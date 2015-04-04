@@ -111,6 +111,20 @@ func load(jwt:String) -> LoadResult {
 
 // MARK: Validation
 
+func validateIssuer(payload:Payload, issuer:String?) -> InvalidToken? {
+  if let issuer = issuer {
+    if let iss = payload["iss"] as? String {
+      if iss != issuer {
+        return .InvalidIssuer
+      }
+    } else {
+      return .InvalidIssuer
+    }
+  }
+
+  return nil
+}
+
 func validateDate(payload:Payload, key:String, comparison:NSComparisonResult, failure:InvalidToken, decodeError:String) -> InvalidToken? {
   if let timestamp = payload[key] as? NSTimeInterval {
     let date = NSDate(timeIntervalSince1970: timestamp)
@@ -125,17 +139,8 @@ func validateDate(payload:Payload, key:String, comparison:NSComparisonResult, fa
 }
 
 func validateClaims(payload:Payload, audience:String?, issuer:String?) -> InvalidToken? {
-  if let issuer = issuer {
-    if let iss = payload["iss"] as? String {
-      if iss != issuer {
-        return .InvalidIssuer
-      }
-    } else {
-      return .InvalidIssuer
-    }
-  }
-
-  return validateDate(payload, "exp", .OrderedAscending, .ExpiredSignature, "Expiration time claim (exp) must be an integer") ??
+  return validateIssuer(payload, issuer) ??
+    validateDate(payload, "exp", .OrderedAscending, .ExpiredSignature, "Expiration time claim (exp) must be an integer") ??
     validateDate(payload, "nbf", .OrderedDescending, .ImmatureSignature, "Not before claim (nbf) must be an integer") ??
     validateDate(payload, "iat", .OrderedDescending, .InvalidIssuedAt, "Issued at claim (iat) must be an integer")
 }
