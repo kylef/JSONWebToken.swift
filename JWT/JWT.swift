@@ -6,6 +6,7 @@ public enum InvalidToken : Printable {
   case DecodeError(String)
   case InvalidIssuer
   case ExpiredSignature
+  case ImmatureSignature
 
   public var description:String {
     switch self {
@@ -15,6 +16,8 @@ public enum InvalidToken : Printable {
         return "Invalid Issuer"
       case .ExpiredSignature:
         return "Expired Signature"
+      case .ImmatureSignature:
+        return "The token is not yet valid (not before claim)"
     }
   }
 }
@@ -123,6 +126,15 @@ func validateClaims(payload:Payload, audience:String?, issuer:String?) -> Invali
     }
   } else if let exp:AnyObject = payload["exp"] {
     return .DecodeError("Expiration time claim (exp) must be an integer")
+  }
+
+  if let nbf = payload["nbf"] as? NSTimeInterval {
+    let expiary = NSDate(timeIntervalSince1970: nbf)
+    if expiary.compare(NSDate()) == .OrderedDescending {
+      return .ImmatureSignature
+    }
+  } else if let nbf:AnyObject = payload["nbf"] {
+    return .DecodeError("Not before claim (nbf) must be an integer")
   }
 
   return nil

@@ -58,6 +58,26 @@ class JWTDecodeTests : XCTestCase {
       XCTAssertEqual(payload as NSDictionary, ["exp": 1728188491])
     }
   }
+
+  // MARK: Not before claim
+
+  func testNotBeforeClaim() {
+    let jwt = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJuYmYiOjE0MjgxODk3MjB9.GPkK60gYvrxESysLWDhMramkh69Dd5OaOsyi2U3cVpg"
+    assertSuccess(decode(jwt)) { payload in
+      XCTAssertEqual(payload as NSDictionary, ["nbf": 1428189720])
+    }
+  }
+
+  func testInvalidNotBeforeClaim() {
+    let jwt = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJuYmYiOlsxNDI4MTg5NzIwXX0.PUL1FQubzzJa4MNXe2D3d5t5cMaqFr3kYlzRUzly-C8"
+    assertDecodeError(decode(jwt), "Not before claim (nbf) must be an integer")
+  }
+
+  func testUnmetNotBeforeClaim() {
+    // If this just started failing, hello 2024!
+    let jwt = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJuYmYiOjE3MjgxODg0OTF9.Tzhu1tu-7BXcF5YEIFFE1Vmg4tEybUnaz58FR4PcblQ"
+    assertFailure(decode(jwt))
+  }
 }
 
 // MARK: Helpers
