@@ -46,7 +46,10 @@ func base64decode(input:String) -> NSData? {
     ending = String(count: amount, repeatedValue: Character("="))
   }
 
-  return NSData(base64EncodedString: input + ending, options: NSDataBase64DecodingOptions(0))
+  let base64 = input.stringByReplacingOccurrencesOfString("-", withString: "+", options: NSStringCompareOptions(0), range: nil)
+    .stringByReplacingOccurrencesOfString("_", withString: "/", options: NSStringCompareOptions(0), range: nil) + ending
+
+  return NSData(base64EncodedString: base64, options: NSDataBase64DecodingOptions(0))
 }
 
 func load(jwt:String) -> LoadResult {
