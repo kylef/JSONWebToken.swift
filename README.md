@@ -19,7 +19,7 @@ pod 'JWT'
 ```swift
 import JWT
 
-JWT.decode("eyJhbG...y5w")
+JWT.decode("eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.e30.2_8pWJfyPup0YwOXK7g9Dn0cF1E3pdn299t4hSeJy5w")
 ```
 
 #### Supported claims
