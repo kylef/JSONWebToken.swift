@@ -13,7 +13,14 @@ class JWTDecodeTests : XCTestCase {
     assertDecodeError(decode("a.b"), "Not enough segments")
   }
 
-  // MARK : Issuer validation
+  // MARK: Disable verify
+
+  func testDisablingVerify() {
+    let jwt = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.e30.2_8pWJfyPup0YwOXK7g9Dn0cF1E3pdn299t4hSeJy5w"
+    assertSuccess(decode(jwt, verify:false, issuer:"fuller.li"))
+  }
+
+  // MARK: Issuer claim
 
   func testSuccessfulIssuerValidation() {
     let jwt = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJmdWxsZXIubGkifQ.wOhJ9_6lx-3JGJPmJmtFCDI3kt7uMAMmhHIslti7ryI"
@@ -30,6 +37,26 @@ class JWTDecodeTests : XCTestCase {
   func testMissingIssuerValidation() {
     let jwt = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.e30.2_8pWJfyPup0YwOXK7g9Dn0cF1E3pdn299t4hSeJy5w"
     assertFailure(decode(jwt, issuer:"fuller.li"))
+  }
+
+  // MARK: Expiration claim
+
+  func testExpiredClaim() {
+    let jwt = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJleHAiOjE0MjgxODg0OTF9.cy6b2szsNkKnHFnz2GjTatGjoHBTs8vBKnPGZgpp91I"
+    assertFailure(decode(jwt))
+  }
+
+  func testInvalidExpiaryClaim() {
+    let jwt = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJleHAiOlsiMTQyODE4ODQ5MSJdfQ.OwF-wd3THjxrEGUhh6IdnNhxQZ7ydwJ3Z6J_dfl9MBs"
+    assertFailure(decode(jwt))
+  }
+
+  func testUnexpiredClaim() {
+    // If this just started failing, hello 2024!
+    let jwt = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJleHAiOjE3MjgxODg0OTF9.7QIdg6ijLJpeiG4m_TqIG9alXLhHMidWDBELkhtUqYw"
+    assertSuccess(decode(jwt)) { payload in
+      XCTAssertEqual(payload as NSDictionary, ["exp": 1728188491])
+    }
   }
 }
 

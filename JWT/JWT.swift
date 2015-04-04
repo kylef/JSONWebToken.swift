@@ -5,6 +5,7 @@ public typealias Payload = [String:AnyObject]
 public enum InvalidToken : Printable {
   case DecodeError(String)
   case InvalidIssuer
+  case ExpiredSignature
 
   public var description:String {
     switch self {
@@ -12,6 +13,8 @@ public enum InvalidToken : Printable {
         return "Decode Error: \(error)"
       case .InvalidIssuer:
         return "Invalid Issuer"
+      case .ExpiredSignature:
+        return "Expired Signature"
     }
   }
 }
@@ -112,5 +115,15 @@ func validateClaims(payload:Payload, audience:String?, issuer:String?) -> Invali
       return .InvalidIssuer
     }
   }
+
+  if let exp = payload["exp"] as? NSTimeInterval {
+    let expiary = NSDate(timeIntervalSince1970: exp)
+    if expiary.compare(NSDate()) == .OrderedAscending {
+      return .ExpiredSignature
+    }
+  } else if let exp:AnyObject = payload["exp"] {
+    return .DecodeError("Expiration time claim (exp) must be an integer")
+  }
+
   return nil
 }
