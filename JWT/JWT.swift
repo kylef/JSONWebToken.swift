@@ -111,6 +111,19 @@ func load(jwt:String) -> LoadResult {
 
 // MARK: Validation
 
+func validateDate(payload:Payload, key:String, comparison:NSComparisonResult, failure:InvalidToken, decodeError:String) -> InvalidToken? {
+  if let timestamp = payload[key] as? NSTimeInterval {
+    let date = NSDate(timeIntervalSince1970: timestamp)
+    if date.compare(NSDate()) == comparison {
+      return failure
+    }
+  } else if let timestamp:AnyObject = payload[key] {
+    return .DecodeError(decodeError)
+  }
+
+  return nil
+}
+
 func validateClaims(payload:Payload, audience:String?, issuer:String?) -> InvalidToken? {
   if let issuer = issuer {
     if let iss = payload["iss"] as? String {
@@ -122,32 +135,7 @@ func validateClaims(payload:Payload, audience:String?, issuer:String?) -> Invali
     }
   }
 
-  if let exp = payload["exp"] as? NSTimeInterval {
-    let expiary = NSDate(timeIntervalSince1970: exp)
-    if expiary.compare(NSDate()) == .OrderedAscending {
-      return .ExpiredSignature
-    }
-  } else if let exp:AnyObject = payload["exp"] {
-    return .DecodeError("Expiration time claim (exp) must be an integer")
-  }
-
-  if let nbf = payload["nbf"] as? NSTimeInterval {
-    let date = NSDate(timeIntervalSince1970: nbf)
-    if date.compare(NSDate()) == .OrderedDescending {
-      return .ImmatureSignature
-    }
-  } else if let nbf:AnyObject = payload["nbf"] {
-    return .DecodeError("Not before claim (nbf) must be an integer")
-  }
-
-  if let iat = payload["iat"] as? NSTimeInterval {
-    let date = NSDate(timeIntervalSince1970: iat)
-    if date.compare(NSDate()) == .OrderedDescending {
-      return .InvalidIssuedAt
-    }
-  } else if let iat:AnyObject = payload["iat"] {
-    return .DecodeError("Issued at claim (iat) must be an integer")
-  }
-
-  return nil
+  return validateDate(payload, "exp", .OrderedAscending, .ExpiredSignature, "Expiration time claim (exp) must be an integer") ??
+    validateDate(payload, "nbf", .OrderedDescending, .ImmatureSignature, "Not before claim (nbf) must be an integer") ??
+    validateDate(payload, "iat", .OrderedDescending, .InvalidIssuedAt, "Issued at claim (iat) must be an integer")
 }
