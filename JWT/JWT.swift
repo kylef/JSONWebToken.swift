@@ -8,6 +8,7 @@ public enum InvalidToken : Printable {
   case ExpiredSignature
   case ImmatureSignature
   case InvalidIssuedAt
+  case InvalidAudience
 
   public var description:String {
     switch self {
@@ -21,6 +22,8 @@ public enum InvalidToken : Printable {
         return "The token is not yet valid (not before claim)"
       case .InvalidIssuedAt:
         return "Issued at claim (iat) is in the future"
+      case InvalidAudience:
+        return "Invalid Audience"
     }
   }
 }
@@ -111,6 +114,24 @@ func load(jwt:String) -> LoadResult {
 
 // MARK: Validation
 
+func validateAudience(payload:Payload, audience:String?) -> InvalidToken? {
+  if let audience = audience {
+    if let aud = payload["aud"] as? [String] {
+      if !contains(aud, audience) {
+        return .InvalidAudience
+      }
+    } else if let aud = payload["aud"] as? String {
+      if aud != audience {
+        return .InvalidAudience
+      }
+    } else {
+      return .DecodeError("Invalid audience claim, must be a string or an array of strings")
+    }
+  }
+
+  return nil
+}
+
 func validateIssuer(payload:Payload, issuer:String?) -> InvalidToken? {
   if let issuer = issuer {
     if let iss = payload["iss"] as? String {
@@ -139,7 +160,7 @@ func validateDate(payload:Payload, key:String, comparison:NSComparisonResult, fa
 }
 
 func validateClaims(payload:Payload, audience:String?, issuer:String?) -> InvalidToken? {
-  return validateIssuer(payload, issuer) ??
+  return validateIssuer(payload, issuer) ?? validateAudience(payload, audience) ??
     validateDate(payload, "exp", .OrderedAscending, .ExpiredSignature, "Expiration time claim (exp) must be an integer") ??
     validateDate(payload, "nbf", .OrderedDescending, .ImmatureSignature, "Not before claim (nbf) must be an integer") ??
     validateDate(payload, "iat", .OrderedDescending, .InvalidIssuedAt, "Issued at claim (iat) must be an integer")

@@ -99,6 +99,32 @@ class JWTDecodeTests : XCTestCase {
     let jwt = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpYXQiOlsxNzI4MTg4NDkxXX0.ND7QMWtLkXDXH38OaXM3SQgLo3Z5TNgF_pcfWHV_alQ"
     assertDecodeError(decode(jwt), "Issued at claim (iat) must be an integer")
   }
+
+  // MARK: Audience claims
+
+  func testAudiencesClaim() {
+    let jwt = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJhdWQiOlsibWF4aW5lIiwia2F0aWUiXX0.AlM2nO839pAUU1NiAeRZmMnBDbw53Hc5ElPQJVNyfJY"
+    assertSuccess(decode(jwt, audience:"maxine")) { payload in
+      XCTAssertEqual(payload as NSDictionary, ["aud": ["maxine", "katie"]])
+    }
+  }
+
+  func testAudienceClaim() {
+    let jwt = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJhdWQiOiJreWxlIn0.VEB_n06pTSLlTXPFkc46ARADJ9HXNUBUPo3VhL9RDe4"
+    assertSuccess(decode(jwt, audience:"kyle")) { payload in
+      XCTAssertEqual(payload as NSDictionary, ["aud": "kyle"])
+    }
+  }
+
+  func testMismatchAudienceClaim() {
+    let jwt = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJhdWQiOiJreWxlIn0.VEB_n06pTSLlTXPFkc46ARADJ9HXNUBUPo3VhL9RDe4" // kyle
+    assertFailure(decode(jwt, audience:"maxine"))
+  }
+
+  func testMissingAudienceClaim() {
+    let jwt = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.e30.2_8pWJfyPup0YwOXK7g9Dn0cF1E3pdn299t4hSeJy5w"
+    assertFailure(decode(jwt, audience:"kyle"))
+  }
 }
 
 // MARK: Helpers
