@@ -14,11 +14,17 @@ pod 'JWT'
 
 ## Usage
 
+### Verify a JWT
+
 ```swift
 import JWT
 
-JWT.verify(claims)
+JWT.verify("eyJhbG...y5w")
 ```
+
+#### Supported claims
+
+- Issuer (`iss`) Claim
 
 ## License
 

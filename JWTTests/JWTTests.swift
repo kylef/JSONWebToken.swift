@@ -12,6 +12,25 @@ class JWTDecodeTests : XCTestCase {
   func testFailsToDecodeInvalidStringWithoutThreeSegments() {
     assertDecodeError(decode("a.b"), "Not enough segments")
   }
+
+  // MARK : Issuer validation
+
+  func testSuccessfulIssuerValidation() {
+    let jwt = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJmdWxsZXIubGkifQ.wOhJ9_6lx-3JGJPmJmtFCDI3kt7uMAMmhHIslti7ryI"
+    assertSuccess(decode(jwt, issuer:"fuller.li")) { payload in
+      XCTAssertEqual(payload as NSDictionary, ["iss": "fuller.li"])
+    }
+  }
+
+  func testIncorrectIssuerValidation() {
+    let jwt = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJmdWxsZXIubGkifQ.wOhJ9_6lx-3JGJPmJmtFCDI3kt7uMAMmhHIslti7ryI"
+    assertFailure(decode(jwt, issuer:"querykit.org"))
+  }
+
+  func testMissingIssuerValidation() {
+    let jwt = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.e30.2_8pWJfyPup0YwOXK7g9Dn0cF1E3pdn299t4hSeJy5w"
+    assertFailure(decode(jwt, issuer:"fuller.li"))
+  }
 }
 
 // MARK: Helpers
@@ -47,6 +66,8 @@ func assertDecodeError(result:DecodeResult, error:String) {
       if decodeError != error {
         XCTFail("Incorrect decode error \(decodeError) != \(error)")
       }
+    default:
+      XCTFail("Failure for the wrong reason")
     }
   }
 }

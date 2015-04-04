@@ -4,11 +4,14 @@ public typealias Payload = [String:AnyObject]
 
 public enum InvalidToken : Printable {
   case DecodeError(String)
+  case InvalidIssuer
 
   public var description:String {
     switch self {
       case .DecodeError(let error):
         return "Decode Error: \(error)"
+      case .InvalidIssuer:
+        return "Invalid Issuer"
     }
   }
 }
@@ -20,9 +23,15 @@ public enum DecodeResult {
 
 
 /// Decode a JWT
-public func decode(jwt:String, verify:Bool = false) -> DecodeResult {
+public func decode(jwt:String, verify:Bool = true, audience:String? = nil, issuer:String? = nil) -> DecodeResult {
   switch load(jwt) {
     case let .Success(header, payload, signature, signatureInput):
+      if verify {
+        if let failure = validateClaims(payload, audience, issuer) {
+          return .Failure(failure)
+        }
+      }
+
       return .Success(payload)
     case .Failure(let failure):
       return .Failure(failure)
@@ -89,4 +98,19 @@ func load(jwt:String) -> LoadResult {
   }
 
   return .Success(header:header!, payload:payload!, signature:signature!, signatureInput:signatureInput)
+}
+
+// MARK: Validation
+
+func validateClaims(payload:Payload, audience:String?, issuer:String?) -> InvalidToken? {
+  if let issuer = issuer {
+    if let iss = payload["iss"] as? String {
+      if iss != issuer {
+        return .InvalidIssuer
+      }
+    } else {
+      return .InvalidIssuer
+    }
+  }
+  return nil
 }
