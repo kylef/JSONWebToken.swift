@@ -78,6 +78,27 @@ class JWTDecodeTests : XCTestCase {
     let jwt = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJuYmYiOjE3MjgxODg0OTF9.Tzhu1tu-7BXcF5YEIFFE1Vmg4tEybUnaz58FR4PcblQ"
     assertFailure(decode(jwt))
   }
+
+  // MARK: Issued at claim
+
+  func testIssuedAtClaimInThePast() {
+    let jwt = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpYXQiOjE0MjgxODk3MjB9.hXBPQvdi9G5Kb5ySZUzAukYsP9wyBF172eTP9gNF9sg"
+    assertSuccess(decode(jwt)) { payload in
+      XCTAssertEqual(payload as NSDictionary, ["iat": 1428189720])
+    }
+  }
+
+  func testIssuedAtClaimInTheFuture() {
+    // If this just started failing, hello 2024!
+    let jwt = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpYXQiOjE3MjgxODg0OTF9.owHiJyJmTcW1lBW5y_Rz3iBfSbcNiXlbZ2fY9qR7-aU"
+    assertFailure(decode(jwt))
+  }
+
+  func testInvalidIssuedAtClaim() {
+    // If this just started failing, hello 2024!
+    let jwt = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpYXQiOlsxNzI4MTg4NDkxXX0.ND7QMWtLkXDXH38OaXM3SQgLo3Z5TNgF_pcfWHV_alQ"
+    assertDecodeError(decode(jwt), "Issued at claim (iat) must be an integer")
+  }
 }
 
 // MARK: Helpers
@@ -114,7 +135,7 @@ func assertDecodeError(result:DecodeResult, error:String) {
         XCTFail("Incorrect decode error \(decodeError) != \(error)")
       }
     default:
-      XCTFail("Failure for the wrong reason")
+      XCTFail("Failure for the wrong reason \(failure)")
     }
   }
 }

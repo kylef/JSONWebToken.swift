@@ -7,6 +7,7 @@ public enum InvalidToken : Printable {
   case InvalidIssuer
   case ExpiredSignature
   case ImmatureSignature
+  case InvalidIssuedAt
 
   public var description:String {
     switch self {
@@ -18,6 +19,8 @@ public enum InvalidToken : Printable {
         return "Expired Signature"
       case .ImmatureSignature:
         return "The token is not yet valid (not before claim)"
+      case .InvalidIssuedAt:
+        return "Issued at claim (iat) is in the future"
     }
   }
 }
@@ -129,12 +132,21 @@ func validateClaims(payload:Payload, audience:String?, issuer:String?) -> Invali
   }
 
   if let nbf = payload["nbf"] as? NSTimeInterval {
-    let expiary = NSDate(timeIntervalSince1970: nbf)
-    if expiary.compare(NSDate()) == .OrderedDescending {
+    let date = NSDate(timeIntervalSince1970: nbf)
+    if date.compare(NSDate()) == .OrderedDescending {
       return .ImmatureSignature
     }
   } else if let nbf:AnyObject = payload["nbf"] {
     return .DecodeError("Not before claim (nbf) must be an integer")
+  }
+
+  if let iat = payload["iat"] as? NSTimeInterval {
+    let date = NSDate(timeIntervalSince1970: iat)
+    if date.compare(NSDate()) == .OrderedDescending {
+      return .InvalidIssuedAt
+    }
+  } else if let iat:AnyObject = payload["iat"] {
+    return .DecodeError("Issued at claim (iat) must be an integer")
   }
 
   return nil
