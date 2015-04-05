@@ -47,6 +47,15 @@ This library supports the following algorithms:
 - None - Unsecured JWTs
 - HS256 - HMAC using SHA-256 hash algorithm (default)
 
+#### Additional Algorithms
+
+Support for HS384 and HS512 can be found in the `algorithms-hs` branch which depends on an unreleased version of CryptoSwift. It can be installed via:
+
+```ruby
+pod 'JWT', :git => 'https://github.com/kylef/JWT.swift.git', :branch => 'algorithms-hs'
+pod 'CryptoSwift', :head
+```
+
 ## License
 
 JWT is licensed under the BSD license. See [LICENSE](LICENSE) for more info.
