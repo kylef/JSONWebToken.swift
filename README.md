@@ -24,6 +24,16 @@ import JWT
 JWT.encode(["my": "payload"], .HS256("secret"))
 ```
 
+#### Building a JWT with the builder pattern
+
+```swift
+JWT.encode(.HS256("secret")) { builder in
+  builder.issuer = "fuller.li"
+  builder.issuedAt = NSDate()
+  builder["custom"] = "Hi"
+}
+```
+
 ### Decoding a JWT
 
 When decoding a JWT, you must supply one or more algorithms and keys.

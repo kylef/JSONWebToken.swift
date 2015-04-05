@@ -76,3 +76,79 @@ public func encode(payload:Payload, algorithm:Algorithm) -> String {
   let signature = algorithm.sign(signingInput)
   return "\(signingInput).\(signature)"
 }
+
+public class PayloadBuilder {
+  var payload = Payload()
+
+  public var issuer:String? {
+    get {
+      return payload["iss"] as? String
+    }
+    set {
+      payload["iss"] = newValue
+    }
+  }
+
+  public var audience:String? {
+    get {
+      return payload["aud"] as? String
+    }
+    set {
+      payload["aud"] = newValue
+    }
+  }
+
+  public var expiration:NSDate? {
+    get {
+      if let expiration = payload["exp"] as? NSTimeInterval {
+        return NSDate(timeIntervalSince1970: expiration)
+      }
+
+      return nil
+    }
+    set {
+      payload["exp"] = newValue?.timeIntervalSince1970
+    }
+  }
+
+  public var notBefore:NSDate? {
+    get {
+      if let notBefore = payload["nbf"] as? NSTimeInterval {
+        return NSDate(timeIntervalSince1970: notBefore)
+      }
+
+      return nil
+    }
+    set {
+      payload["nbf"] = newValue?.timeIntervalSince1970
+    }
+  }
+
+  public var issuedAt:NSDate? {
+    get {
+      if let issuedAt = payload["iat"] as? NSTimeInterval {
+        return NSDate(timeIntervalSince1970: issuedAt)
+      }
+
+      return nil
+    }
+    set {
+      payload["iat"] = newValue?.timeIntervalSince1970
+    }
+  }
+
+  public subscript(key: String) -> AnyObject? {
+    get {
+      return payload[key]
+    }
+    set {
+      payload[key] = newValue
+    }
+  }
+}
+
+public func encode(algorithm:Algorithm, closure:(PayloadBuilder -> ())) -> String {
+  let builder = PayloadBuilder()
+  closure(builder)
+  return encode(builder.payload, algorithm)
+}

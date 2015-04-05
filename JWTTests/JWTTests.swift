@@ -8,6 +8,69 @@ class JWTEncodeTests : XCTestCase {
     let fixture = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJuYW1lIjoiS3lsZSJ9.zxm7xcp1eZtZhp4t-nlw09ATQnnFKIiSN83uG8u6cAg"
     XCTAssertEqual(jwt, fixture)
   }
+
+  func testEncodingWithBuilder() {
+    let algorithm = Algorithm.HS256("secret")
+    let jwt = JWT.encode(algorithm) { builder in
+      builder.issuer = "fuller.li"
+    }
+
+    assertSuccess(JWT.decode(jwt, algorithm)) { payload in
+      XCTAssertEqual(payload as NSDictionary, ["iss": "fuller.li"])
+    }
+  }
+}
+
+class JWTPayloadBuilder : XCTestCase {
+  func testIssuer() {
+    JWT.encode(.None) { builder in
+       builder.issuer = "fuller.li"
+      XCTAssertEqual(builder.issuer!, "fuller.li")
+      XCTAssertEqual(builder["iss"] as String, "fuller.li")
+    }
+  }
+
+  func testAudience() {
+    JWT.encode(.None) { builder in
+      builder.audience = "cocoapods"
+      XCTAssertEqual(builder.audience!, "cocoapods")
+      XCTAssertEqual(builder["aud"] as String, "cocoapods")
+    }
+  }
+
+  func testExpiration() {
+    JWT.encode(.None) { builder in
+      let date = NSDate(timeIntervalSince1970: NSDate().timeIntervalSince1970)
+      builder.expiration = date
+      XCTAssertEqual(builder.expiration!, date)
+      XCTAssertEqual(builder["exp"] as NSTimeInterval, date.timeIntervalSince1970)
+    }
+  }
+
+  func testNotBefore() {
+    JWT.encode(.None) { builder in
+      let date = NSDate(timeIntervalSince1970: NSDate().timeIntervalSince1970)
+      builder.notBefore = date
+      XCTAssertEqual(builder.notBefore!, date)
+      XCTAssertEqual(builder["nbf"] as NSTimeInterval, date.timeIntervalSince1970)
+    }
+  }
+
+  func testIssuedAt() {
+    JWT.encode(.None) { builder in
+      let date = NSDate(timeIntervalSince1970: NSDate().timeIntervalSince1970)
+      builder.issuedAt = date
+      XCTAssertEqual(builder.issuedAt!, date)
+      XCTAssertEqual(builder["iat"] as NSTimeInterval, date.timeIntervalSince1970)
+    }
+  }
+
+  func testCustomAttributes() {
+    JWT.encode(.None) { builder in
+      builder["user"] = "kyle"
+      XCTAssertEqual(builder["user"] as String, "kyle")
+    }
+  }
 }
 
 class JWTDecodeTests : XCTestCase {
