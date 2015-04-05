@@ -1,6 +1,6 @@
 # JSON Web Token
 
-[![Build Status](http://img.shields.io/travis/kylef/JWT.swift/master.svg?style=flat)](https://travis-ci.org/kylef/JWT.swift)
+[![Build Status](http://img.shields.io/travis/kylef/JSONWebToken.swift/master.svg?style=flat)](https://travis-ci.org/kylef/JSONWebToken.swift)
 
 Swift implementation of [JSON Web Token](https://tools.ietf.org/html/draft-ietf-oauth-json-web-token-32).
 
@@ -9,7 +9,7 @@ Swift implementation of [JSON Web Token](https://tools.ietf.org/html/draft-ietf-
 [CocoaPods](http://cocoapods.org/) is the recommended installation method.
 
 ```ruby
-pod 'JWT'
+pod 'JSONWebToken'
 ```
 
 ## Usage
@@ -52,11 +52,11 @@ This library supports the following algorithms:
 Support for HS384 and HS512 can be found in the `algorithms-hs` branch which depends on an unreleased version of CryptoSwift. It can be installed via:
 
 ```ruby
-pod 'JWT', :git => 'https://github.com/kylef/JWT.swift.git', :branch => 'algorithms-hs'
+pod 'JSONWebToken', :git => 'https://github.com/kylef/JSONWebToken.swift.git', :branch => 'algorithms-hs'
 pod 'CryptoSwift', :head
 ```
 
 ## License
 
-JWT is licensed under the BSD license. See [LICENSE](LICENSE) for more info.
+JSONWebToken is licensed under the BSD license. See [LICENSE](LICENSE) for more info.
 
