@@ -2,10 +2,10 @@ platform :osx, '10.9'
 use_frameworks!
 
 target 'JWT' do
-  podspec
+  pod 'CryptoSwift', :head
 end
 
 target 'JWTTests' do
-  podspec
+  pod 'CryptoSwift', :head
 end
 

@@ -11,6 +11,12 @@ public enum Algorithm : Printable {
   /// HMAC using SHA-256 hash algorithm
   case HS256(String)
 
+  /// HMAC using SHA-384 hash algorithm
+  case HS384(String)
+
+  /// HMAC using SHA-512 hash algorithm
+  case HS512(String)
+
   static func algorithm(name:String, key:String?) -> Algorithm? {
     if name == "none" {
       if let key = key {
@@ -20,6 +26,10 @@ public enum Algorithm : Printable {
     } else if let key = key {
       if name == "HS256" {
         return .HS256(key)
+      } else if name == "HS384" {
+        return .HS384(key)
+      } else if name == "HS512" {
+        return .HS512(key)
       }
     }
 
@@ -32,6 +42,10 @@ public enum Algorithm : Printable {
       return "none"
     case .HS256(let key):
       return "HS256"
+    case .HS384(let key):
+        return "HS384"
+    case .HS512(let key):
+        return "HS512"
     }
   }
 
@@ -45,6 +59,17 @@ public enum Algorithm : Printable {
       let mac = Authenticator.HMAC(key: key.dataUsingEncoding(NSUTF8StringEncoding, allowLossyConversion: false)!, variant:.sha256)
       let result = mac.authenticate(message.dataUsingEncoding(NSUTF8StringEncoding, allowLossyConversion: false)!)!
       return base64encode(result)
+
+    case .HS384(let key):
+        let mac = Authenticator.HMAC(key: key.dataUsingEncoding(NSUTF8StringEncoding, allowLossyConversion: false)!, variant:.sha384)
+        let result = mac.authenticate(message.dataUsingEncoding(NSUTF8StringEncoding, allowLossyConversion: false)!)!
+        return base64encode(result)
+
+    case .HS512(let key):
+        let mac = Authenticator.HMAC(key: key.dataUsingEncoding(NSUTF8StringEncoding, allowLossyConversion: false)!, variant:.sha512)
+        let result = mac.authenticate(message.dataUsingEncoding(NSUTF8StringEncoding, allowLossyConversion: false)!)!
+        return base64encode(result)
+
     }
   }
 
