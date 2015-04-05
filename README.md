@@ -26,8 +26,16 @@ JWT.encode(["my": "payload"], .HS256("secret"))
 
 ### Decoding a JWT
 
+When decoding a JWT, you must supply one or more algorithms and keys.
+
 ```swift
-JWT.decode("eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.e30.2_8pWJfyPup0YwOXK7g9Dn0cF1E3pdn299t4hSeJy5w")
+JWT.decode("eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.e30.2_8pWJfyPup0YwOXK7g9Dn0cF1E3pdn299t4hSeJy5w", .HS256("secret"))
+```
+
+When the JWT may be signed with one out of many algorithms or keys:
+
+```swift
+JWT.decode("eyJh...5w", [.HS256("secret"), .HS256("secret2"), .HS512("secure")])
 ```
 
 #### Supported claims

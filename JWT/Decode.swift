@@ -9,9 +9,6 @@ public enum InvalidToken : Printable {
   /// The JWT uses an unsupported algorithm
   case InvalidAlgorithm
 
-  /// An invalid key was used when trying to validate a JWT
-  case InvalidKey
-
   /// The issued claim has expired
   case ExpiredSignature
 
@@ -43,9 +40,7 @@ public enum InvalidToken : Printable {
     case InvalidAudience:
       return "Invalid Audience"
     case InvalidAlgorithm:
-      return "Unsupported Algorithm"
-    case InvalidKey:
-      return "Invalid Key"
+      return "Unsupported algorithm or incorrect key"
     }
   }
 }
@@ -60,13 +55,12 @@ public enum DecodeResult {
   case Failure(InvalidToken)
 }
 
-
 /// Decode a JWT
-public func decode(jwt:String, key:String? = nil, verify:Bool = true, audience:String? = nil, issuer:String? = nil) -> DecodeResult {
+public func decode(jwt:String, algorithms:[Algorithm], verify:Bool = true, audience:String? = nil, issuer:String? = nil) -> DecodeResult {
   switch load(jwt) {
   case let .Success(header, payload, signature, signatureInput):
     if verify {
-      if let failure = validateClaims(payload, audience, issuer) ?? verifySignature(header, signatureInput, signature, key) {
+      if let failure = validateClaims(payload, audience, issuer) ?? verifySignature(algorithms, header, signatureInput, signature) {
         return .Failure(failure)
       }
     }
@@ -75,6 +69,11 @@ public func decode(jwt:String, key:String? = nil, verify:Bool = true, audience:S
   case .Failure(let failure):
     return .Failure(failure)
   }
+}
+
+/// Decode a JWT
+public func decode(jwt:String, algorithm:Algorithm, verify:Bool = true, audience:String? = nil, issuer:String? = nil) -> DecodeResult {
+  return decode(jwt, [algorithm], verify: verify, audience: audience, issuer: issuer)
 }
 
 // MARK: Parsing a JWT
@@ -125,14 +124,13 @@ func load(jwt:String) -> LoadResult {
 
 // MARK: Signature Verification
 
-func verifySignature(header:Payload, signingInput:String, signature:NSData, key:String?) -> InvalidToken? {
+func verifySignature(algorithms:[Algorithm], header:Payload, signingInput:String, signature:NSData) -> InvalidToken? {
   if let alg = header["alg"] as? String {
-    if let algoritm = Algorithm.algorithm(alg, key: key) {
-      if algoritm.verify(signingInput, signature: signature) {
-        return nil
-      } else {
-        return .InvalidKey
-      }
+    let matchingAlgorithms = filter(algorithms) { algorithm in  algorithm.description == alg }
+    let results = map(matchingAlgorithms) { algorithm in algorithm.verify(signingInput, signature: signature) }
+    let successes = filter(results) { $0 }
+    if successes.count > 0 {
+      return nil
     }
 
     return .InvalidAlgorithm
