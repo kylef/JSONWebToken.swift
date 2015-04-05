@@ -13,6 +13,9 @@ public enum Algorithm : Printable {
 
   static func algorithm(name:String, key:String?) -> Algorithm? {
     if name == "none" {
+      if let key = key {
+        return nil  // We don't allow nil when we configured a key
+      }
       return Algorithm.None
     } else if let key = key {
       if name == "HS256" {

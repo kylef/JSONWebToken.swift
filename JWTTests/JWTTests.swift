@@ -143,6 +143,11 @@ class JWTDecodeTests : XCTestCase {
       XCTAssertEqual(payload as NSDictionary, ["test": "ing"])
     }
   }
+
+  func testNoneFailsWithSecretAlgorithm() {
+    let jwt = "eyJhbGciOiJub25lIiwidHlwIjoiSldUIn0.eyJ0ZXN0IjoiaW5nIn0."
+    assertFailure(decode(jwt, key:"secret"))
+  }
 }
 
 // MARK: Helpers
