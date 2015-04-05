@@ -14,18 +14,20 @@ pod 'JWT'
 
 ## Usage
 
-### Decoding a JWT
-
 ```swift
 import JWT
-
-JWT.decode("eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.e30.2_8pWJfyPup0YwOXK7g9Dn0cF1E3pdn299t4hSeJy5w")
 ```
 
 ### Encoding a claim
 
 ```swift
 JWT.encode(["my": "payload"], .HS256("secret"))
+```
+
+### Decoding a JWT
+
+```swift
+JWT.decode("eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.e30.2_8pWJfyPup0YwOXK7g9Dn0cF1E3pdn299t4hSeJy5w")
 ```
 
 #### Supported claims
