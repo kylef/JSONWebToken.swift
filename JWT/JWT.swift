@@ -36,6 +36,52 @@ public enum InvalidToken : Printable {
   }
 }
 
+/// The supported Algorithms
+public enum Algorithm : Printable {
+  /// No Algorithm, i-e, insecure
+  case None
+
+  /// HMAC using SHA-256 hash algorithm
+  case HS256(String)
+
+  static func algorithm(name:String, key:String?) -> Algorithm? {
+    if name == "none" {
+      return Algorithm.None
+    } else if let key = key {
+      if name == "HS256" {
+        return .HS256(key)
+      }
+    }
+
+    return nil
+  }
+
+  public var description:String {
+    switch self {
+    case .None:
+      return "none"
+    case .HS256(let key):
+      return "HS256"
+    }
+  }
+
+  func sign(message:String) -> String {
+    switch self {
+    case .None:
+      return ""
+
+    case .HS256(let key):
+      let mac = Authenticator.HMAC(key: key.dataUsingEncoding(NSUTF8StringEncoding, allowLossyConversion: false)!, variant:.sha256)
+      let result = mac.authenticate(message.dataUsingEncoding(NSUTF8StringEncoding, allowLossyConversion: false)!)!
+      return base64encode(result)
+    }
+  }
+
+  func verify(message:String, signature:NSData) -> Bool {
+    return sign(message) == base64encode(signature)
+  }
+}
+
 public enum DecodeResult {
   case Success(Payload)
   case Failure(InvalidToken)
@@ -60,8 +106,7 @@ public func decode(jwt:String, key:String? = nil, verify:Bool = true, audience:S
 
 
 /// Encoding a payload
-
-public func encode(payload:Payload, key:String) -> String {
+public func encode(payload:Payload, algorithm:Algorithm) -> String {
   func encode(payload:Payload) -> String? {
     if let data = NSJSONSerialization.dataWithJSONObject(payload, options: NSJSONWritingOptions(0), error: nil) {
       return base64encode(data)
@@ -70,13 +115,10 @@ public func encode(payload:Payload, key:String) -> String {
     return nil
   }
 
-  let algorithm = "HS256"
-  let header = encode(["typ": "JWT", "alg": algorithm])!
+  let header = encode(["typ": "JWT", "alg": algorithm.description])!
   let payload = encode(payload)!
   let signingInput = "\(header).\(payload)"
-  let mac = Authenticator.HMAC(key: key.dataUsingEncoding(NSUTF8StringEncoding, allowLossyConversion: true)!, variant:.sha256)
-  let result = mac.authenticate(signingInput.dataUsingEncoding(NSUTF8StringEncoding, allowLossyConversion: false)!)!
-  let signature = base64encode(result)
+  let signature = algorithm.sign(signingInput)
   return "\(signingInput).\(signature)"
 }
 
@@ -156,80 +198,16 @@ func load(jwt:String) -> LoadResult {
 
 func verifySignature(header:Payload, signingInput:String, signature:NSData, key:String?) -> InvalidToken? {
   if let alg = header["alg"] as? String {
-    switch alg {
-      case "none":
+    if let algoritm = Algorithm.algorithm(alg, key: key) {
+      if algoritm.verify(signingInput, signature: signature) {
         return nil
-      case "HS256":
-        if let key = key?.dataUsingEncoding(NSUTF8StringEncoding, allowLossyConversion: false) {
-          let mac = Authenticator.HMAC(key: key, variant:.sha256)
-          let result = mac.authenticate(signingInput.dataUsingEncoding(NSUTF8StringEncoding, allowLossyConversion: false)!)
-          if result! == signature {
-            return nil
-          } else {
-            return .DecodeError("Signature verification failed")
-          }
-        }
-        break
-      default:
-        break
+      } else {
+        return .DecodeError("Signature verification failed")
+      }
     }
 
     return .InvalidAlgorithm
   }
 
   return .DecodeError("Missing Algorithm")
-}
-
-// MARK: Claim Validation
-
-func validateAudience(payload:Payload, audience:String?) -> InvalidToken? {
-  if let audience = audience {
-    if let aud = payload["aud"] as? [String] {
-      if !contains(aud, audience) {
-        return .InvalidAudience
-      }
-    } else if let aud = payload["aud"] as? String {
-      if aud != audience {
-        return .InvalidAudience
-      }
-    } else {
-      return .DecodeError("Invalid audience claim, must be a string or an array of strings")
-    }
-  }
-
-  return nil
-}
-
-func validateIssuer(payload:Payload, issuer:String?) -> InvalidToken? {
-  if let issuer = issuer {
-    if let iss = payload["iss"] as? String {
-      if iss != issuer {
-        return .InvalidIssuer
-      }
-    } else {
-      return .InvalidIssuer
-    }
-  }
-
-  return nil
-}
-
-func validateDate(payload:Payload, key:String, comparison:NSComparisonResult, failure:InvalidToken, decodeError:String) -> InvalidToken? {
-  if let timestamp = payload[key] as? NSTimeInterval {
-    let date = NSDate(timeIntervalSince1970: timestamp)
-    if date.compare(NSDate()) == comparison {
-      return failure
-    }
-  } else if let timestamp:AnyObject = payload[key] {
-    return .DecodeError(decodeError)
-  }
-
-  return nil
-}
-
-func validateClaims(payload:Payload, audience:String?, issuer:String?) -> InvalidToken? {
-  return validateIssuer(payload, issuer) ?? validateAudience(payload, audience) ??
-    validateDate(payload, "exp", .OrderedAscending, .ExpiredSignature, "Expiration time claim (exp) must be an integer") ??
-    validateDate(payload, "nbf", .OrderedDescending, .ImmatureSignature, "Not before claim (nbf) must be an integer") ??
-    validateDate(payload, "iat", .OrderedDescending, .InvalidIssuedAt, "Issued at claim (iat) must be an integer")
 }
