@@ -64,6 +64,8 @@ This library supports the following algorithms:
 
 - None - Unsecured JWTs
 - HS256 - HMAC using SHA-256 hash algorithm (default)
+- HS384 - HMAC using SHA-384 hash algorithm
+- HS512 - HMAC using SHA-512 hash algorithm
 
 #### Additional Algorithms
 
