@@ -30,6 +30,13 @@ JWT.decode("eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.e30.2_8pWJfyPup0YwOXK7g9Dn0cF1E
 - Issued At (`iat`) Claim
 - Audience (`aud`) Claim
 
+### Algorithms
+
+This library supports the following algorithms:
+
+- None - Unsecured JWTs
+- HS256 - HMAC using SHA-256 hash algorithm (default)
+
 ## License
 
 JWT is licensed under the BSD license. See [LICENSE](LICENSE) for more info.
