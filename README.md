@@ -32,6 +32,8 @@ JWT.decode("eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.e30.2_8pWJfyPup0YwOXK7g9Dn0cF1E
 
 #### Supported claims
 
+The library supports validating the following claims:
+
 - Issuer (`iss`) Claim
 - Expiration Time (`exp`) Claim
 - Not Before (`nbf`) Claim
