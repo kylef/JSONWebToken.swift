@@ -58,6 +58,28 @@ public func decode(jwt:String, key:String? = nil, verify:Bool = true, audience:S
   }
 }
 
+
+/// Encoding a payload
+
+public func encode(payload:Payload, key:String) -> String {
+  func encode(payload:Payload) -> String? {
+    if let data = NSJSONSerialization.dataWithJSONObject(payload, options: NSJSONWritingOptions(0), error: nil) {
+      return base64encode(data)
+    }
+
+    return nil
+  }
+
+  let algorithm = "HS256"
+  let header = encode(["typ": "JWT", "alg": algorithm])!
+  let payload = encode(payload)!
+  let signingInput = "\(header).\(payload)"
+  let mac = Authenticator.HMAC(key: key.dataUsingEncoding(NSUTF8StringEncoding, allowLossyConversion: true)!, variant:.sha256)
+  let result = mac.authenticate(signingInput.dataUsingEncoding(NSUTF8StringEncoding, allowLossyConversion: false)!)!
+  let signature = base64encode(result)
+  return "\(signingInput).\(signature)"
+}
+
 // MARK: Parsing a JWT
 
 enum LoadResult {
@@ -66,6 +88,16 @@ enum LoadResult {
 }
 
 /// URL Base64 Decoding
+
+func base64encode(input:NSData) -> String {
+  let data = input.base64EncodedDataWithOptions(NSDataBase64EncodingOptions(0))
+  let string = NSString(data: data, encoding: NSUTF8StringEncoding) as String
+  return string
+    .stringByReplacingOccurrencesOfString("+", withString: "-", options: NSStringCompareOptions(0), range: nil)
+    .stringByReplacingOccurrencesOfString("/", withString: "_", options: NSStringCompareOptions(0), range: nil)
+    .stringByReplacingOccurrencesOfString("=", withString: "", options: NSStringCompareOptions(0), range: nil)
+}
+
 func base64decode(input:String) -> NSData? {
   let rem = countElements(input) % 4
 

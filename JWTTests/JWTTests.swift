@@ -1,6 +1,15 @@
 import XCTest
 import JWT
 
+class JWTEncodeTests : XCTestCase {
+  func testEncodingJWT() {
+    let payload = ["name": "Kyle"] as Payload
+    let jwt = JWT.encode(payload, "secret")
+    let fixture = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJuYW1lIjoiS3lsZSJ9.zxm7xcp1eZtZhp4t-nlw09ATQnnFKIiSN83uG8u6cAg"
+    XCTAssertEqual(jwt, fixture)
+  }
+}
+
 class JWTDecodeTests : XCTestCase {
   func testDecodingValidJWT() {
     let jwt = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJuYW1lIjoiS3lsZSJ9.zxm7xcp1eZtZhp4t-nlw09ATQnnFKIiSN83uG8u6cAg"
