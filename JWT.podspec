@@ -11,5 +11,6 @@ Pod::Spec.new do |spec|
   spec.ios.deployment_target = '8.0'
   spec.osx.deployment_target = '10.9'
   spec.requires_arc = true
+  spec.dependency 'CryptoSwift', '~> 0.0.8'
 end
 

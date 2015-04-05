@@ -1,4 +1,5 @@
 import Foundation
+import CryptoSwift
 
 public typealias Payload = [String:AnyObject]
 
@@ -9,6 +10,9 @@ public enum InvalidToken : Printable {
   case ImmatureSignature
   case InvalidIssuedAt
   case InvalidAudience
+
+  case InvalidAlgorithm
+  case InvalidKey
 
   public var description:String {
     switch self {
@@ -24,6 +28,10 @@ public enum InvalidToken : Printable {
         return "Issued at claim (iat) is in the future"
       case InvalidAudience:
         return "Invalid Audience"
+      case InvalidAlgorithm:
+        return "Unsupported Algorithm"
+      case InvalidKey:
+        return "Invalid Key"
     }
   }
 }
@@ -35,11 +43,11 @@ public enum DecodeResult {
 
 
 /// Decode a JWT
-public func decode(jwt:String, verify:Bool = true, audience:String? = nil, issuer:String? = nil) -> DecodeResult {
+public func decode(jwt:String, key:String? = nil, verify:Bool = true, audience:String? = nil, issuer:String? = nil) -> DecodeResult {
   switch load(jwt) {
     case let .Success(header, payload, signature, signatureInput):
       if verify {
-        if let failure = validateClaims(payload, audience, issuer) {
+        if let failure = validateClaims(payload, audience, issuer) ?? verifySignature(header, signatureInput, signature, key) {
           return .Failure(failure)
         }
       }
@@ -112,7 +120,35 @@ func load(jwt:String) -> LoadResult {
   return .Success(header:header!, payload:payload!, signature:signature!, signatureInput:signatureInput)
 }
 
-// MARK: Validation
+// MARK: Signature Verification
+
+func verifySignature(header:Payload, signingInput:String, signature:NSData, key:String?) -> InvalidToken? {
+  if let alg = header["alg"] as? String {
+    switch alg {
+      case "none":
+        return nil
+      case "HS256":
+        if let key = key?.dataUsingEncoding(NSUTF8StringEncoding, allowLossyConversion: false) {
+          let mac = Authenticator.HMAC(key: key, variant:.sha256)
+          let result = mac.authenticate(signingInput.dataUsingEncoding(NSUTF8StringEncoding, allowLossyConversion: false)!)
+          if result! == signature {
+            return nil
+          } else {
+            return .DecodeError("Signature verification failed")
+          }
+        }
+        break
+      default:
+        break
+    }
+
+    return .InvalidAlgorithm
+  }
+
+  return .DecodeError("Missing Algorithm")
+}
+
+// MARK: Claim Validation
 
 func validateAudience(payload:Payload, audience:String?) -> InvalidToken? {
   if let audience = audience {
