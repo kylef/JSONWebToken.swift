@@ -11,6 +11,12 @@ public enum Algorithm : Printable {
   /// HMAC using SHA-256 hash algorithm
   case HS256(String)
 
+  /// HMAC using SHA-384 hash algorithm
+  case HS384(String)
+
+  /// HMAC using SHA-512 hash algorithm
+  case HS512(String)
+
   static func algorithm(name:String, key:String?) -> Algorithm? {
     if name == "none" {
       if let key = key {
@@ -20,6 +26,10 @@ public enum Algorithm : Printable {
     } else if let key = key {
       if name == "HS256" {
         return .HS256(key)
+      } else if name == "HS384" {
+        return .HS384(key)
+      } else if name == "HS512" {
+        return .HS512(key)
       }
     }
 
@@ -32,21 +42,35 @@ public enum Algorithm : Printable {
       return "none"
     case .HS256(let key):
       return "HS256"
+    case .HS384(let key):
+      return "HS384"
+    case .HS512(let key):
+      return "HS512"
     }
   }
 
   /// Sign a message using the algorithm
   func sign(message:String) -> String {
+    func signHS(key:String, variant:CryptoSwift.HMAC.Variant) -> String {
+      let keyData = key.dataUsingEncoding(NSUTF8StringEncoding, allowLossyConversion: false)!
+      let messageData = message.dataUsingEncoding(NSUTF8StringEncoding, allowLossyConversion: false)!
+      let mac = Authenticator.HMAC(key: keyData.arrayOfBytes(), variant:variant)
+      let result = mac.authenticate(messageData.arrayOfBytes())!
+      return base64encode(NSData.withBytes(result))
+    }
+
     switch self {
     case .None:
       return ""
 
     case .HS256(let key):
-      let keyData = key.dataUsingEncoding(NSUTF8StringEncoding, allowLossyConversion: false)!
-      let messageData = message.dataUsingEncoding(NSUTF8StringEncoding, allowLossyConversion: false)!
-      let mac = Authenticator.HMAC(key: keyData.arrayOfBytes(), variant:.sha256)
-      let result = mac.authenticate(messageData.arrayOfBytes())!
-      return base64encode(NSData.withBytes(result))
+      return signHS(key, .sha256)
+
+    case .HS384(let key):
+      return signHS(key, .sha384)
+
+    case .HS512(let key):
+      return signHS(key, .sha512)
     }
   }
 

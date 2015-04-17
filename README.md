@@ -64,15 +64,8 @@ This library supports the following algorithms:
 
 - None - Unsecured JWTs
 - HS256 - HMAC using SHA-256 hash algorithm (default)
-
-#### Additional Algorithms
-
-Support for HS384 and HS512 can be found in the `algorithms-hs` branch which depends on an unreleased version of CryptoSwift. It can be installed via:
-
-```ruby
-pod 'JSONWebToken', :git => 'https://github.com/kylef/JSONWebToken.swift.git', :branch => 'algorithms-hs'
-pod 'CryptoSwift', :head
-```
+- HS384 - HMAC using SHA-384 hash algorithm
+- HS512 - HMAC using SHA-384 hash algorithm
 
 ## License
 

@@ -217,6 +217,20 @@ class JWTDecodeTests : XCTestCase {
     let jwt = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.e30.2_8pWJfyPup0YwOXK7g9Dn0cF1E3pdn299t4hSeJy5w."
     assertFailure(decode(jwt, [.HS256("anothersecret"), .HS256("secret")]))
   }
+
+  func testHS384Algorithm() {
+    let jwt = "eyJhbGciOiJIUzM4NCIsInR5cCI6IkpXVCJ9.eyJzb21lIjoicGF5bG9hZCJ9.lddiriKLoo42qXduMhCTKZ5Lo3njXxOC92uXyvbLyYKzbq4CVVQOb3MpDwnI19u4"
+    assertSuccess(decode(jwt, .HS384("secret"))) { payload in
+      XCTAssertEqual(payload as NSDictionary, ["some": "payload"])
+    }
+  }
+
+  func testHS512Algorithm() {
+    let jwt = "eyJhbGciOiJIUzUxMiIsInR5cCI6IkpXVCJ9.eyJzb21lIjoicGF5bG9hZCJ9.WTzLzFO079PduJiFIyzrOah54YaM8qoxH9fLMQoQhKtw3_fMGjImIOokijDkXVbyfBqhMo2GCNu4w9v7UXvnpA"
+    assertSuccess(decode(jwt, .HS512("secret"))) { payload in
+      XCTAssertEqual(payload as NSDictionary, ["some": "payload"])
+    }
+  }
 }
 
 // MARK: Helpers
