@@ -26,7 +26,7 @@ class JWTPayloadBuilder : XCTestCase {
     JWT.encode(.None) { builder in
        builder.issuer = "fuller.li"
       XCTAssertEqual(builder.issuer!, "fuller.li")
-      XCTAssertEqual(builder["iss"] as String, "fuller.li")
+      XCTAssertEqual(builder["iss"] as! String, "fuller.li")
     }
   }
 
@@ -34,7 +34,7 @@ class JWTPayloadBuilder : XCTestCase {
     JWT.encode(.None) { builder in
       builder.audience = "cocoapods"
       XCTAssertEqual(builder.audience!, "cocoapods")
-      XCTAssertEqual(builder["aud"] as String, "cocoapods")
+      XCTAssertEqual(builder["aud"] as! String, "cocoapods")
     }
   }
 
@@ -43,7 +43,7 @@ class JWTPayloadBuilder : XCTestCase {
       let date = NSDate(timeIntervalSince1970: NSDate().timeIntervalSince1970)
       builder.expiration = date
       XCTAssertEqual(builder.expiration!, date)
-      XCTAssertEqual(builder["exp"] as NSTimeInterval, date.timeIntervalSince1970)
+      XCTAssertEqual(builder["exp"] as! NSTimeInterval, date.timeIntervalSince1970)
     }
   }
 
@@ -52,7 +52,7 @@ class JWTPayloadBuilder : XCTestCase {
       let date = NSDate(timeIntervalSince1970: NSDate().timeIntervalSince1970)
       builder.notBefore = date
       XCTAssertEqual(builder.notBefore!, date)
-      XCTAssertEqual(builder["nbf"] as NSTimeInterval, date.timeIntervalSince1970)
+      XCTAssertEqual(builder["nbf"] as! NSTimeInterval, date.timeIntervalSince1970)
     }
   }
 
@@ -61,14 +61,14 @@ class JWTPayloadBuilder : XCTestCase {
       let date = NSDate(timeIntervalSince1970: NSDate().timeIntervalSince1970)
       builder.issuedAt = date
       XCTAssertEqual(builder.issuedAt!, date)
-      XCTAssertEqual(builder["iat"] as NSTimeInterval, date.timeIntervalSince1970)
+      XCTAssertEqual(builder["iat"] as! NSTimeInterval, date.timeIntervalSince1970)
     }
   }
 
   func testCustomAttributes() {
     JWT.encode(.None) { builder in
       builder["user"] = "kyle"
-      XCTAssertEqual(builder["user"] as String, "kyle")
+      XCTAssertEqual(builder["user"] as! String, "kyle")
     }
   }
 }

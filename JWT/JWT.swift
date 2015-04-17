@@ -42,9 +42,11 @@ public enum Algorithm : Printable {
       return ""
 
     case .HS256(let key):
-      let mac = Authenticator.HMAC(key: key.dataUsingEncoding(NSUTF8StringEncoding, allowLossyConversion: false)!, variant:.sha256)
-      let result = mac.authenticate(message.dataUsingEncoding(NSUTF8StringEncoding, allowLossyConversion: false)!)!
-      return base64encode(result)
+      let keyData = key.dataUsingEncoding(NSUTF8StringEncoding, allowLossyConversion: false)!
+      let messageData = message.dataUsingEncoding(NSUTF8StringEncoding, allowLossyConversion: false)!
+      let mac = Authenticator.HMAC(key: keyData.arrayOfBytes(), variant:.sha256)
+      let result = mac.authenticate(messageData.arrayOfBytes())!
+      return base64encode(NSData.withBytes(result))
     }
   }
 
