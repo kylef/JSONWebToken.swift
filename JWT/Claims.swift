@@ -1,16 +1,16 @@
 import Foundation
 
 func validateClaims(payload:Payload, audience:String?, issuer:String?) -> InvalidToken? {
-  return validateIssuer(payload, issuer) ?? validateAudience(payload, audience) ??
-    validateDate(payload, "exp", .OrderedAscending, .ExpiredSignature, "Expiration time claim (exp) must be an integer") ??
-    validateDate(payload, "nbf", .OrderedDescending, .ImmatureSignature, "Not before claim (nbf) must be an integer") ??
-    validateDate(payload, "iat", .OrderedDescending, .InvalidIssuedAt, "Issued at claim (iat) must be an integer")
+  return validateIssuer(payload, issuer: issuer) ?? validateAudience(payload, audience: audience) ??
+    validateDate(payload, key: "exp", comparison: .OrderedAscending, failure: .ExpiredSignature, decodeError: "Expiration time claim (exp) must be an integer") ??
+    validateDate(payload, key: "nbf", comparison: .OrderedDescending, failure: .ImmatureSignature, decodeError: "Not before claim (nbf) must be an integer") ??
+    validateDate(payload, key: "iat", comparison: .OrderedDescending, failure: .InvalidIssuedAt, decodeError: "Issued at claim (iat) must be an integer")
 }
 
 func validateAudience(payload:Payload, audience:String?) -> InvalidToken? {
   if let audience = audience {
     if let aud = payload["aud"] as? [String] {
-      if !contains(aud, audience) {
+      if !aud.contains(audience) {
         return .InvalidAudience
       }
     } else if let aud = payload["aud"] as? String {
@@ -45,7 +45,7 @@ func validateDate(payload:Payload, key:String, comparison:NSComparisonResult, fa
     if date.compare(NSDate()) == comparison {
       return failure
     }
-  } else if let timestamp:AnyObject = payload[key] {
+  } else if let _:AnyObject = payload[key] {
     return .DecodeError(decodeError)
   }
 

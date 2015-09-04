@@ -2,7 +2,7 @@ import Foundation
 
 
 /// Failure reasons from decoding a JWT
-public enum InvalidToken : Printable {
+public enum InvalidToken : CustomStringConvertible {
   /// Decoding the JWT itself failed
   case DecodeError(String)
 
@@ -60,7 +60,7 @@ public func decode(jwt:String, algorithms:[Algorithm], verify:Bool = true, audie
   switch load(jwt) {
   case let .Success(header, payload, signature, signatureInput):
     if verify {
-      if let failure = validateClaims(payload, audience, issuer) ?? verifySignature(algorithms, header, signatureInput, signature) {
+      if let failure = validateClaims(payload, audience: audience, issuer: issuer) ?? verifySignature(algorithms, header: header, signingInput: signatureInput, signature: signature) {
         return .Failure(failure)
       }
     }
@@ -73,7 +73,7 @@ public func decode(jwt:String, algorithms:[Algorithm], verify:Bool = true, audie
 
 /// Decode a JWT
 public func decode(jwt:String, algorithm:Algorithm, verify:Bool = true, audience:String? = nil, issuer:String? = nil) -> DecodeResult {
-  return decode(jwt, [algorithm], verify: verify, audience: audience, issuer: issuer)
+  return decode(jwt, algorithms: [algorithm], verify: verify, audience: audience, issuer: issuer)
 }
 
 // MARK: Parsing a JWT
@@ -99,7 +99,7 @@ func load(jwt:String) -> LoadResult {
     return .Failure(.DecodeError("Header is not correctly encoded as base64"))
   }
 
-  let header = NSJSONSerialization.JSONObjectWithData(headerData!, options: NSJSONReadingOptions(0), error: nil) as? Payload
+  let header = (try? NSJSONSerialization.JSONObjectWithData(headerData!, options: NSJSONReadingOptions(rawValue: 0))) as? Payload
   if header == nil {
     return .Failure(.DecodeError("Invalid header"))
   }
@@ -109,7 +109,7 @@ func load(jwt:String) -> LoadResult {
     return .Failure(.DecodeError("Payload is not correctly encoded as base64"))
   }
 
-  let payload = NSJSONSerialization.JSONObjectWithData(payloadData!, options: NSJSONReadingOptions(0), error: nil) as? Payload
+  let payload = (try? NSJSONSerialization.JSONObjectWithData(payloadData!, options: NSJSONReadingOptions(rawValue: 0))) as? Payload
   if payload == nil {
     return .Failure(.DecodeError("Invalid payload"))
   }
@@ -126,9 +126,9 @@ func load(jwt:String) -> LoadResult {
 
 func verifySignature(algorithms:[Algorithm], header:Payload, signingInput:String, signature:NSData) -> InvalidToken? {
   if let alg = header["alg"] as? String {
-    let matchingAlgorithms = filter(algorithms) { algorithm in  algorithm.description == alg }
-    let results = map(matchingAlgorithms) { algorithm in algorithm.verify(signingInput, signature: signature) }
-    let successes = filter(results) { $0 }
+    let matchingAlgorithms = algorithms.filter { algorithm in  algorithm.description == alg }
+    let results = matchingAlgorithms.map { algorithm in algorithm.verify(signingInput, signature: signature) }
+    let successes = results.filter { $0 }
     if successes.count > 0 {
       return nil
     }
