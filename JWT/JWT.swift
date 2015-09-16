@@ -40,7 +40,7 @@ public enum Algorithm : CustomStringConvertible {
     switch self {
     case .None:
       return "none"
-    case .HS256(let _):
+    case .HS256(_):
       return "HS256"
     case .HS384( _):
       return "HS384"
