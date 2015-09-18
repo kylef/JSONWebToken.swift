@@ -39,20 +39,18 @@ JWT.encode(.HS256("secret")) { builder in
 When decoding a JWT, you must supply one or more algorithms and keys.
 
 ```swift
-let result = JWT.decode("eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.e30.2_8pWJfyPup0YwOXK7g9Dn0cF1E3pdn299t4hSeJy5w", algorithm: .HS256("secret"))
-
-switch result {
-case .Success(let payload):
-    print(payload)
-case .Failure(let failure):
-    print("decoding failed \(failure)")
+do {
+  let payload = try JWT.decode("eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.e30.2_8pWJfyPup0YwOXK7g9Dn0cF1E3pdn299t4hSeJy5w", algorithm: .HS256("secret"))
+  print(payload)
+} catch {
+  print("Failed to decode JWT: \(error)")
 }
 ```
 
 When the JWT may be signed with one out of many algorithms or keys:
 
 ```swift
-let result = JWT.decode("eyJh...5w", algorithms: [.HS256("secret"), .HS256("secret2"), .HS512("secure")])
+try JWT.decode("eyJh...5w", algorithms: [.HS256("secret"), .HS256("secret2"), .HS512("secure")])
 ```
 
 #### Supported claims

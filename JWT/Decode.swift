@@ -2,7 +2,7 @@ import Foundation
 
 
 /// Failure reasons from decoding a JWT
-public enum InvalidToken : CustomStringConvertible {
+public enum InvalidToken : CustomStringConvertible, ErrorType {
   /// Decoding the JWT itself failed
   case DecodeError(String)
 
@@ -46,34 +46,25 @@ public enum InvalidToken : CustomStringConvertible {
 }
 
 
-/// Result from decoding a JWT
-public enum DecodeResult {
-  /// Decoding succeeded
-  case Success(Payload)
-
-  /// Decoding failed, take a look at the invalid token reason
-  case Failure(InvalidToken)
-}
-
 /// Decode a JWT
-public func decode(jwt:String, algorithms:[Algorithm], verify:Bool = true, audience:String? = nil, issuer:String? = nil) -> DecodeResult {
+public func decode(jwt:String, algorithms:[Algorithm], verify:Bool = true, audience:String? = nil, issuer:String? = nil) throws -> Payload {
   switch load(jwt) {
   case let .Success(header, payload, signature, signatureInput):
     if verify {
       if let failure = validateClaims(payload, audience: audience, issuer: issuer) ?? verifySignature(algorithms, header: header, signingInput: signatureInput, signature: signature) {
-        return .Failure(failure)
+        throw failure
       }
     }
 
-    return .Success(payload)
+    return payload
   case .Failure(let failure):
-    return .Failure(failure)
+    throw failure
   }
 }
 
 /// Decode a JWT
-public func decode(jwt:String, algorithm:Algorithm, verify:Bool = true, audience:String? = nil, issuer:String? = nil) -> DecodeResult {
-  return decode(jwt, algorithms: [algorithm], verify: verify, audience: audience, issuer: issuer)
+public func decode(jwt:String, algorithm:Algorithm, verify:Bool = true, audience:String? = nil, issuer:String? = nil) throws -> Payload {
+  return try decode(jwt, algorithms: [algorithm], verify: verify, audience: audience, issuer: issuer)
 }
 
 // MARK: Parsing a JWT
