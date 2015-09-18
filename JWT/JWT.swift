@@ -4,7 +4,7 @@ import CryptoSwift
 public typealias Payload = [String:AnyObject]
 
 /// The supported Algorithms
-public enum Algorithm : Printable {
+public enum Algorithm : CustomStringConvertible {
   /// No Algorithm, i-e, insecure
   case None
 
@@ -19,7 +19,7 @@ public enum Algorithm : Printable {
 
   static func algorithm(name:String, key:String?) -> Algorithm? {
     if name == "none" {
-      if let key = key {
+      if key != nil {
         return nil  // We don't allow nil when we configured a key
       }
       return Algorithm.None
@@ -40,11 +40,11 @@ public enum Algorithm : Printable {
     switch self {
     case .None:
       return "none"
-    case .HS256(let key):
+    case .HS256:
       return "HS256"
-    case .HS384(let key):
+    case .HS384:
       return "HS384"
-    case .HS512(let key):
+    case .HS512:
       return "HS512"
     }
   }
@@ -64,13 +64,13 @@ public enum Algorithm : Printable {
       return ""
 
     case .HS256(let key):
-      return signHS(key, .sha256)
+      return signHS(key, variant: .sha256)
 
     case .HS384(let key):
-      return signHS(key, .sha384)
+      return signHS(key, variant: .sha384)
 
     case .HS512(let key):
-      return signHS(key, .sha512)
+      return signHS(key, variant: .sha512)
     }
   }
 
@@ -83,13 +83,13 @@ public enum Algorithm : Printable {
 // MARK: Encoding
 
 /*** Encode a payload
-  :param: payload The payload to sign
-  :param: algorithm The algorithm to sign the payload with
-  :returns: The JSON web token as a String
+  - parameter payload: The payload to sign
+  - parameter algorithm: The algorithm to sign the payload with
+  - returns: The JSON web token as a String
 */
 public func encode(payload:Payload, algorithm:Algorithm) -> String {
   func encodeJSON(payload:Payload) -> String? {
-    if let data = NSJSONSerialization.dataWithJSONObject(payload, options: NSJSONWritingOptions(0), error: nil) {
+    if let data = try? NSJSONSerialization.dataWithJSONObject(payload, options: NSJSONWritingOptions(rawValue: 0)) {
       return base64encode(data)
     }
 
@@ -176,5 +176,5 @@ public class PayloadBuilder {
 public func encode(algorithm:Algorithm, closure:(PayloadBuilder -> ())) -> String {
   let builder = PayloadBuilder()
   closure(builder)
-  return encode(builder.payload, algorithm)
+  return encode(builder.payload, algorithm: algorithm)
 }

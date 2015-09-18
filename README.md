@@ -21,7 +21,7 @@ import JWT
 ### Encoding a claim
 
 ```swift
-JWT.encode(["my": "payload"], .HS256("secret"))
+JWT.encode(["my": "payload"], algorithm: .HS256("secret"))
 ```
 
 #### Building a JWT with the builder pattern
@@ -39,7 +39,7 @@ JWT.encode(.HS256("secret")) { builder in
 When decoding a JWT, you must supply one or more algorithms and keys.
 
 ```swift
-let result = JWT.decode("eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.e30.2_8pWJfyPup0YwOXK7g9Dn0cF1E3pdn299t4hSeJy5w", .HS256("secret"))
+let result = JWT.decode("eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.e30.2_8pWJfyPup0YwOXK7g9Dn0cF1E3pdn299t4hSeJy5w", algorithm: .HS256("secret"))
 
 switch result {
 case .Success(let payload):
@@ -52,7 +52,7 @@ case .Failure(let failure):
 When the JWT may be signed with one out of many algorithms or keys:
 
 ```swift
-let result = JWT.decode("eyJh...5w", [.HS256("secret"), .HS256("secret2"), .HS512("secure")])
+let result = JWT.decode("eyJh...5w", algorithms: [.HS256("secret"), .HS256("secret2"), .HS512("secure")])
 ```
 
 #### Supported claims
