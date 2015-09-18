@@ -1,6 +1,6 @@
 Pod::Spec.new do |spec|
   spec.name = 'JSONWebToken'
-  spec.version = '1.3.0'
+  spec.version = '1.4.0'
   spec.summary = 'Swift library for JSON Web Tokens (JWT).'
   spec.homepage = 'https://github.com/kylef/JSONWebToken.swift'
   spec.license = { :type => 'BSD', :file => 'LICENSE' }
