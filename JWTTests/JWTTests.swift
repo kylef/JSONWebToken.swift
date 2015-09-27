@@ -131,6 +131,14 @@ class JWTDecodeTests : XCTestCase {
       XCTAssertEqual(payload as NSDictionary, ["exp": 1728188491])
     }
   }
+  
+  func testUnexpiredClaimString() {
+    // If this just started failing, hello 2024!
+    let jwt = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJleHAiOiIxNzI4MTg4NDkxIn0.y4w7lNLrfRRPzuNUfM-ZvPkoOtrTU_d8ZVYasLdZGpk"
+    assertSuccess(try decode(jwt, algorithm: .HS256("secret"))) { payload in
+      XCTAssertEqual(payload as NSDictionary, ["exp": "1728188491"])
+    }
+  }
 
   // MARK: Not before claim
 
@@ -138,6 +146,13 @@ class JWTDecodeTests : XCTestCase {
     let jwt = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJuYmYiOjE0MjgxODk3MjB9.jFT0nXAJvEwyG6R7CMJlzNJb7FtZGv30QRZpYam5cvs"
     assertSuccess(try decode(jwt, algorithm: .HS256("secret"))) { payload in
       XCTAssertEqual(payload as NSDictionary, ["nbf": 1428189720])
+    }
+  }
+  
+  func testNotBeforeClaimString() {
+    let jwt = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJuYmYiOiIxNDI4MTg5NzIwIn0.qZsj36irdmIAeXv6YazWDSFbpuxHtEh4Deof5YTpnVI"
+    assertSuccess(try decode(jwt, algorithm: .HS256("secret"))) { payload in
+      XCTAssertEqual(payload as NSDictionary, ["nbf": "1428189720"])
     }
   }
 
@@ -158,6 +173,13 @@ class JWTDecodeTests : XCTestCase {
     let jwt = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpYXQiOjE0MjgxODk3MjB9.I_5qjRcCUZVQdABLwG82CSuu2relSdIyJOyvXWUAJh4"
     assertSuccess(try decode(jwt, algorithm: .HS256("secret"))) { payload in
       XCTAssertEqual(payload as NSDictionary, ["iat": 1428189720])
+    }
+  }
+  
+  func testIssuedAtClaimInThePastString() {
+    let jwt = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpYXQiOiIxNDI4MTg5NzIwIn0.M8veWtsY52oBwi7LRKzvNnzhjK0QBS8Su1r0atlns2k"
+    assertSuccess(try decode(jwt, algorithm: .HS256("secret"))) { payload in
+      XCTAssertEqual(payload as NSDictionary, ["iat": "1428189720"])
     }
   }
 
