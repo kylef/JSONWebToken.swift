@@ -14,8 +14,8 @@
 		279D63BB1AD0E3FA0024E2BC /* Claims.swift in Sources */ = {isa = PBXBuildFile; fileRef = 279D63BA1AD0E3FA0024E2BC /* Claims.swift */; };
 		279D63BD1AD0ED750024E2BC /* Decode.swift in Sources */ = {isa = PBXBuildFile; fileRef = 279D63BC1AD0ED750024E2BC /* Decode.swift */; };
 		279D63BF1AD0EDC00024E2BC /* Base64.swift in Sources */ = {isa = PBXBuildFile; fileRef = 279D63BE1AD0EDC00024E2BC /* Base64.swift */; };
-		885619E9E1C342A9D8BD77B7 /* Pods_JWT.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 540942F3614C41E3827F2013 /* Pods_JWT.framework */; settings = {ATTRIBUTES = (Weak, ); }; };
-		EBEC5851F5183DF2D7BFE1AF /* Pods_JWTTests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = CE8198B6E30BA6B8F8125FA7 /* Pods_JWTTests.framework */; settings = {ATTRIBUTES = (Weak, ); }; };
+		885619E9E1C342A9D8BD77B7 /* Pods_JWT.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 540942F3614C41E3827F2013 /* Pods_JWT.framework */; };
+		EBEC5851F5183DF2D7BFE1AF /* Pods_JWTTests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = CE8198B6E30BA6B8F8125FA7 /* Pods_JWTTests.framework */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
