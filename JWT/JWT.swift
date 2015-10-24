@@ -55,7 +55,7 @@ public enum Algorithm : CustomStringConvertible {
       let keyData = key.dataUsingEncoding(NSUTF8StringEncoding, allowLossyConversion: false)!
       let messageData = message.dataUsingEncoding(NSUTF8StringEncoding, allowLossyConversion: false)!
       let mac = Authenticator.HMAC(key: keyData.arrayOfBytes(), variant:variant)
-      let result = mac.authenticate(messageData.arrayOfBytes())!
+      let result = try! mac.authenticate(messageData.arrayOfBytes())
       return base64encode(NSData.withBytes(result))
     }
 
