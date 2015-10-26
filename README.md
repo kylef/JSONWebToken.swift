@@ -36,7 +36,8 @@ JWT.encode(.HS256("secret")) { builder in
 
 ### Decoding a JWT
 
-When decoding a JWT, you must supply one or more algorithms and keys.
+When decoding a JWT, you must supply only one algorithm as a temporary fix (until JWT spec is modified to
+verify signature with Key ID) for critical vulnerability as identified by Tim McClean in this [article](https://auth0.com/blog/2015/03/31/critical-vulnerabilities-in-json-web-token-libraries/)
 
 ```swift
 do {
@@ -45,12 +46,6 @@ do {
 } catch {
   print("Failed to decode JWT: \(error)")
 }
-```
-
-When the JWT may be signed with one out of many algorithms or keys:
-
-```swift
-try JWT.decode("eyJh...5w", algorithms: [.HS256("secret"), .HS256("secret2"), .HS512("secure")])
 ```
 
 #### Supported claims
