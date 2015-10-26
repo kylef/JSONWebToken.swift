@@ -47,6 +47,7 @@ public enum InvalidToken : CustomStringConvertible, ErrorType {
 
 
 /// Decode a JWT
+// Depcrated
 public func decode(jwt:String, algorithms:[Algorithm], verify:Bool = true, audience:String? = nil, issuer:String? = nil) throws -> Payload {
   switch load(jwt) {
   case let .Success(header, payload, signature, signatureInput):
@@ -64,7 +65,18 @@ public func decode(jwt:String, algorithms:[Algorithm], verify:Bool = true, audie
 
 /// Decode a JWT
 public func decode(jwt:String, algorithm:Algorithm, verify:Bool = true, audience:String? = nil, issuer:String? = nil) throws -> Payload {
-  return try decode(jwt, algorithms: [algorithm], verify: verify, audience: audience, issuer: issuer)
+  switch load(jwt) {
+  case let .Success(header, payload, signature, signatureInput):
+    if verify {
+      if let failure = validateClaims(payload, audience: audience, issuer: issuer) ?? verifySignature(algorithm, header: header, signingInput: signatureInput, signature: signature) {
+        throw failure
+      }
+    }
+    
+    return payload
+  case .Failure(let failure):
+    throw failure
+  }
 }
 
 // MARK: Parsing a JWT
@@ -127,5 +139,19 @@ func verifySignature(algorithms:[Algorithm], header:Payload, signingInput:String
     return .InvalidAlgorithm
   }
 
+  return .DecodeError("Missing Algorithm")
+}
+
+func verifySignature(algorithm:Algorithm, header:Payload, signingInput:String, signature:NSData) -> InvalidToken? {
+  if let alg = header["alg"] as? String {
+    if algorithm.description == alg {
+      let result = algorithm.verify(signingInput, signature: signature)
+      if result {
+        return nil
+      }
+      return .InvalidAlgorithm
+    }
+  }
+  
   return .DecodeError("Missing Algorithm")
 }
