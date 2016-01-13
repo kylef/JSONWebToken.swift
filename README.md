@@ -12,6 +12,20 @@ Swift implementation of [JSON Web Token](https://tools.ietf.org/html/draft-ietf-
 pod 'JSONWebToken'
 ```
 
+[Swift Package Manager](https://swift.org/package-manager/) installation is also available with the following dependency:
+
+```swift
+import PackageDescription
+
+let package = Package(
+  name: "AwesomeProject",
+  dependencies: [
+    .Package(url: "https://github.com/kylef/JSONWebToken.swift", versions: Version(1,4,2)..<Version(2,0,0))
+  ]
+)
+
+```
+
 ## Usage
 
 ```swift
