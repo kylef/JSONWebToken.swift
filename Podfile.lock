@@ -1,10 +1,10 @@
 PODS:
-  - CryptoSwift (0.1.1)
+  - CryptoSwift (0.2.2)
 
 DEPENDENCIES:
-  - CryptoSwift (= 0.1.1)
+  - CryptoSwift (= 0.2.2)
 
 SPEC CHECKSUMS:
-  CryptoSwift: c11640d3d66107efc8333e4131a5173f072b1d61
+  CryptoSwift: d382228d6301c09474132417878a741c2a2e68cd
 
 COCOAPODS: 0.39.0
