@@ -9,6 +9,7 @@ Pod::Spec.new do |spec|
   spec.source_files = 'Sources/*.swift'
   spec.ios.deployment_target = '8.0'
   spec.osx.deployment_target = '10.9'
+  spec.tvos.deployment_target = '9.0'
   spec.requires_arc = true
   spec.dependency 'CryptoSwift', '0.2.2'
   spec.module_name = 'JWT'
