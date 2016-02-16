@@ -1,8 +1,5 @@
 language: objective-c
 osx_image: xcode72
-before_install:
-- gem install cocoapods --no-document
-- gem install xcpretty --no-document
 script:
 - set -o pipefail
 - xcodebuild -workspace JWT.xcworkspace -scheme JWT test -sdk macosx | xcpretty -c
