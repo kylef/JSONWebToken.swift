@@ -1,3 +1,5 @@
 [submodule "Carthage/Checkouts/CryptoSwift"]
 	path = Carthage/Checkouts/CryptoSwift
 	url = https://github.com/krzyzanowskim/CryptoSwift.git
+[submodule "Carthage/Checkouts/xcconfigs"]
+	url = https://github.com/jspahrsummers/xcconfigs.git
