@@ -1,1 +1,1 @@
-github "krzyzanowskim/CryptoSwift" "0.2.2"
+github "krzyzanowskim/CryptoSwift" ~> 0.2.2

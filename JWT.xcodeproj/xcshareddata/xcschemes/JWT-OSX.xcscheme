@@ -16,16 +16,16 @@
                BuildableIdentifier = "primary"
                BlueprintIdentifier = "279D639B1AD07FFF0024E2BC"
                BuildableName = "JWT.framework"
-               BlueprintName = "JWT"
+               BlueprintName = "JWT-OSX"
                ReferencedContainer = "container:JWT.xcodeproj">
             </BuildableReference>
          </BuildActionEntry>
          <BuildActionEntry
             buildForTesting = "YES"
-            buildForRunning = "YES"
+            buildForRunning = "NO"
             buildForProfiling = "NO"
             buildForArchiving = "NO"
-            buildForAnalyzing = "YES">
+            buildForAnalyzing = "NO">
             <BuildableReference
                BuildableIdentifier = "primary"
                BlueprintIdentifier = "279D63A61AD07FFF0024E2BC"
@@ -58,7 +58,7 @@
             BuildableIdentifier = "primary"
             BlueprintIdentifier = "279D639B1AD07FFF0024E2BC"
             BuildableName = "JWT.framework"
-            BlueprintName = "JWT"
+            BlueprintName = "JWT-OSX"
             ReferencedContainer = "container:JWT.xcodeproj">
          </BuildableReference>
       </MacroExpansion>
@@ -80,7 +80,7 @@
             BuildableIdentifier = "primary"
             BlueprintIdentifier = "279D639B1AD07FFF0024E2BC"
             BuildableName = "JWT.framework"
-            BlueprintName = "JWT"
+            BlueprintName = "JWT-OSX"
             ReferencedContainer = "container:JWT.xcodeproj">
          </BuildableReference>
       </MacroExpansion>
@@ -98,7 +98,7 @@
             BuildableIdentifier = "primary"
             BlueprintIdentifier = "279D639B1AD07FFF0024E2BC"
             BuildableName = "JWT.framework"
-            BlueprintName = "JWT"
+            BlueprintName = "JWT-OSX"
             ReferencedContainer = "container:JWT.xcodeproj">
          </BuildableReference>
       </MacroExpansion>
