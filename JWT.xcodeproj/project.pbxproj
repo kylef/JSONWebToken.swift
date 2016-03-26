@@ -30,31 +30,6 @@
 		CD9B623D1C7753FB005D4844 /* Decode.swift in Sources */ = {isa = PBXBuildFile; fileRef = 520A71151C469F010005C709 /* Decode.swift */; };
 		CD9B623E1C7753FB005D4844 /* Base64.swift in Sources */ = {isa = PBXBuildFile; fileRef = 520A71131C469F010005C709 /* Base64.swift */; };
 		CD9B62421C7753FB005D4844 /* JWT.h in Headers */ = {isa = PBXBuildFile; fileRef = 279D63A11AD07FFF0024E2BC /* JWT.h */; settings = {ATTRIBUTES = (Public, ); }; };
-		CD9B62701C7755C8005D4844 /* Common.xcconfig in Resources */ = {isa = PBXBuildFile; fileRef = CD9B62511C7755C8005D4844 /* Common.xcconfig */; };
-		CD9B62711C7755C8005D4844 /* Debug.xcconfig in Resources */ = {isa = PBXBuildFile; fileRef = CD9B62531C7755C8005D4844 /* Debug.xcconfig */; };
-		CD9B62721C7755C8005D4844 /* Profile.xcconfig in Resources */ = {isa = PBXBuildFile; fileRef = CD9B62541C7755C8005D4844 /* Profile.xcconfig */; };
-		CD9B62731C7755C8005D4844 /* Release.xcconfig in Resources */ = {isa = PBXBuildFile; fileRef = CD9B62551C7755C8005D4844 /* Release.xcconfig */; };
-		CD9B62741C7755C8005D4844 /* Test.xcconfig in Resources */ = {isa = PBXBuildFile; fileRef = CD9B62561C7755C8005D4844 /* Test.xcconfig */; };
-		CD9B62751C7755C8005D4844 /* Application.xcconfig in Resources */ = {isa = PBXBuildFile; fileRef = CD9B62581C7755C8005D4844 /* Application.xcconfig */; };
-		CD9B62761C7755C8005D4844 /* Framework.xcconfig in Resources */ = {isa = PBXBuildFile; fileRef = CD9B62591C7755C8005D4844 /* Framework.xcconfig */; };
-		CD9B62771C7755C8005D4844 /* StaticLibrary.xcconfig in Resources */ = {isa = PBXBuildFile; fileRef = CD9B625A1C7755C8005D4844 /* StaticLibrary.xcconfig */; };
-		CD9B62781C7755C8005D4844 /* iOS-Application.xcconfig in Resources */ = {isa = PBXBuildFile; fileRef = CD9B625C1C7755C8005D4844 /* iOS-Application.xcconfig */; };
-		CD9B62791C7755C8005D4844 /* iOS-Base.xcconfig in Resources */ = {isa = PBXBuildFile; fileRef = CD9B625D1C7755C8005D4844 /* iOS-Base.xcconfig */; };
-		CD9B627A1C7755C8005D4844 /* iOS-Framework.xcconfig in Resources */ = {isa = PBXBuildFile; fileRef = CD9B625E1C7755C8005D4844 /* iOS-Framework.xcconfig */; };
-		CD9B627B1C7755C8005D4844 /* iOS-StaticLibrary.xcconfig in Resources */ = {isa = PBXBuildFile; fileRef = CD9B625F1C7755C8005D4844 /* iOS-StaticLibrary.xcconfig */; };
-		CD9B627C1C7755C8005D4844 /* Mac-Application.xcconfig in Resources */ = {isa = PBXBuildFile; fileRef = CD9B62611C7755C8005D4844 /* Mac-Application.xcconfig */; };
-		CD9B627D1C7755C8005D4844 /* Mac-Base.xcconfig in Resources */ = {isa = PBXBuildFile; fileRef = CD9B62621C7755C8005D4844 /* Mac-Base.xcconfig */; };
-		CD9B627E1C7755C8005D4844 /* Mac-DynamicLibrary.xcconfig in Resources */ = {isa = PBXBuildFile; fileRef = CD9B62631C7755C8005D4844 /* Mac-DynamicLibrary.xcconfig */; };
-		CD9B627F1C7755C8005D4844 /* Mac-Framework.xcconfig in Resources */ = {isa = PBXBuildFile; fileRef = CD9B62641C7755C8005D4844 /* Mac-Framework.xcconfig */; };
-		CD9B62801C7755C8005D4844 /* Mac-StaticLibrary.xcconfig in Resources */ = {isa = PBXBuildFile; fileRef = CD9B62651C7755C8005D4844 /* Mac-StaticLibrary.xcconfig */; };
-		CD9B62811C7755C8005D4844 /* tvOS-Application.xcconfig in Resources */ = {isa = PBXBuildFile; fileRef = CD9B62671C7755C8005D4844 /* tvOS-Application.xcconfig */; };
-		CD9B62821C7755C8005D4844 /* tvOS-Base.xcconfig in Resources */ = {isa = PBXBuildFile; fileRef = CD9B62681C7755C8005D4844 /* tvOS-Base.xcconfig */; };
-		CD9B62831C7755C8005D4844 /* tvOS-Framework.xcconfig in Resources */ = {isa = PBXBuildFile; fileRef = CD9B62691C7755C8005D4844 /* tvOS-Framework.xcconfig */; };
-		CD9B62841C7755C8005D4844 /* tvOS-StaticLibrary.xcconfig in Resources */ = {isa = PBXBuildFile; fileRef = CD9B626A1C7755C8005D4844 /* tvOS-StaticLibrary.xcconfig */; };
-		CD9B62851C7755C8005D4844 /* watchOS-Application.xcconfig in Resources */ = {isa = PBXBuildFile; fileRef = CD9B626C1C7755C8005D4844 /* watchOS-Application.xcconfig */; };
-		CD9B62861C7755C8005D4844 /* watchOS-Base.xcconfig in Resources */ = {isa = PBXBuildFile; fileRef = CD9B626D1C7755C8005D4844 /* watchOS-Base.xcconfig */; };
-		CD9B62871C7755C8005D4844 /* watchOS-Framework.xcconfig in Resources */ = {isa = PBXBuildFile; fileRef = CD9B626E1C7755C8005D4844 /* watchOS-Framework.xcconfig */; };
-		CD9B62881C7755C8005D4844 /* watchOS-StaticLibrary.xcconfig in Resources */ = {isa = PBXBuildFile; fileRef = CD9B626F1C7755C8005D4844 /* watchOS-StaticLibrary.xcconfig */; };
 		CD9B62891C7758BB005D4844 /* CryptoSwift.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 66725DAB1C59202E00FC32F4 /* CryptoSwift.framework */; };
 		CD9B628E1C7758E5005D4844 /* CryptoSwift.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 66725DAF1C59202E00FC32F4 /* CryptoSwift.framework */; };
 		CD9B62911C775900005D4844 /* CryptoSwift.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 66725DAD1C59202E00FC32F4 /* CryptoSwift.framework */; };
@@ -150,31 +125,6 @@
 		CD9B62231C7753D8005D4844 /* JWT.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = JWT.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		CD9B62351C7753EC005D4844 /* JWT.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = JWT.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		CD9B62471C7753FB005D4844 /* JWT.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = JWT.framework; sourceTree = BUILT_PRODUCTS_DIR; };
-		CD9B62511C7755C8005D4844 /* Common.xcconfig */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xcconfig; path = Common.xcconfig; sourceTree = "<group>"; };
-		CD9B62531C7755C8005D4844 /* Debug.xcconfig */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xcconfig; path = Debug.xcconfig; sourceTree = "<group>"; };
-		CD9B62541C7755C8005D4844 /* Profile.xcconfig */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xcconfig; path = Profile.xcconfig; sourceTree = "<group>"; };
-		CD9B62551C7755C8005D4844 /* Release.xcconfig */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xcconfig; path = Release.xcconfig; sourceTree = "<group>"; };
-		CD9B62561C7755C8005D4844 /* Test.xcconfig */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xcconfig; path = Test.xcconfig; sourceTree = "<group>"; };
-		CD9B62581C7755C8005D4844 /* Application.xcconfig */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xcconfig; path = Application.xcconfig; sourceTree = "<group>"; };
-		CD9B62591C7755C8005D4844 /* Framework.xcconfig */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xcconfig; path = Framework.xcconfig; sourceTree = "<group>"; };
-		CD9B625A1C7755C8005D4844 /* StaticLibrary.xcconfig */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xcconfig; path = StaticLibrary.xcconfig; sourceTree = "<group>"; };
-		CD9B625C1C7755C8005D4844 /* iOS-Application.xcconfig */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xcconfig; path = "iOS-Application.xcconfig"; sourceTree = "<group>"; };
-		CD9B625D1C7755C8005D4844 /* iOS-Base.xcconfig */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xcconfig; path = "iOS-Base.xcconfig"; sourceTree = "<group>"; };
-		CD9B625E1C7755C8005D4844 /* iOS-Framework.xcconfig */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xcconfig; path = "iOS-Framework.xcconfig"; sourceTree = "<group>"; };
-		CD9B625F1C7755C8005D4844 /* iOS-StaticLibrary.xcconfig */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xcconfig; path = "iOS-StaticLibrary.xcconfig"; sourceTree = "<group>"; };
-		CD9B62611C7755C8005D4844 /* Mac-Application.xcconfig */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xcconfig; path = "Mac-Application.xcconfig"; sourceTree = "<group>"; };
-		CD9B62621C7755C8005D4844 /* Mac-Base.xcconfig */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xcconfig; path = "Mac-Base.xcconfig"; sourceTree = "<group>"; };
-		CD9B62631C7755C8005D4844 /* Mac-DynamicLibrary.xcconfig */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xcconfig; path = "Mac-DynamicLibrary.xcconfig"; sourceTree = "<group>"; };
-		CD9B62641C7755C8005D4844 /* Mac-Framework.xcconfig */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xcconfig; path = "Mac-Framework.xcconfig"; sourceTree = "<group>"; };
-		CD9B62651C7755C8005D4844 /* Mac-StaticLibrary.xcconfig */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xcconfig; path = "Mac-StaticLibrary.xcconfig"; sourceTree = "<group>"; };
-		CD9B62671C7755C8005D4844 /* tvOS-Application.xcconfig */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xcconfig; path = "tvOS-Application.xcconfig"; sourceTree = "<group>"; };
-		CD9B62681C7755C8005D4844 /* tvOS-Base.xcconfig */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xcconfig; path = "tvOS-Base.xcconfig"; sourceTree = "<group>"; };
-		CD9B62691C7755C8005D4844 /* tvOS-Framework.xcconfig */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xcconfig; path = "tvOS-Framework.xcconfig"; sourceTree = "<group>"; };
-		CD9B626A1C7755C8005D4844 /* tvOS-StaticLibrary.xcconfig */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xcconfig; path = "tvOS-StaticLibrary.xcconfig"; sourceTree = "<group>"; };
-		CD9B626C1C7755C8005D4844 /* watchOS-Application.xcconfig */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xcconfig; path = "watchOS-Application.xcconfig"; sourceTree = "<group>"; };
-		CD9B626D1C7755C8005D4844 /* watchOS-Base.xcconfig */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xcconfig; path = "watchOS-Base.xcconfig"; sourceTree = "<group>"; };
-		CD9B626E1C7755C8005D4844 /* watchOS-Framework.xcconfig */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xcconfig; path = "watchOS-Framework.xcconfig"; sourceTree = "<group>"; };
-		CD9B626F1C7755C8005D4844 /* watchOS-StaticLibrary.xcconfig */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xcconfig; path = "watchOS-StaticLibrary.xcconfig"; sourceTree = "<group>"; };
 		CE8198B6E30BA6B8F8125FA7 /* Pods_JWTTests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_JWTTests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
 
@@ -227,7 +177,6 @@
 			children = (
 				66725DA21C59202E00FC32F4 /* CryptoSwift.xcodeproj */,
 				520A711B1C469F440005C709 /* Package.swift */,
-				CD9B624B1C7755B0005D4844 /* xcconfigs */,
 				520A71121C469F010005C709 /* Sources */,
 				279D639E1AD07FFF0024E2BC /* JWT */,
 				279D63AB1AD07FFF0024E2BC /* JWTTests */,
@@ -300,8 +249,8 @@
 			children = (
 				66725DAB1C59202E00FC32F4 /* CryptoSwift.framework */,
 				66725DAD1C59202E00FC32F4 /* CryptoSwift.framework */,
-				66725DAF1C59202E00FC32F4 /* CryptoSwift.framework */,
 				66725DB11C59202E00FC32F4 /* CryptoSwift.framework */,
+				66725DAF1C59202E00FC32F4 /* CryptoSwift.framework */,
 				66725DB31C59202E00FC32F4 /* CryptoSwiftTests.xctest */,
 			);
 			name = Products;
@@ -314,99 +263,6 @@
 				CE8198B6E30BA6B8F8125FA7 /* Pods_JWTTests.framework */,
 			);
 			name = Frameworks;
-			sourceTree = "<group>";
-		};
-		CD9B624B1C7755B0005D4844 /* xcconfigs */ = {
-			isa = PBXGroup;
-			children = (
-				CD9B62501C7755C8005D4844 /* Base */,
-				CD9B625B1C7755C8005D4844 /* iOS */,
-				CD9B62601C7755C8005D4844 /* Mac OS X */,
-				CD9B62661C7755C8005D4844 /* tvOS */,
-				CD9B626B1C7755C8005D4844 /* watchOS */,
-			);
-			name = xcconfigs;
-			sourceTree = "<group>";
-		};
-		CD9B62501C7755C8005D4844 /* Base */ = {
-			isa = PBXGroup;
-			children = (
-				CD9B62511C7755C8005D4844 /* Common.xcconfig */,
-				CD9B62521C7755C8005D4844 /* Configurations */,
-				CD9B62571C7755C8005D4844 /* Targets */,
-			);
-			name = Base;
-			path = Carthage/Checkouts/xcconfigs/Base;
-			sourceTree = "<group>";
-		};
-		CD9B62521C7755C8005D4844 /* Configurations */ = {
-			isa = PBXGroup;
-			children = (
-				CD9B62531C7755C8005D4844 /* Debug.xcconfig */,
-				CD9B62541C7755C8005D4844 /* Profile.xcconfig */,
-				CD9B62551C7755C8005D4844 /* Release.xcconfig */,
-				CD9B62561C7755C8005D4844 /* Test.xcconfig */,
-			);
-			path = Configurations;
-			sourceTree = "<group>";
-		};
-		CD9B62571C7755C8005D4844 /* Targets */ = {
-			isa = PBXGroup;
-			children = (
-				CD9B62581C7755C8005D4844 /* Application.xcconfig */,
-				CD9B62591C7755C8005D4844 /* Framework.xcconfig */,
-				CD9B625A1C7755C8005D4844 /* StaticLibrary.xcconfig */,
-			);
-			path = Targets;
-			sourceTree = "<group>";
-		};
-		CD9B625B1C7755C8005D4844 /* iOS */ = {
-			isa = PBXGroup;
-			children = (
-				CD9B625C1C7755C8005D4844 /* iOS-Application.xcconfig */,
-				CD9B625D1C7755C8005D4844 /* iOS-Base.xcconfig */,
-				CD9B625E1C7755C8005D4844 /* iOS-Framework.xcconfig */,
-				CD9B625F1C7755C8005D4844 /* iOS-StaticLibrary.xcconfig */,
-			);
-			name = iOS;
-			path = Carthage/Checkouts/xcconfigs/iOS;
-			sourceTree = "<group>";
-		};
-		CD9B62601C7755C8005D4844 /* Mac OS X */ = {
-			isa = PBXGroup;
-			children = (
-				CD9B62611C7755C8005D4844 /* Mac-Application.xcconfig */,
-				CD9B62621C7755C8005D4844 /* Mac-Base.xcconfig */,
-				CD9B62631C7755C8005D4844 /* Mac-DynamicLibrary.xcconfig */,
-				CD9B62641C7755C8005D4844 /* Mac-Framework.xcconfig */,
-				CD9B62651C7755C8005D4844 /* Mac-StaticLibrary.xcconfig */,
-			);
-			name = "Mac OS X";
-			path = "Carthage/Checkouts/xcconfigs/Mac OS X";
-			sourceTree = "<group>";
-		};
-		CD9B62661C7755C8005D4844 /* tvOS */ = {
-			isa = PBXGroup;
-			children = (
-				CD9B62671C7755C8005D4844 /* tvOS-Application.xcconfig */,
-				CD9B62681C7755C8005D4844 /* tvOS-Base.xcconfig */,
-				CD9B62691C7755C8005D4844 /* tvOS-Framework.xcconfig */,
-				CD9B626A1C7755C8005D4844 /* tvOS-StaticLibrary.xcconfig */,
-			);
-			name = tvOS;
-			path = Carthage/Checkouts/xcconfigs/tvOS;
-			sourceTree = "<group>";
-		};
-		CD9B626B1C7755C8005D4844 /* watchOS */ = {
-			isa = PBXGroup;
-			children = (
-				CD9B626C1C7755C8005D4844 /* watchOS-Application.xcconfig */,
-				CD9B626D1C7755C8005D4844 /* watchOS-Base.xcconfig */,
-				CD9B626E1C7755C8005D4844 /* watchOS-Framework.xcconfig */,
-				CD9B626F1C7755C8005D4844 /* watchOS-StaticLibrary.xcconfig */,
-			);
-			name = watchOS;
-			path = Carthage/Checkouts/xcconfigs/watchOS;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -644,31 +500,6 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				CD9B62731C7755C8005D4844 /* Release.xcconfig in Resources */,
-				CD9B62811C7755C8005D4844 /* tvOS-Application.xcconfig in Resources */,
-				CD9B62861C7755C8005D4844 /* watchOS-Base.xcconfig in Resources */,
-				CD9B627F1C7755C8005D4844 /* Mac-Framework.xcconfig in Resources */,
-				CD9B62721C7755C8005D4844 /* Profile.xcconfig in Resources */,
-				CD9B627B1C7755C8005D4844 /* iOS-StaticLibrary.xcconfig in Resources */,
-				CD9B62771C7755C8005D4844 /* StaticLibrary.xcconfig in Resources */,
-				CD9B62791C7755C8005D4844 /* iOS-Base.xcconfig in Resources */,
-				CD9B62711C7755C8005D4844 /* Debug.xcconfig in Resources */,
-				CD9B62701C7755C8005D4844 /* Common.xcconfig in Resources */,
-				CD9B62841C7755C8005D4844 /* tvOS-StaticLibrary.xcconfig in Resources */,
-				CD9B62761C7755C8005D4844 /* Framework.xcconfig in Resources */,
-				CD9B62881C7755C8005D4844 /* watchOS-StaticLibrary.xcconfig in Resources */,
-				CD9B627C1C7755C8005D4844 /* Mac-Application.xcconfig in Resources */,
-				CD9B627D1C7755C8005D4844 /* Mac-Base.xcconfig in Resources */,
-				CD9B62821C7755C8005D4844 /* tvOS-Base.xcconfig in Resources */,
-				CD9B62741C7755C8005D4844 /* Test.xcconfig in Resources */,
-				CD9B62801C7755C8005D4844 /* Mac-StaticLibrary.xcconfig in Resources */,
-				CD9B62751C7755C8005D4844 /* Application.xcconfig in Resources */,
-				CD9B627E1C7755C8005D4844 /* Mac-DynamicLibrary.xcconfig in Resources */,
-				CD9B62831C7755C8005D4844 /* tvOS-Framework.xcconfig in Resources */,
-				CD9B62851C7755C8005D4844 /* watchOS-Application.xcconfig in Resources */,
-				CD9B62871C7755C8005D4844 /* watchOS-Framework.xcconfig in Resources */,
-				CD9B627A1C7755C8005D4844 /* iOS-Framework.xcconfig in Resources */,
-				CD9B62781C7755C8005D4844 /* iOS-Application.xcconfig in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -774,17 +605,45 @@
 /* Begin XCBuildConfiguration section */
 		279D63B01AD07FFF0024E2BC /* Debug */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = CD9B62531C7755C8005D4844 /* Debug.xcconfig */;
 			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
 				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
 				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				COPY_PHASE_STRIP = NO;
 				CURRENT_PROJECT_VERSION = 1;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
 				ENABLE_TESTABILITY = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu99;
 				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"DEBUG=1",
+					"$(inherited)",
+				);
+				GCC_SYMBOLS_PRIVATE_EXTERN = NO;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
 				MACOSX_DEPLOYMENT_TARGET = 10.9;
 				MTL_ENABLE_DEBUG_INFO = YES;
+				ONLY_ACTIVE_ARCH = YES;
+				PRODUCT_NAME = "$(PROJECT_NAME)";
 				SDKROOT = macosx;
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
 				VERSIONING_SYSTEM = "apple-generic";
 				VERSION_INFO_PREFIX = "";
 			};
@@ -792,15 +651,36 @@
 		};
 		279D63B11AD07FFF0024E2BC /* Release */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = CD9B62551C7755C8005D4844 /* Release.xcconfig */;
 			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
 				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
 				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				COPY_PHASE_STRIP = NO;
 				CURRENT_PROJECT_VERSION = 1;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
 				ENABLE_NS_ASSERTIONS = NO;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
 				MACOSX_DEPLOYMENT_TARGET = 10.9;
 				MTL_ENABLE_DEBUG_INFO = NO;
+				PRODUCT_NAME = "$(PROJECT_NAME)";
 				SDKROOT = macosx;
 				VERSIONING_SYSTEM = "apple-generic";
 				VERSION_INFO_PREFIX = "";
@@ -809,31 +689,40 @@
 		};
 		279D63B31AD07FFF0024E2BC /* Debug */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = CD9B62641C7755C8005D4844 /* Mac-Framework.xcconfig */;
 			buildSettings = {
+				COMBINE_HIDPI_IMAGES = YES;
+				DEFINES_MODULE = YES;
 				DYLIB_COMPATIBILITY_VERSION = 1;
 				DYLIB_CURRENT_VERSION = 1;
+				DYLIB_INSTALL_NAME_BASE = "@rpath";
 				FRAMEWORK_VERSION = A;
 				INFOPLIST_FILE = JWT/Info.plist;
+				INSTALL_PATH = "@rpath";
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/../Frameworks @loader_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = "org.cocode.$(PRODUCT_NAME:rfc1034identifier)";
+				SKIP_INSTALL = YES;
 			};
 			name = Debug;
 		};
 		279D63B41AD07FFF0024E2BC /* Release */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = CD9B62641C7755C8005D4844 /* Mac-Framework.xcconfig */;
 			buildSettings = {
+				COMBINE_HIDPI_IMAGES = YES;
+				DEFINES_MODULE = YES;
 				DYLIB_COMPATIBILITY_VERSION = 1;
 				DYLIB_CURRENT_VERSION = 1;
+				DYLIB_INSTALL_NAME_BASE = "@rpath";
 				FRAMEWORK_VERSION = A;
 				INFOPLIST_FILE = JWT/Info.plist;
+				INSTALL_PATH = "@rpath";
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/../Frameworks @loader_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = "org.cocode.$(PRODUCT_NAME:rfc1034identifier)";
+				SKIP_INSTALL = YES;
 			};
 			name = Release;
 		};
 		279D63B61AD07FFF0024E2BC /* Debug */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = CD9B62611C7755C8005D4844 /* Mac-Application.xcconfig */;
 			buildSettings = {
 				COMBINE_HIDPI_IMAGES = YES;
 				FRAMEWORK_SEARCH_PATHS = (
@@ -853,7 +742,6 @@
 		};
 		279D63B71AD07FFF0024E2BC /* Release */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = CD9B62611C7755C8005D4844 /* Mac-Application.xcconfig */;
 			buildSettings = {
 				COMBINE_HIDPI_IMAGES = YES;
 				FRAMEWORK_SEARCH_PATHS = (
@@ -869,73 +757,114 @@
 		};
 		CD9B62211C7753D8005D4844 /* Debug */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = CD9B625E1C7755C8005D4844 /* iOS-Framework.xcconfig */;
 			buildSettings = {
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				DEFINES_MODULE = YES;
 				DYLIB_COMPATIBILITY_VERSION = 1;
 				DYLIB_CURRENT_VERSION = 1;
-				FRAMEWORK_VERSION = A;
+				DYLIB_INSTALL_NAME_BASE = "@rpath";
 				INFOPLIST_FILE = JWT/Info.plist;
+				INSTALL_PATH = "@rpath";
+				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = "org.cocode.$(PRODUCT_NAME:rfc1034identifier)";
+				SDKROOT = iphoneos;
+				SKIP_INSTALL = YES;
+				TARGETED_DEVICE_FAMILY = "1,2";
 			};
 			name = Debug;
 		};
 		CD9B62221C7753D8005D4844 /* Release */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = CD9B625E1C7755C8005D4844 /* iOS-Framework.xcconfig */;
 			buildSettings = {
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				DEFINES_MODULE = YES;
 				DYLIB_COMPATIBILITY_VERSION = 1;
 				DYLIB_CURRENT_VERSION = 1;
-				FRAMEWORK_VERSION = A;
+				DYLIB_INSTALL_NAME_BASE = "@rpath";
 				INFOPLIST_FILE = JWT/Info.plist;
+				INSTALL_PATH = "@rpath";
+				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = "org.cocode.$(PRODUCT_NAME:rfc1034identifier)";
+				SDKROOT = iphoneos;
+				SKIP_INSTALL = YES;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				VALIDATE_PRODUCT = YES;
 			};
 			name = Release;
 		};
 		CD9B62331C7753EC005D4844 /* Debug */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = CD9B62691C7755C8005D4844 /* tvOS-Framework.xcconfig */;
 			buildSettings = {
+				DEFINES_MODULE = YES;
 				DYLIB_COMPATIBILITY_VERSION = 1;
 				DYLIB_CURRENT_VERSION = 1;
-				FRAMEWORK_VERSION = A;
+				DYLIB_INSTALL_NAME_BASE = "@rpath";
 				INFOPLIST_FILE = JWT/Info.plist;
+				INSTALL_PATH = "@rpath";
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = "org.cocode.$(PRODUCT_NAME:rfc1034identifier)";
+				SDKROOT = appletvos;
+				SKIP_INSTALL = YES;
+				TARGETED_DEVICE_FAMILY = 3;
+				TVOS_DEPLOYMENT_TARGET = 9.0;
 			};
 			name = Debug;
 		};
 		CD9B62341C7753EC005D4844 /* Release */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = CD9B62691C7755C8005D4844 /* tvOS-Framework.xcconfig */;
 			buildSettings = {
+				DEFINES_MODULE = YES;
 				DYLIB_COMPATIBILITY_VERSION = 1;
 				DYLIB_CURRENT_VERSION = 1;
-				FRAMEWORK_VERSION = A;
+				DYLIB_INSTALL_NAME_BASE = "@rpath";
 				INFOPLIST_FILE = JWT/Info.plist;
+				INSTALL_PATH = "@rpath";
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = "org.cocode.$(PRODUCT_NAME:rfc1034identifier)";
+				SDKROOT = appletvos;
+				SKIP_INSTALL = YES;
+				TARGETED_DEVICE_FAMILY = 3;
+				TVOS_DEPLOYMENT_TARGET = 9.0;
+				VALIDATE_PRODUCT = YES;
 			};
 			name = Release;
 		};
 		CD9B62451C7753FB005D4844 /* Debug */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = CD9B626E1C7755C8005D4844 /* watchOS-Framework.xcconfig */;
 			buildSettings = {
+				DEFINES_MODULE = YES;
 				DYLIB_COMPATIBILITY_VERSION = 1;
 				DYLIB_CURRENT_VERSION = 1;
-				FRAMEWORK_VERSION = A;
+				DYLIB_INSTALL_NAME_BASE = "@rpath";
 				INFOPLIST_FILE = JWT/Info.plist;
+				INSTALL_PATH = "@rpath";
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = "org.cocode.$(PRODUCT_NAME:rfc1034identifier)";
+				SDKROOT = watchos;
+				SKIP_INSTALL = YES;
+				TARGETED_DEVICE_FAMILY = 4;
+				WATCHOS_DEPLOYMENT_TARGET = 2.0;
 			};
 			name = Debug;
 		};
 		CD9B62461C7753FB005D4844 /* Release */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = CD9B626E1C7755C8005D4844 /* watchOS-Framework.xcconfig */;
 			buildSettings = {
+				DEFINES_MODULE = YES;
 				DYLIB_COMPATIBILITY_VERSION = 1;
 				DYLIB_CURRENT_VERSION = 1;
-				FRAMEWORK_VERSION = A;
+				DYLIB_INSTALL_NAME_BASE = "@rpath";
 				INFOPLIST_FILE = JWT/Info.plist;
+				INSTALL_PATH = "@rpath";
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = "org.cocode.$(PRODUCT_NAME:rfc1034identifier)";
+				SDKROOT = watchos;
+				SKIP_INSTALL = YES;
+				TARGETED_DEVICE_FAMILY = 4;
+				VALIDATE_PRODUCT = YES;
+				WATCHOS_DEPLOYMENT_TARGET = 2.0;
 			};
 			name = Release;
 		};
