@@ -47,11 +47,11 @@ public enum InvalidToken : CustomStringConvertible, ErrorType {
 
 
 /// Decode a JWT
-public func decode(jwt:String, algorithms:[Algorithm], verify:Bool = true, audience:String? = nil, issuer:String? = nil) throws -> Payload {
+public func decode(jwt:String, algorithms:[Algorithm], verify:Bool = true, audience:String? = nil, issuer:String? = nil, secretBase64Encoded: Bool = false) throws -> Payload {
   switch load(jwt) {
   case let .Success(header, payload, signature, signatureInput):
     if verify {
-      if let failure = validateClaims(payload, audience: audience, issuer: issuer) ?? verifySignature(algorithms, header: header, signingInput: signatureInput, signature: signature) {
+      if let failure = validateClaims(payload, audience: audience, issuer: issuer) ?? verifySignature(algorithms, header: header, signingInput: signatureInput, signature: signature, secretBase64Encoded: secretBase64Encoded) {
         throw failure
       }
     }
@@ -63,8 +63,8 @@ public func decode(jwt:String, algorithms:[Algorithm], verify:Bool = true, audie
 }
 
 /// Decode a JWT
-public func decode(jwt:String, algorithm:Algorithm, verify:Bool = true, audience:String? = nil, issuer:String? = nil) throws -> Payload {
-  return try decode(jwt, algorithms: [algorithm], verify: verify, audience: audience, issuer: issuer)
+public func decode(jwt:String, algorithm:Algorithm, verify:Bool = true, audience:String? = nil, issuer:String? = nil, secretBase64Encoded: Bool = false) throws -> Payload {
+  return try decode(jwt, algorithms: [algorithm], verify: verify, audience: audience, issuer: issuer, secretBase64Encoded: secretBase64Encoded)
 }
 
 // MARK: Parsing a JWT
@@ -115,10 +115,10 @@ func load(jwt:String) -> LoadResult {
 
 // MARK: Signature Verification
 
-func verifySignature(algorithms:[Algorithm], header:Payload, signingInput:String, signature:NSData) -> InvalidToken? {
+func verifySignature(algorithms:[Algorithm], header:Payload, signingInput:String, signature:NSData, secretBase64Encoded: Bool) -> InvalidToken? {
   if let alg = header["alg"] as? String {
     let matchingAlgorithms = algorithms.filter { algorithm in  algorithm.description == alg }
-    let results = matchingAlgorithms.map { algorithm in algorithm.verify(signingInput, signature: signature) }
+    let results = matchingAlgorithms.map { algorithm in algorithm.verify(signingInput, signature: signature, secretBase64Encoded: secretBase64Encoded) }
     let successes = results.filter { $0 }
     if successes.count > 0 {
       return nil

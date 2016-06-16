@@ -50,9 +50,11 @@ public enum Algorithm : CustomStringConvertible {
   }
 
   /// Sign a message using the algorithm
-  func sign(message:String) -> String {
+  func sign(message:String, secretBase64Encoded: Bool = false) -> String {
     func signHS(key:String, variant:CryptoSwift.HMAC.Variant) -> String {
-      let keyData = key.dataUsingEncoding(NSUTF8StringEncoding, allowLossyConversion: false)!
+      guard let keyData = secretBase64Encoded ? base64decode(key) : key.dataUsingEncoding(NSUTF8StringEncoding, allowLossyConversion: false) else {
+        return ""
+      }
       let messageData = message.dataUsingEncoding(NSUTF8StringEncoding, allowLossyConversion: false)!
       let mac = Authenticator.HMAC(key: keyData.arrayOfBytes(), variant:variant)
       let result: [UInt8]
@@ -80,8 +82,8 @@ public enum Algorithm : CustomStringConvertible {
   }
 
   /// Verify a signature for a message using the algorithm
-  func verify(message:String, signature:NSData) -> Bool {
-    return sign(message) == base64encode(signature)
+  func verify(message:String, signature:NSData, secretBase64Encoded: Bool) -> Bool {
+    return sign(message, secretBase64Encoded: secretBase64Encoded) == base64encode(signature)
   }
 }
 
