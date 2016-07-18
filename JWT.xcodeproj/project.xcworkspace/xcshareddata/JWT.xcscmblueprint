@@ -1,0 +1,30 @@
+{
+  "DVTSourceControlWorkspaceBlueprintPrimaryRemoteRepositoryKey" : "7E97FD2E547F76C4288DDD5313C743FD4F6EECC0",
+  "DVTSourceControlWorkspaceBlueprintWorkingCopyRepositoryLocationsKey" : {
+
+  },
+  "DVTSourceControlWorkspaceBlueprintWorkingCopyStatesKey" : {
+    "7E97FD2E547F76C4288DDD5313C743FD4F6EECC0" : 0,
+    "C3D8ED1CB28D809ADCE2C0DE74935E8A502ACD53" : 0
+  },
+  "DVTSourceControlWorkspaceBlueprintIdentifierKey" : "98453F1D-0F37-46F3-8545-4CA7DBF91C45",
+  "DVTSourceControlWorkspaceBlueprintWorkingCopyPathsKey" : {
+    "7E97FD2E547F76C4288DDD5313C743FD4F6EECC0" : "JSONWebToken.swift\/",
+    "C3D8ED1CB28D809ADCE2C0DE74935E8A502ACD53" : "JSONWebToken.swift\/Carthage\/Checkouts\/CryptoSwift\/"
+  },
+  "DVTSourceControlWorkspaceBlueprintNameKey" : "JWT",
+  "DVTSourceControlWorkspaceBlueprintVersion" : 204,
+  "DVTSourceControlWorkspaceBlueprintRelativePathToProjectKey" : "JWT.xcodeproj",
+  "DVTSourceControlWorkspaceBlueprintRemoteRepositoriesKey" : [
+    {
+      "DVTSourceControlWorkspaceBlueprintRemoteRepositoryURLKey" : "github.com:kevin-chen-bcgdv\/JSONWebToken.swift.git",
+      "DVTSourceControlWorkspaceBlueprintRemoteRepositorySystemKey" : "com.apple.dt.Xcode.sourcecontrol.Git",
+      "DVTSourceControlWorkspaceBlueprintRemoteRepositoryIdentifierKey" : "7E97FD2E547F76C4288DDD5313C743FD4F6EECC0"
+    },
+    {
+      "DVTSourceControlWorkspaceBlueprintRemoteRepositoryURLKey" : "https:\/\/github.com\/krzyzanowskim\/CryptoSwift.git",
+      "DVTSourceControlWorkspaceBlueprintRemoteRepositorySystemKey" : "com.apple.dt.Xcode.sourcecontrol.Git",
+      "DVTSourceControlWorkspaceBlueprintRemoteRepositoryIdentifierKey" : "C3D8ED1CB28D809ADCE2C0DE74935E8A502ACD53"
+    }
+  ]
+}

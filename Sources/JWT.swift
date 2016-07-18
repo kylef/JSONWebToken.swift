@@ -6,30 +6,30 @@ public typealias Payload = [String:AnyObject]
 /// The supported Algorithms
 public enum Algorithm : CustomStringConvertible {
   /// No Algorithm, i-e, insecure
-  case None
+  case none
 
   /// HMAC using SHA-256 hash algorithm
-  case HS256(String)
+  case hs256(String)
 
   /// HMAC using SHA-384 hash algorithm
-  case HS384(String)
+  case hs384(String)
 
   /// HMAC using SHA-512 hash algorithm
-  case HS512(String)
+  case hs512(String)
 
-  static func algorithm(name:String, key:String?) -> Algorithm? {
+  static func algorithm(_ name:String, key:String?) -> Algorithm? {
     if name == "none" {
       if key != nil {
         return nil  // We don't allow nil when we configured a key
       }
-      return Algorithm.None
+      return Algorithm.none
     } else if let key = key {
       if name == "HS256" {
-        return .HS256(key)
+        return .hs256(key)
       } else if name == "HS384" {
-        return .HS384(key)
+        return .hs384(key)
       } else if name == "HS512" {
-        return .HS512(key)
+        return .hs512(key)
       }
     }
 
@@ -38,49 +38,49 @@ public enum Algorithm : CustomStringConvertible {
 
   public var description:String {
     switch self {
-    case .None:
+    case .none:
       return "none"
-    case .HS256:
+    case .hs256:
       return "HS256"
-    case .HS384:
+    case .hs384:
       return "HS384"
-    case .HS512:
+    case .hs512:
       return "HS512"
     }
   }
 
   /// Sign a message using the algorithm
-  func sign(message:String) -> String {
-    func signHS(key:String, variant:CryptoSwift.HMAC.Variant) -> String {
-      let keyData = key.dataUsingEncoding(NSUTF8StringEncoding, allowLossyConversion: false)!
-      let messageData = message.dataUsingEncoding(NSUTF8StringEncoding, allowLossyConversion: false)!
-      let mac = Authenticator.HMAC(key: keyData.arrayOfBytes(), variant:variant)
+  func sign(_ message:String) -> String {
+    func signHS(_ key:String, variant:CryptoSwift.HMAC.Variant) -> String {
+      let keyData = key.data(using: String.Encoding.utf8, allowLossyConversion: false)!
+      let messageData = message.data(using: String.Encoding.utf8, allowLossyConversion: false)!
+      let mac = Authenticator.HMAC(key: keyData.bytes, variant:variant)
       let result: [UInt8]
       do {
-        result = try mac.authenticate(messageData.arrayOfBytes())
+        result = try mac.authenticate(messageData.bytes)
       } catch {
         result = []
       }
-      return base64encode(NSData.withBytes(result))
+      return base64encode(Data(bytes: result))
     }
 
     switch self {
-    case .None:
+    case .none:
       return ""
 
-    case .HS256(let key):
+    case .hs256(let key):
       return signHS(key, variant: .sha256)
 
-    case .HS384(let key):
+    case .hs384(let key):
       return signHS(key, variant: .sha384)
 
-    case .HS512(let key):
+    case .hs512(let key):
       return signHS(key, variant: .sha512)
     }
   }
 
   /// Verify a signature for a message using the algorithm
-  func verify(message:String, signature:NSData) -> Bool {
+  func verify(_ message:String, signature:Data) -> Bool {
     return sign(message) == base64encode(signature)
   }
 }
@@ -92,9 +92,9 @@ public enum Algorithm : CustomStringConvertible {
   - parameter algorithm: The algorithm to sign the payload with
   - returns: The JSON web token as a String
 */
-public func encode(payload:Payload, algorithm:Algorithm) -> String {
-  func encodeJSON(payload:Payload) -> String? {
-    if let data = try? NSJSONSerialization.dataWithJSONObject(payload, options: NSJSONWritingOptions(rawValue: 0)) {
+public func encode(_ payload:Payload, algorithm:Algorithm) -> String {
+  func encodeJSON(_ payload:Payload) -> String? {
+    if let data = try? JSONSerialization.data(withJSONObject: payload, options: JSONSerialization.WritingOptions(rawValue: 0)) {
       return base64encode(data)
     }
 
@@ -129,10 +129,10 @@ public class PayloadBuilder {
     }
   }
 
-  public var expiration:NSDate? {
+  public var expiration:Date? {
     get {
-      if let expiration = payload["exp"] as? NSTimeInterval {
-        return NSDate(timeIntervalSince1970: expiration)
+      if let expiration = payload["exp"] as? TimeInterval {
+        return Date(timeIntervalSince1970: expiration)
       }
 
       return nil
@@ -142,10 +142,10 @@ public class PayloadBuilder {
     }
   }
 
-  public var notBefore:NSDate? {
+  public var notBefore:Date? {
     get {
-      if let notBefore = payload["nbf"] as? NSTimeInterval {
-        return NSDate(timeIntervalSince1970: notBefore)
+      if let notBefore = payload["nbf"] as? TimeInterval {
+        return Date(timeIntervalSince1970: notBefore)
       }
 
       return nil
@@ -155,10 +155,10 @@ public class PayloadBuilder {
     }
   }
 
-  public var issuedAt:NSDate? {
+  public var issuedAt:Date? {
     get {
-      if let issuedAt = payload["iat"] as? NSTimeInterval {
-        return NSDate(timeIntervalSince1970: issuedAt)
+      if let issuedAt = payload["iat"] as? TimeInterval {
+        return Date(timeIntervalSince1970: issuedAt)
       }
 
       return nil
@@ -178,7 +178,7 @@ public class PayloadBuilder {
   }
 }
 
-public func encode(algorithm:Algorithm, closure:(PayloadBuilder -> ())) -> String {
+public func encode(algorithm:Algorithm, closure:((PayloadBuilder) -> ())) -> String {
   let builder = PayloadBuilder()
   closure(builder)
   return encode(builder.payload, algorithm: algorithm)
