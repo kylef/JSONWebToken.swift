@@ -2,7 +2,7 @@ import Foundation
 
 
 /// Failure reasons from decoding a JWT
-public enum InvalidToken : CustomStringConvertible, ErrorProtocol {
+public enum InvalidToken : CustomStringConvertible, Swift.Error {
   /// Decoding the JWT itself failed
   case decodeError(String)
 
@@ -37,9 +37,9 @@ public enum InvalidToken : CustomStringConvertible, ErrorProtocol {
       return "The token is not yet valid (not before claim)"
     case .invalidIssuedAt:
       return "Issued at claim (iat) is in the future"
-    case invalidAudience:
+    case .invalidAudience:
       return "Invalid Audience"
-    case invalidAlgorithm:
+    case .invalidAlgorithm:
       return "Unsupported algorithm or incorrect key"
     }
   }
@@ -118,7 +118,7 @@ func load(_ jwt:String) -> LoadResult {
 func verifySignature(_ algorithms:[Algorithm], header:Payload, signingInput:String, signature:Data) -> InvalidToken? {
   if let alg = header["alg"] as? String {
     let matchingAlgorithms = algorithms.filter { algorithm in  algorithm.description == alg }
-    let results = matchingAlgorithms.map { algorithm in algorithm.verify(signingInput, signature: signature) }
+    let results = matchingAlgorithms.map { algorithm in algorithm.verify(message: signingInput, signature: signature) }
     let successes = results.filter { $0 }
     if successes.count > 0 {
       return nil

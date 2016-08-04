@@ -3,7 +3,7 @@ import Foundation
 
 /// URI Safe base64 encode
 func base64encode(_ input:Data) -> String {
-  let data = input.base64EncodedData(options: NSData.Base64EncodingOptions(rawValue: 0))
+  let data = input.base64EncodedData(options: Data.Base64EncodingOptions(rawValue: 0))
   let string = NSString(data: data, encoding: String.Encoding.utf8.rawValue) as! String
   return string
     .replacingOccurrences(of: "+", with: "-", options: NSString.CompareOptions(rawValue: 0), range: nil)
