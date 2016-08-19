@@ -18,7 +18,7 @@ func base64decode(_ input:String) -> Data? {
   var ending = ""
   if rem > 0 {
     let amount = 4 - rem
-    ending = String(repeating: Character("="), count: amount)
+    ending = String(repeating: String("="), count: amount)
   }
 
   let base64 = input.replacingOccurrences(of: "-", with: "+", options: NSString.CompareOptions(rawValue: 0), range: nil)

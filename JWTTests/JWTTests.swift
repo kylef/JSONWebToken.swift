@@ -136,7 +136,7 @@ class JWTDecodeTests : XCTestCase {
     // If this just started failing, hello 2024!
     let jwt = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJleHAiOiIxNzI4MTg4NDkxIn0.y4w7lNLrfRRPzuNUfM-ZvPkoOtrTU_d8ZVYasLdZGpk"
     assertSuccess(decoder: try decode(jwt, algorithm: .hs256("secret"))) { payload in
-      XCTAssertEqual(payload as NSDictionary, ["exp": "1728188491"])
+      XCTAssertEqual(payload as! [String: String], ["exp": "1728188491"])
     }
   }
 
