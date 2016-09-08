@@ -54,7 +54,7 @@ public enum Algorithm : CustomStringConvertible {
     func signHS(_ key:String, variant:CryptoSwift.HMAC.Variant) -> String {
       let keyData = key.data(using: String.Encoding.utf8, allowLossyConversion: false)!
       let messageData = message.data(using: String.Encoding.utf8, allowLossyConversion: false)!
-      let mac = Authenticator.HMAC(key: keyData.bytes, variant:variant)
+      let mac = HMAC(key: keyData.bytes, variant:variant)
       let result: [UInt8]
       do {
         result = try mac.authenticate(messageData.bytes)
