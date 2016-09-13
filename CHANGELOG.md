@@ -1,6 +1,8 @@
 # JSON Web Token Changelog
 
-## Master
+## 2.0.1
+
+This release adds support for Swift 3.0.
 
 ### Breaking
 
@@ -13,9 +15,6 @@
   .hs256("secret".data(using: .utf8)!)
   ```
 
-## 2.0.0
-
-This release adds support for Swift 3.0.
 
 ## 1.5.0
 
