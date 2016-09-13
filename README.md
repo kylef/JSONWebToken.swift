@@ -27,9 +27,9 @@ JWT.encode(["my": "payload"], algorithm: .HS256("secret"))
 #### Building a JWT with the builder pattern
 
 ```swift
-JWT.encode(.HS256("secret")) { builder in
+JWT.encode(.hs256("secret")) { builder in
   builder.issuer = "fuller.li"
-  builder.issuedAt = NSDate()
+  builder.issuedAt = Date()
   builder["custom"] = "Hi"
 }
 ```
@@ -40,7 +40,7 @@ When decoding a JWT, you must supply one or more algorithms and keys.
 
 ```swift
 do {
-  let payload = try JWT.decode("eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.e30.2_8pWJfyPup0YwOXK7g9Dn0cF1E3pdn299t4hSeJy5w", algorithm: .HS256("secret"))
+  let payload = try JWT.decode("eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.e30.2_8pWJfyPup0YwOXK7g9Dn0cF1E3pdn299t4hSeJy5w", algorithm: .hs256("secret"))
   print(payload)
 } catch {
   print("Failed to decode JWT: \(error)")
@@ -50,7 +50,7 @@ do {
 When the JWT may be signed with one out of many algorithms or keys:
 
 ```swift
-try JWT.decode("eyJh...5w", algorithms: [.HS256("secret"), .HS256("secret2"), .HS512("secure")])
+try JWT.decode("eyJh...5w", algorithms: [.hs256("secret"), .hs256("secret2"), .hs512("secure")])
 ```
 
 #### Supported claims
@@ -67,10 +67,10 @@ The library supports validating the following claims:
 
 This library supports the following algorithms:
 
-- None - Unsecured JWTs
-- HS256 - HMAC using SHA-256 hash algorithm (default)
-- HS384 - HMAC using SHA-384 hash algorithm
-- HS512 - HMAC using SHA-512 hash algorithm
+- `none` - Unsecured JWTs
+- `hs256` - HMAC using SHA-256 hash algorithm (default)
+- `hs384` - HMAC using SHA-384 hash algorithm
+- `hs512` - HMAC using SHA-512 hash algorithm
 
 ## License
 

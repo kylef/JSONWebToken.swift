@@ -2,44 +2,44 @@ import Foundation
 
 
 /// Failure reasons from decoding a JWT
-public enum InvalidToken : CustomStringConvertible, ErrorType {
+public enum InvalidToken : CustomStringConvertible, Error {
   /// Decoding the JWT itself failed
-  case DecodeError(String)
+  case decodeError(String)
 
   /// The JWT uses an unsupported algorithm
-  case InvalidAlgorithm
+  case invalidAlgorithm
 
   /// The issued claim has expired
-  case ExpiredSignature
+  case expiredSignature
 
   /// The issued claim is for the future
-  case ImmatureSignature
+  case immatureSignature
 
   /// The claim is for the future
-  case InvalidIssuedAt
+  case invalidIssuedAt
 
   /// The audience of the claim doesn't match
-  case InvalidAudience
+  case invalidAudience
 
   /// The issuer claim failed to verify
-  case InvalidIssuer
+  case invalidIssuer
 
   /// Returns a readable description of the error
   public var description:String {
     switch self {
-    case .DecodeError(let error):
+    case .decodeError(let error):
       return "Decode Error: \(error)"
-    case .InvalidIssuer:
+    case .invalidIssuer:
       return "Invalid Issuer"
-    case .ExpiredSignature:
+    case .expiredSignature:
       return "Expired Signature"
-    case .ImmatureSignature:
+    case .immatureSignature:
       return "The token is not yet valid (not before claim)"
-    case .InvalidIssuedAt:
+    case .invalidIssuedAt:
       return "Issued at claim (iat) is in the future"
-    case InvalidAudience:
+    case .invalidAudience:
       return "Invalid Audience"
-    case InvalidAlgorithm:
+    case .invalidAlgorithm:
       return "Unsupported algorithm or incorrect key"
     }
   }
@@ -47,9 +47,9 @@ public enum InvalidToken : CustomStringConvertible, ErrorType {
 
 
 /// Decode a JWT
-public func decode(jwt:String, algorithms:[Algorithm], verify:Bool = true, audience:String? = nil, issuer:String? = nil) throws -> Payload {
+public func decode(_ jwt:String, algorithms:[Algorithm], verify:Bool = true, audience:String? = nil, issuer:String? = nil) throws -> Payload {
   switch load(jwt) {
-  case let .Success(header, payload, signature, signatureInput):
+  case let .success(header, payload, signature, signatureInput):
     if verify {
       if let failure = validateClaims(payload, audience: audience, issuer: issuer) ?? verifySignature(algorithms, header: header, signingInput: signatureInput, signature: signature) {
         throw failure
@@ -57,27 +57,27 @@ public func decode(jwt:String, algorithms:[Algorithm], verify:Bool = true, audie
     }
 
     return payload
-  case .Failure(let failure):
+  case .failure(let failure):
     throw failure
   }
 }
 
 /// Decode a JWT
-public func decode(jwt:String, algorithm:Algorithm, verify:Bool = true, audience:String? = nil, issuer:String? = nil) throws -> Payload {
+public func decode(_ jwt:String, algorithm:Algorithm, verify:Bool = true, audience:String? = nil, issuer:String? = nil) throws -> Payload {
   return try decode(jwt, algorithms: [algorithm], verify: verify, audience: audience, issuer: issuer)
 }
 
 // MARK: Parsing a JWT
 
 enum LoadResult {
-  case Success(header:Payload, payload:Payload, signature:NSData, signatureInput:String)
-  case Failure(InvalidToken)
+  case success(header:Payload, payload:Payload, signature:Data, signatureInput:String)
+  case failure(InvalidToken)
 }
 
-func load(jwt:String) -> LoadResult {
-  let segments = jwt.componentsSeparatedByString(".")
+func load(_ jwt:String) -> LoadResult {
+  let segments = jwt.components(separatedBy: ".")
   if segments.count != 3 {
-    return .Failure(.DecodeError("Not enough segments"))
+    return .failure(.decodeError("Not enough segments"))
   }
 
   let headerSegment = segments[0]
@@ -87,35 +87,35 @@ func load(jwt:String) -> LoadResult {
 
   let headerData = base64decode(headerSegment)
   if headerData == nil {
-    return .Failure(.DecodeError("Header is not correctly encoded as base64"))
+    return .failure(.decodeError("Header is not correctly encoded as base64"))
   }
 
-  let header = (try? NSJSONSerialization.JSONObjectWithData(headerData!, options: NSJSONReadingOptions(rawValue: 0))) as? Payload
+  let header = (try? JSONSerialization.jsonObject(with: headerData!, options: JSONSerialization.ReadingOptions(rawValue: 0))) as? Payload
   if header == nil {
-    return .Failure(.DecodeError("Invalid header"))
+    return .failure(.decodeError("Invalid header"))
   }
 
   let payloadData = base64decode(payloadSegment)
   if payloadData == nil {
-    return .Failure(.DecodeError("Payload is not correctly encoded as base64"))
+    return .failure(.decodeError("Payload is not correctly encoded as base64"))
   }
 
-  let payload = (try? NSJSONSerialization.JSONObjectWithData(payloadData!, options: NSJSONReadingOptions(rawValue: 0))) as? Payload
+  let payload = (try? JSONSerialization.jsonObject(with: payloadData!, options: JSONSerialization.ReadingOptions(rawValue: 0))) as? Payload
   if payload == nil {
-    return .Failure(.DecodeError("Invalid payload"))
+    return .failure(.decodeError("Invalid payload"))
   }
 
   let signature = base64decode(signatureSegment)
   if signature == nil {
-    return .Failure(.DecodeError("Signature is not correctly encoded as base64"))
+    return .failure(.decodeError("Signature is not correctly encoded as base64"))
   }
 
-  return .Success(header:header!, payload:payload!, signature:signature!, signatureInput:signatureInput)
+  return .success(header:header!, payload:payload!, signature:signature!, signatureInput:signatureInput)
 }
 
 // MARK: Signature Verification
 
-func verifySignature(algorithms:[Algorithm], header:Payload, signingInput:String, signature:NSData) -> InvalidToken? {
+func verifySignature(_ algorithms:[Algorithm], header:Payload, signingInput:String, signature:Data) -> InvalidToken? {
   if let alg = header["alg"] as? String {
     let matchingAlgorithms = algorithms.filter { algorithm in  algorithm.description == alg }
     let results = matchingAlgorithms.map { algorithm in algorithm.verify(signingInput, signature: signature) }
@@ -124,8 +124,8 @@ func verifySignature(algorithms:[Algorithm], header:Payload, signingInput:String
       return nil
     }
 
-    return .InvalidAlgorithm
+    return .invalidAlgorithm
   }
 
-  return .DecodeError("Missing Algorithm")
+  return .decodeError("Missing Algorithm")
 }
