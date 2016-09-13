@@ -9,32 +9,13 @@ public enum Algorithm : CustomStringConvertible {
   case none
 
   /// HMAC using SHA-256 hash algorithm
-  case hs256(String)
+  case hs256(Data)
 
   /// HMAC using SHA-384 hash algorithm
-  case hs384(String)
+  case hs384(Data)
 
   /// HMAC using SHA-512 hash algorithm
-  case hs512(String)
-
-  static func algorithm(_ name:String, key:String?) -> Algorithm? {
-    if name == "none" {
-      if key != nil {
-        return nil  // We don't allow nil when we configured a key
-      }
-      return Algorithm.none
-    } else if let key = key {
-      if name == "HS256" {
-        return .hs256(key)
-      } else if name == "HS384" {
-        return .hs384(key)
-      } else if name == "HS512" {
-        return .hs512(key)
-      }
-    }
-
-    return nil
-  }
+  case hs512(Data)
 
   public var description:String {
     switch self {
@@ -51,10 +32,9 @@ public enum Algorithm : CustomStringConvertible {
 
   /// Sign a message using the algorithm
   func sign(_ message:String) -> String {
-    func signHS(_ key:String, variant:CryptoSwift.HMAC.Variant) -> String {
-      let keyData = key.data(using: String.Encoding.utf8, allowLossyConversion: false)!
+    func signHS(_ key: Data, variant:CryptoSwift.HMAC.Variant) -> String {
       let messageData = message.data(using: String.Encoding.utf8, allowLossyConversion: false)!
-      let mac = HMAC(key: keyData.bytes, variant:variant)
+      let mac = HMAC(key: key.bytes, variant:variant)
       let result: [UInt8]
       do {
         result = try mac.authenticate(messageData.bytes)
