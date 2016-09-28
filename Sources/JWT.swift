@@ -73,7 +73,7 @@ public enum Algorithm: CustomStringConvertible {
 /// - returns: The JSON web token as a String
 public func encode(_ payload: Payload, algorithm: Algorithm) throws -> String {
   func encodeJSON(_ payload: Payload) throws -> String {
-    let data = try JSONSerialization.data(withJSONObject: payload.store, options: JSONSerialization.WritingOptions(rawValue: 0))
+    let data = try JSONSerialization.data(withJSONObject: payload.store)
     return base64encode(data)
   }
 
@@ -90,6 +90,7 @@ public struct Payload: ExpressibleByDictionaryLiteral {
 
   var store: BackingStore = [:]
 
+  // TODO: this is unsafe because it allows invalid JSON values 
   public init(dictionaryLiteral elements: (String, Any)...) {
     for (key, value) in elements {
       store[key] = value
@@ -157,9 +158,55 @@ public struct Payload: ExpressibleByDictionaryLiteral {
     }
   }
 
-  public subscript(key: String) -> Any {
+  subscript(key: String) -> Int? {
     get {
-      return store[key]
+      return store[key] as? Int
+    }
+    set {
+      store[key] = newValue
+    }
+  }
+
+  subscript(key: String) -> [Int]? {
+    get {
+      return store[key] as? [Int]
+    }
+    set {
+      store[key] = newValue
+    }
+  }
+
+
+  subscript(key: String) -> UInt? {
+    get {
+      return store[key] as? UInt
+    }
+    set {
+      store[key] = newValue
+    }
+  }
+
+  subscript(key: String) -> [UInt]? {
+    get {
+      return store[key] as? [UInt]
+    }
+    set {
+      store[key] = newValue
+    }
+  }
+
+  subscript(key: String) -> Double? {
+    get {
+      return store[key] as? Double
+    }
+    set {
+      store[key] = newValue
+    }
+  }
+
+  subscript(key: String) -> [Double]? {
+    get {
+      return store[key] as? [Double]
     }
     set {
       store[key] = newValue

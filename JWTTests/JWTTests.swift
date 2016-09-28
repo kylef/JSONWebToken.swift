@@ -30,6 +30,13 @@ class PayloadTests: XCTestCase {
     XCTAssertEqual(payload.audiences ?? [], ["cocoapods", "carthage"])
   }
 
+  func testCustomDate() {
+    let date = Date()
+    var payload = Payload()
+    payload["date"] = date
+    XCTAssertEqual(payload["date"]?.timeIntervalSince1970, date.timeIntervalSince1970)
+  }
+
   func testExpiration() {
     var payload = Payload()
     let date = Date()
