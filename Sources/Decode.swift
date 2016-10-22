@@ -1,8 +1,7 @@
 import Foundation
 
-
 /// Failure reasons from decoding a JWT
-public enum InvalidToken : CustomStringConvertible, Error {
+public enum InvalidToken: CustomStringConvertible, Error {
   /// Decoding the JWT itself failed
   case decodeError(String)
 
@@ -45,39 +44,30 @@ public enum InvalidToken : CustomStringConvertible, Error {
   }
 }
 
-
 /// Decode a JWT
-public func decode(_ jwt:String, algorithms:[Algorithm], verify:Bool = true, audience:String? = nil, issuer:String? = nil) throws -> Payload {
-  switch load(jwt) {
-  case let .success(header, payload, signature, signatureInput):
-    if verify {
-      if let failure = validateClaims(payload, audience: audience, issuer: issuer) ?? verifySignature(algorithms, header: header, signingInput: signatureInput, signature: signature) {
-        throw failure
-      }
-    }
+public func decode(_ jwt: String, algorithms: [Algorithm], verify: Bool = true, audience: String? = nil, issuer: String? = nil) throws -> Payload {
 
-    return payload
-  case .failure(let failure):
-    throw failure
+  let (header, payload, signature, signatureInput) = try load(jwt)
+  if verify {
+    try validateClaims(payload: payload, audience: audience, issuer: issuer)
+    try verifySignature(algorithms, header: header, signingInput: signatureInput, signature: signature)
   }
+  return payload
 }
 
 /// Decode a JWT
-public func decode(_ jwt:String, algorithm:Algorithm, verify:Bool = true, audience:String? = nil, issuer:String? = nil) throws -> Payload {
+public func decode(_ jwt: String, algorithm: Algorithm, verify: Bool = true, audience: String? = nil, issuer: String? = nil) throws -> Payload {
   return try decode(jwt, algorithms: [algorithm], verify: verify, audience: audience, issuer: issuer)
 }
 
 // MARK: Parsing a JWT
 
-enum LoadResult {
-  case success(header:Payload, payload:Payload, signature:Data, signatureInput:String)
-  case failure(InvalidToken)
-}
+typealias LoadedToken = (header: Payload, payload: Payload, signature: Data, signatureInput: String)
 
-func load(_ jwt:String) -> LoadResult {
+func load(_ jwt: String) throws -> LoadedToken {
   let segments = jwt.components(separatedBy: ".")
-  if segments.count != 3 {
-    return .failure(.decodeError("Not enough segments"))
+  guard segments.count == 3 else {
+    throw InvalidToken.decodeError("Not enough segments")
   }
 
   let headerSegment = segments[0]
@@ -85,47 +75,41 @@ func load(_ jwt:String) -> LoadResult {
   let signatureSegment = segments[2]
   let signatureInput = "\(headerSegment).\(payloadSegment)"
 
-  let headerData = base64decode(headerSegment)
-  if headerData == nil {
-    return .failure(.decodeError("Header is not correctly encoded as base64"))
+  guard let headerData = base64decode(headerSegment) else {
+    throw InvalidToken.decodeError("Header is not correctly encoded as base64")
   }
 
-  let header = (try? JSONSerialization.jsonObject(with: headerData!, options: JSONSerialization.ReadingOptions(rawValue: 0))) as? Payload
-  if header == nil {
-    return .failure(.decodeError("Invalid header"))
+  guard let header = try Payload(jsonData: headerData) else {
+    throw InvalidToken.decodeError("Invalid header")
   }
 
-  let payloadData = base64decode(payloadSegment)
-  if payloadData == nil {
-    return .failure(.decodeError("Payload is not correctly encoded as base64"))
+  guard let payloadData = base64decode(payloadSegment) else {
+    throw InvalidToken.decodeError("Payload is not correctly encoded as base64")
   }
 
-  let payload = (try? JSONSerialization.jsonObject(with: payloadData!, options: JSONSerialization.ReadingOptions(rawValue: 0))) as? Payload
-  if payload == nil {
-    return .failure(.decodeError("Invalid payload"))
+  guard let payload = try Payload(jsonData: payloadData) else {
+    throw InvalidToken.decodeError("Invalid payload")
   }
 
-  let signature = base64decode(signatureSegment)
-  if signature == nil {
-    return .failure(.decodeError("Signature is not correctly encoded as base64"))
+  guard let signature = base64decode(signatureSegment) else {
+    throw InvalidToken.decodeError("Signature is not correctly encoded as base64")
   }
 
-  return .success(header:header!, payload:payload!, signature:signature!, signatureInput:signatureInput)
+  return (header: header, payload: payload, signature: signature, signatureInput: signatureInput)
 }
 
 // MARK: Signature Verification
 
-func verifySignature(_ algorithms:[Algorithm], header:Payload, signingInput:String, signature:Data) -> InvalidToken? {
-  if let alg = header["alg"] as? String {
-    let matchingAlgorithms = algorithms.filter { algorithm in  algorithm.description == alg }
-    let results = matchingAlgorithms.map { algorithm in algorithm.verify(signingInput, signature: signature) }
-    let successes = results.filter { $0 }
-    if successes.count > 0 {
-      return nil
-    }
-
-    return .invalidAlgorithm
+func verifySignature(_ algorithms: [Algorithm], header: Payload, signingInput: String, signature: Data) throws {
+  guard let algorithmDescription: String = header["alg"] else {
+    throw InvalidToken.decodeError("Missing Algorithm")
   }
 
-  return .decodeError("Missing Algorithm")
+  let verifiedAlgorithmsMatchingDescription = algorithms
+    .filter { algorithm in algorithm.description == algorithmDescription }
+    .filter { algorithm in algorithm.verify(signingInput, signature: signature) }
+
+  if verifiedAlgorithmsMatchingDescription.count == 0 {
+    throw InvalidToken.invalidAlgorithm
+  }
 }

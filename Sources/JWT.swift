@@ -1,10 +1,8 @@
 import Foundation
 import CryptoSwift
 
-public typealias Payload = [String: Any]
-
 /// The supported Algorithms
-public enum Algorithm : CustomStringConvertible {
+public enum Algorithm: CustomStringConvertible {
   /// No Algorithm, i-e, insecure
   case none
 
@@ -31,10 +29,10 @@ public enum Algorithm : CustomStringConvertible {
   }
 
   /// Sign a message using the algorithm
-  func sign(_ message:String) -> String {
-    func signHS(_ key: Data, variant:CryptoSwift.HMAC.Variant) -> String {
+  func sign(_ message: String) -> String {
+    func signHS(_ key: Data, variant: CryptoSwift.HMAC.Variant) -> String {
       let messageData = message.data(using: String.Encoding.utf8, allowLossyConversion: false)!
-      let mac = HMAC(key: key.bytes, variant:variant)
+      let mac = HMAC(key: key.bytes, variant: variant)
       let result: [UInt8]
       do {
         result = try mac.authenticate(messageData.bytes)
@@ -60,106 +58,189 @@ public enum Algorithm : CustomStringConvertible {
   }
 
   /// Verify a signature for a message using the algorithm
-  func verify(_ message:String, signature:Data) -> Bool {
+  func verify(_ message: String, signature: Data) -> Bool {
     return sign(message) == base64encode(signature)
   }
 }
 
-// MARK: Encoding
-
-/*** Encode a payload
-  - parameter payload: The payload to sign
-  - parameter algorithm: The algorithm to sign the payload with
-  - returns: The JSON web token as a String
-*/
-public func encode(_ payload:Payload, algorithm:Algorithm) -> String {
-  func encodeJSON(_ payload:Payload) -> String? {
-    if let data = try? JSONSerialization.data(withJSONObject: payload, options: JSONSerialization.WritingOptions(rawValue: 0)) {
-      return base64encode(data)
-    }
-
-    return nil
+/// Encode a payload
+///
+/// - parameter payload:   The payload to sign
+/// - parameter algorithm: The algorithm to sign the payload with
+///
+/// - throws: when serialization fails
+///
+/// - returns: The JSON web token as a String
+public func encode(_ payload: Payload, algorithm: Algorithm) throws -> String {
+  func encodeJSON(_ payload: Payload) throws -> String {
+    let data = try JSONSerialization.data(withJSONObject: payload.store)
+    return base64encode(data)
   }
 
-  let header = encodeJSON(["typ": "JWT" as AnyObject, "alg": algorithm.description as AnyObject])!
-  let payload = encodeJSON(payload)!
+  let header = try encodeJSON(["typ": "JWT", "alg": algorithm.description])
+  let payload = try encodeJSON(payload)
   let signingInput = "\(header).\(payload)"
   let signature = algorithm.sign(signingInput)
   return "\(signingInput).\(signature)"
 }
 
-open class PayloadBuilder {
-  var payload = Payload()
+public struct Payload: ExpressibleByDictionaryLiteral {
 
-  open var issuer:String? {
-    get {
-      return payload["iss"] as? String
-    }
-    set {
-      payload["iss"] = newValue as AnyObject?
-    }
-  }
+  typealias BackingStore = [String: Any]
 
-  open var audience:String? {
-    get {
-      return payload["aud"] as? String
-    }
-    set {
-      payload["aud"] = newValue as AnyObject?
+  var store: BackingStore = [:]
+
+  // TODO: this is unsafe because it allows invalid JSON values 
+  public init(dictionaryLiteral elements: (String, Any)...) {
+    for (key, value) in elements {
+      store[key] = value
     }
   }
 
-  open var expiration:Date? {
-    get {
-      if let expiration = payload["exp"] as? TimeInterval {
-        return Date(timeIntervalSince1970: expiration)
-      }
-
+  init?(jsonData: Data) throws {
+    guard let store = try JSONSerialization.jsonObject(with: jsonData) as? BackingStore else {
       return nil
     }
+    self.store = store
+  }
+
+  public var issuer: String? {
+    get {
+      return self["iss"]
+    }
     set {
-      payload["exp"] = newValue?.timeIntervalSince1970 as AnyObject?
+      self["iss"] = newValue
     }
   }
 
-  open var notBefore:Date? {
+  public var audience: String? {
     get {
-      if let notBefore = payload["nbf"] as? TimeInterval {
-        return Date(timeIntervalSince1970: notBefore)
+      return self["aud"]
+    }
+    set {
+      self["aud"] = newValue
+    }
+  }
+
+  public var audiences: [String]? {
+    get {
+      return self["aud"] ?? audience.map { [$0] }
+    }
+    set {
+      self["aud"] = newValue
+    }
+  }
+
+  public var expiration: Date? {
+    get {
+      return self["exp"]
+    }
+    set {
+      self["exp"] = newValue
+    }
+  }
+
+  public var notBefore: Date? {
+    get {
+      return self["nbf"]
+    }
+    set {
+      self["nbf"] = newValue
+    }
+  }
+
+  public var issuedAt: Date? {
+    get {
+      return self["iat"]
+    }
+    set {
+      self["iat"] = newValue
+    }
+  }
+
+  subscript(key: String) -> Int? {
+    get {
+      return store[key] as? Int
+    }
+    set {
+      store[key] = newValue
+    }
+  }
+
+  subscript(key: String) -> [Int]? {
+    get {
+      return store[key] as? [Int]
+    }
+    set {
+      store[key] = newValue
+    }
+  }
+
+
+  subscript(key: String) -> UInt? {
+    get {
+      return store[key] as? UInt
+    }
+    set {
+      store[key] = newValue
+    }
+  }
+
+  subscript(key: String) -> [UInt]? {
+    get {
+      return store[key] as? [UInt]
+    }
+    set {
+      store[key] = newValue
+    }
+  }
+
+  subscript(key: String) -> Double? {
+    get {
+      return store[key] as? Double
+    }
+    set {
+      store[key] = newValue
+    }
+  }
+
+  subscript(key: String) -> [Double]? {
+    get {
+      return store[key] as? [Double]
+    }
+    set {
+      store[key] = newValue
+    }
+  }
+
+  public subscript(key: String) -> Date? {
+    get {
+      guard let timeInterval = store[key] as? TimeInterval ??
+      (store[key] as? NSString)?.doubleValue else {
+        return nil
       }
-
-      return nil
+      return Date.init(timeIntervalSince1970: timeInterval)
     }
     set {
-      payload["nbf"] = newValue?.timeIntervalSince1970 as AnyObject?
+      store[key] = newValue?.timeIntervalSince1970
     }
   }
 
-  open var issuedAt:Date? {
+  public subscript(key: String) -> String? {
     get {
-      if let issuedAt = payload["iat"] as? TimeInterval {
-        return Date(timeIntervalSince1970: issuedAt)
-      }
-
-      return nil
+      return store[key] as? String
     }
     set {
-      payload["iat"] = newValue?.timeIntervalSince1970 as AnyObject?
+      store[key] = newValue
     }
   }
 
-  open subscript(key: String) -> Any {
+  public subscript(key: String) -> [String]? {
     get {
-      return payload[key]
+      return store[key] as? [String]
     }
     set {
-      payload[key] = newValue
+      store[key] = newValue
     }
   }
-}
-
-public func encode(_ algorithm:Algorithm, closure:((PayloadBuilder) -> ())) -> String {
-  let builder = PayloadBuilder()
-  closure(builder)
-  return encode(builder.payload, algorithm: algorithm)
 }
