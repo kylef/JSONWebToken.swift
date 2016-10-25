@@ -1,13 +1,13 @@
 import Foundation
 
-func validateClaims(_ payload:Payload, audience:String?, issuer:String?) -> InvalidToken? {
+public func validateClaims(_ payload:Payload, audience:String?, issuer:String?) -> InvalidToken? {
   return validateIssuer(payload, issuer: issuer) ?? validateAudience(payload, audience: audience) ??
     validateDate(payload, key: "exp", comparison: .orderedAscending, failure: .expiredSignature, decodeError: "Expiration time claim (exp) must be an integer") ??
     validateDate(payload, key: "nbf", comparison: .orderedDescending, failure: .immatureSignature, decodeError: "Not before claim (nbf) must be an integer") ??
     validateDate(payload, key: "iat", comparison: .orderedDescending, failure: .invalidIssuedAt, decodeError: "Issued at claim (iat) must be an integer")
 }
 
-func validateAudience(_ payload:Payload, audience:String?) -> InvalidToken? {
+public func validateAudience(_ payload:Payload, audience:String?) -> InvalidToken? {
   if let audience = audience {
     if let aud = payload["aud"] as? [String] {
       if !aud.contains(audience) {
@@ -25,7 +25,7 @@ func validateAudience(_ payload:Payload, audience:String?) -> InvalidToken? {
   return nil
 }
 
-func validateIssuer(_ payload:Payload, issuer:String?) -> InvalidToken? {
+public func validateIssuer(_ payload:Payload, issuer:String?) -> InvalidToken? {
   if let issuer = issuer {
     if let iss = payload["iss"] as? String {
       if iss != issuer {
