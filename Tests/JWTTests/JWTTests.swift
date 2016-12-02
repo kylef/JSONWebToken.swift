@@ -176,7 +176,7 @@ class DecodeTests: XCTestCase {
       XCTAssertEqual(payload as! [String: Int], ["iat": 1428189720])
     }
   }
-  
+
   func testIssuedAtClaimInThePastString() {
     let jwt = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpYXQiOiIxNDI4MTg5NzIwIn0.M8veWtsY52oBwi7LRKzvNnzhjK0QBS8Su1r0atlns2k"
     assertSuccess(try decode(jwt, algorithm: .hs256("secret".data(using: .utf8)!))) { payload in
