@@ -103,17 +103,16 @@ func load(_ jwt:String) throws -> (header: Payload, payload: Payload, signature:
 
 // MARK: Signature Verification
 
-func verifySignature(_ algorithms:[Algorithm], header:Payload, signingInput:String, signature:Data) throws {
-  if let alg = header["alg"] as? String {
-    let matchingAlgorithms = algorithms.filter { algorithm in  algorithm.description == alg }
-    let results = matchingAlgorithms.map { algorithm in algorithm.verify(signingInput, signature: signature) }
-    let successes = results.filter { $0 }
-    if successes.count > 0 {
-      return
-    }
-
-    throw InvalidToken.invalidAlgorithm
+func verifySignature(_ algorithms: [Algorithm], header: Payload, signingInput: String, signature: Data) throws {
+  guard let alg = header["alg"] as? String else {
+    throw InvalidToken.decodeError("Missing Algorithm")
   }
 
-  throw InvalidToken.decodeError("Missing Algorithm")
+  let verifiedAlgorithms = algorithms
+    .filter { algorithm in algorithm.description == alg }
+    .filter { algorithm in algorithm.verify(signingInput, signature: signature) }
+
+  if verifiedAlgorithms.isEmpty {
+    throw InvalidToken.invalidAlgorithm
+  }
 }
