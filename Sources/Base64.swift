@@ -1,8 +1,7 @@
 import Foundation
 
-
 /// URI Safe base64 encode
-func base64encode(_ input:Data) -> String {
+func base64encode(_ input: Data) -> String {
   let data = input.base64EncodedData(options: NSData.Base64EncodingOptions(rawValue: 0))
   let string = String(data: data, encoding: .utf8)!
   return string
@@ -12,7 +11,7 @@ func base64encode(_ input:Data) -> String {
 }
 
 /// URI Safe base64 decode
-func base64decode(_ input:String) -> Data? {
+func base64decode(_ input: String) -> Data? {
   let rem = input.characters.count % 4
 
   var ending = ""

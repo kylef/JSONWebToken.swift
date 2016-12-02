@@ -30,7 +30,7 @@ public func encode(claims: [String: Any], algorithm: Algorithm) -> String {
 
 
 /// Encode a set of claims using the builder pattern
-public func encode(_ algorithm: Algorithm, closure: ((ClaimSetBuilder) -> ())) -> String {
+public func encode(_ algorithm: Algorithm, closure: ((ClaimSetBuilder) -> Void)) -> String {
   let builder = ClaimSetBuilder()
   closure(builder)
   return encode(claims: builder.claims, algorithm: algorithm)

@@ -1,6 +1,6 @@
 import Foundation
 
-func validateDate(_ payload:Payload, key:String, comparison:ComparisonResult, failure:InvalidToken, decodeError:String) throws {
+func validateDate(_ payload: Payload, key: String, comparison: ComparisonResult, failure: InvalidToken, decodeError: String) throws {
   if payload[key] == nil {
     return
   }

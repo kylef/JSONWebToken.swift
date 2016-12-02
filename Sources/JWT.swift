@@ -4,7 +4,7 @@ import CryptoSwift
 public typealias Payload = [String: Any]
 
 /// The supported Algorithms
-public enum Algorithm : CustomStringConvertible {
+public enum Algorithm: CustomStringConvertible {
   /// No Algorithm, i-e, insecure
   case none
 
@@ -17,7 +17,7 @@ public enum Algorithm : CustomStringConvertible {
   /// HMAC using SHA-512 hash algorithm
   case hs512(Data)
 
-  public var description:String {
+  public var description: String {
     switch self {
     case .none:
       return "none"
@@ -31,10 +31,10 @@ public enum Algorithm : CustomStringConvertible {
   }
 
   /// Sign a message using the algorithm
-  func sign(_ message:String) -> String {
-    func signHS(_ key: Data, variant:CryptoSwift.HMAC.Variant) -> String {
+  func sign(_ message: String) -> String {
+    func signHS(_ key: Data, variant: CryptoSwift.HMAC.Variant) -> String {
       let messageData = message.data(using: String.Encoding.utf8, allowLossyConversion: false)!
-      let mac = HMAC(key: key.bytes, variant:variant)
+      let mac = HMAC(key: key.bytes, variant: variant)
       let result: [UInt8]
       do {
         result = try mac.authenticate(messageData.bytes)
@@ -60,7 +60,7 @@ public enum Algorithm : CustomStringConvertible {
   }
 
   /// Verify a signature for a message using the algorithm
-  func verify(_ message:String, signature:Data) -> Bool {
+  func verify(_ message: String, signature: Data) -> Bool {
     return sign(message) == base64encode(signature)
   }
 }
