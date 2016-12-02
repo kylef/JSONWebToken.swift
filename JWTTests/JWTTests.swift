@@ -2,7 +2,7 @@ import Foundation
 import XCTest
 import JWT
 
-class JWTEncodeTests : XCTestCase {
+class EncodeTests: XCTestCase {
   func testEncodingJWT() {
     let payload = ["name": "Kyle"] as Payload
     let jwt = JWT.encode(payload, algorithm: .hs256("secret".data(using: .utf8)!))
@@ -22,7 +22,7 @@ class JWTEncodeTests : XCTestCase {
   }
 }
 
-class JWTPayloadBuilder : XCTestCase {
+class PayloadTests: XCTestCase {
   func testIssuer() {
     JWT.encode(.none) { builder in
        builder.issuer = "fuller.li"
@@ -74,7 +74,7 @@ class JWTPayloadBuilder : XCTestCase {
   }
 }
 
-class JWTDecodeTests : XCTestCase {
+class DecodeTests: XCTestCase {
   func testDecodingValidJWT() {
     let jwt = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJuYW1lIjoiS3lsZSJ9.zxm7xcp1eZtZhp4t-nlw09ATQnnFKIiSN83uG8u6cAg"
 
