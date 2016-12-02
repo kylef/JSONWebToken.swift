@@ -1,5 +1,12 @@
 # JSON Web Token Changelog
 
+## 2.0.2
+
+### Enhancements
+
+- Adds support for Linux.
+
+
 ## 2.0.1
 
 This release adds support for Swift 3.0.
