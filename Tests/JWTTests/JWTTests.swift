@@ -83,6 +83,13 @@ class PayloadTests: XCTestCase {
 }
 
 class DecodeTests: XCTestCase {
+  func testDecodingValidJWTAsClaimSet() throws {
+    let jwt = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJuYW1lIjoiS3lsZSJ9.zxm7xcp1eZtZhp4t-nlw09ATQnnFKIiSN83uG8u6cAg"
+
+    let claims: ClaimSet = try JWT.decode(jwt, algorithm: .hs256("secret".data(using: .utf8)!))
+    XCTAssertEqual(claims["name"] as? String, "Kyle")
+  }
+
   func testDecodingValidJWT() {
     let jwt = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJuYW1lIjoiS3lsZSJ9.zxm7xcp1eZtZhp4t-nlw09ATQnnFKIiSN83uG8u6cAg"
 
