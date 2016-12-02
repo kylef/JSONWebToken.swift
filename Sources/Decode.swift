@@ -75,12 +75,11 @@ func load(_ jwt:String) throws -> (header: Payload, payload: Payload, signature:
   let signatureSegment = segments[2]
   let signatureInput = "\(headerSegment).\(payloadSegment)"
 
-  let headerData = base64decode(headerSegment)
-  if headerData == nil {
+  guard let headerData = base64decode(headerSegment) else {
     throw InvalidToken.decodeError("Header is not correctly encoded as base64")
   }
 
-  let header = (try? JSONSerialization.jsonObject(with: headerData!, options: JSONSerialization.ReadingOptions(rawValue: 0))) as? Payload
+  let header = (try? JSONSerialization.jsonObject(with: headerData, options: JSONSerialization.ReadingOptions(rawValue: 0))) as? Payload
   if header == nil {
     throw InvalidToken.decodeError("Invalid header")
   }
@@ -95,12 +94,11 @@ func load(_ jwt:String) throws -> (header: Payload, payload: Payload, signature:
     throw InvalidToken.decodeError("Invalid payload")
   }
 
-  let signature = base64decode(signatureSegment)
-  if signature == nil {
+  guard let signature = base64decode(signatureSegment) else {
     throw InvalidToken.decodeError("Signature is not correctly encoded as base64")
   }
 
-  return (header: header!, payload: payload!, signature: signature!, signatureInput: signatureInput)
+  return (header: header!, payload: payload!, signature: signature, signatureInput: signatureInput)
 }
 
 // MARK: Signature Verification
