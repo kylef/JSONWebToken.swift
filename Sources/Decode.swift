@@ -47,24 +47,33 @@ public enum InvalidToken : CustomStringConvertible, Error {
 
 
 /// Decode a JWT
-public func decode(_ jwt:String, algorithms:[Algorithm], verify:Bool = true, audience:String? = nil, issuer:String? = nil) throws -> Payload {
-  let (header, payload, signature, signatureInput) = try load(jwt)
+func decode(_ jwt: String, algorithms: [Algorithm], verify: Bool = true, audience: String? = nil, issuer: String? = nil) throws -> ClaimSet {
+  let (header, claims, signature, signatureInput) = try load(jwt)
+
   if verify {
-    try validateClaims(payload, audience: audience, issuer: issuer)
+    try claims.validate(audience: audience, issuer: issuer)
     try verifySignature(algorithms, header: header, signingInput: signatureInput, signature: signature)
   }
 
-  return payload
+  return claims
 }
 
+
 /// Decode a JWT
-public func decode(_ jwt:String, algorithm:Algorithm, verify:Bool = true, audience:String? = nil, issuer:String? = nil) throws -> Payload {
-  return try decode(jwt, algorithms: [algorithm], verify: verify, audience: audience, issuer: issuer)
+public func decode(_ jwt: String, algorithms: [Algorithm], verify: Bool = true, audience: String? = nil, issuer: String? = nil) throws -> Payload {
+  return try decode(jwt, algorithms: algorithms, verify: verify, audience: audience, issuer: issuer).claims
 }
+
+
+/// Decode a JWT
+public func decode(_ jwt: String, algorithm: Algorithm, verify: Bool = true, audience: String? = nil, issuer: String? = nil) throws -> Payload {
+  return try decode(jwt, algorithms: [algorithm], verify: verify, audience: audience, issuer: issuer).claims
+}
+
 
 // MARK: Parsing a JWT
 
-func load(_ jwt:String) throws -> (header: Payload, payload: Payload, signature: Data, signatureInput: String) {
+func load(_ jwt:String) throws -> (header: Payload, payload: ClaimSet, signature: Data, signatureInput: String) {
   let segments = jwt.components(separatedBy: ".")
   if segments.count != 3 {
     throw InvalidToken.decodeError("Not enough segments")
@@ -98,7 +107,7 @@ func load(_ jwt:String) throws -> (header: Payload, payload: Payload, signature:
     throw InvalidToken.decodeError("Signature is not correctly encoded as base64")
   }
 
-  return (header: header!, payload: payload!, signature: signature, signatureInput: signatureInput)
+  return (header: header!, payload: ClaimSet(claims: payload!), signature: signature, signatureInput: signatureInput)
 }
 
 // MARK: Signature Verification

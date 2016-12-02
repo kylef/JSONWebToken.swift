@@ -10,6 +10,10 @@
 		2734C6A81D88001F00BFF9F1 /* CryptoSwift.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 66725DAB1C59202E00FC32F4 /* CryptoSwift.framework */; };
 		2734C6A91D88002900BFF9F1 /* CryptoSwift.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 66725DAB1C59202E00FC32F4 /* CryptoSwift.framework */; };
 		2734C6AA1D88003000BFF9F1 /* CryptoSwift.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 66725DAB1C59202E00FC32F4 /* CryptoSwift.framework */; };
+		277794051DF221F800573F3E /* ClaimSet.swift in Sources */ = {isa = PBXBuildFile; fileRef = 277794041DF221F800573F3E /* ClaimSet.swift */; };
+		277794061DF221F800573F3E /* ClaimSet.swift in Sources */ = {isa = PBXBuildFile; fileRef = 277794041DF221F800573F3E /* ClaimSet.swift */; };
+		277794071DF221F800573F3E /* ClaimSet.swift in Sources */ = {isa = PBXBuildFile; fileRef = 277794041DF221F800573F3E /* ClaimSet.swift */; };
+		277794081DF221F800573F3E /* ClaimSet.swift in Sources */ = {isa = PBXBuildFile; fileRef = 277794041DF221F800573F3E /* ClaimSet.swift */; };
 		279D63A21AD07FFF0024E2BC /* JWT.h in Headers */ = {isa = PBXBuildFile; fileRef = 279D63A11AD07FFF0024E2BC /* JWT.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		279D63A81AD07FFF0024E2BC /* JWT.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 279D639C1AD07FFF0024E2BC /* JWT.framework */; };
 		279D63AF1AD07FFF0024E2BC /* JWTTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 279D63AE1AD07FFF0024E2BC /* JWTTests.swift */; };
@@ -67,6 +71,7 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		277794041DF221F800573F3E /* ClaimSet.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ClaimSet.swift; sourceTree = "<group>"; };
 		279D639C1AD07FFF0024E2BC /* JWT.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = JWT.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		279D63A01AD07FFF0024E2BC /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		279D63A11AD07FFF0024E2BC /* JWT.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = JWT.h; sourceTree = "<group>"; };
@@ -196,6 +201,7 @@
 		520A71121C469F010005C709 /* Sources */ = {
 			isa = PBXGroup;
 			children = (
+				277794041DF221F800573F3E /* ClaimSet.swift */,
 				520A71131C469F010005C709 /* Base64.swift */,
 				520A71141C469F010005C709 /* Claims.swift */,
 				520A71151C469F010005C709 /* Decode.swift */,
@@ -460,6 +466,7 @@
 				520A71181C469F010005C709 /* Claims.swift in Sources */,
 				520A711A1C469F010005C709 /* JWT.swift in Sources */,
 				520A71191C469F010005C709 /* Decode.swift in Sources */,
+				277794051DF221F800573F3E /* ClaimSet.swift in Sources */,
 				520A71171C469F010005C709 /* Base64.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -479,6 +486,7 @@
 				CD9B62171C7753D8005D4844 /* Claims.swift in Sources */,
 				CD9B62181C7753D8005D4844 /* JWT.swift in Sources */,
 				CD9B62191C7753D8005D4844 /* Decode.swift in Sources */,
+				277794061DF221F800573F3E /* ClaimSet.swift in Sources */,
 				CD9B621A1C7753D8005D4844 /* Base64.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -490,6 +498,7 @@
 				CD9B62291C7753EC005D4844 /* Claims.swift in Sources */,
 				CD9B622A1C7753EC005D4844 /* JWT.swift in Sources */,
 				CD9B622B1C7753EC005D4844 /* Decode.swift in Sources */,
+				277794071DF221F800573F3E /* ClaimSet.swift in Sources */,
 				CD9B622C1C7753EC005D4844 /* Base64.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -501,6 +510,7 @@
 				CD9B623B1C7753FB005D4844 /* Claims.swift in Sources */,
 				CD9B623C1C7753FB005D4844 /* JWT.swift in Sources */,
 				CD9B623D1C7753FB005D4844 /* Decode.swift in Sources */,
+				277794081DF221F800573F3E /* ClaimSet.swift in Sources */,
 				CD9B623E1C7753FB005D4844 /* Base64.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

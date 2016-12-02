@@ -67,14 +67,14 @@ public enum Algorithm : CustomStringConvertible {
 
 // MARK: Encoding
 
-/*** Encode a payload
-  - parameter payload: The payload to sign
-  - parameter algorithm: The algorithm to sign the payload with
-  - returns: The JSON web token as a String
-*/
-public func encode(_ payload:Payload, algorithm:Algorithm) -> String {
-  func encodeJSON(_ payload:Payload) -> String? {
-    if let data = try? JSONSerialization.data(withJSONObject: payload, options: JSONSerialization.WritingOptions(rawValue: 0)) {
+/*** Encode a set of claims
+ - parameter claims: The ClaiMSet to sign
+ - parameter algorithm: The algorithm to sign the payload with
+ - returns: The JSON web token as a String
+ */
+public func encode(claims: ClaimSet, algorithm: Algorithm) -> String {
+  func encodeJSON(_ payload: [String: Any]) -> String? {
+    if let data = try? JSONSerialization.data(withJSONObject: payload) {
       return base64encode(data)
     }
 
@@ -82,84 +82,25 @@ public func encode(_ payload:Payload, algorithm:Algorithm) -> String {
   }
 
   let header = encodeJSON(["typ": "JWT", "alg": algorithm.description])!
-  let payload = encodeJSON(payload)!
+  let payload = encodeJSON(claims.claims)!
   let signingInput = "\(header).\(payload)"
   let signature = algorithm.sign(signingInput)
   return "\(signingInput).\(signature)"
 }
 
-open class PayloadBuilder {
-  var payload = Payload()
 
-  open var issuer: String? {
-    get {
-      return payload["iss"] as? String
-    }
-    set {
-      payload["iss"] = newValue
-    }
-  }
-
-  open var audience: String? {
-    get {
-      return payload["aud"] as? String
-    }
-    set {
-      payload["aud"] = newValue
-    }
-  }
-
-  open var expiration: Date? {
-    get {
-      if let expiration = payload["exp"] as? TimeInterval {
-        return Date(timeIntervalSince1970: expiration)
-      }
-
-      return nil
-    }
-    set {
-      payload["exp"] = newValue?.timeIntervalSince1970
-    }
-  }
-
-  open var notBefore: Date? {
-    get {
-      if let notBefore = payload["nbf"] as? TimeInterval {
-        return Date(timeIntervalSince1970: notBefore)
-      }
-
-      return nil
-    }
-    set {
-      payload["nbf"] = newValue?.timeIntervalSince1970
-    }
-  }
-
-  open var issuedAt: Date? {
-    get {
-      if let issuedAt = payload["iat"] as? TimeInterval {
-        return Date(timeIntervalSince1970: issuedAt)
-      }
-
-      return nil
-    }
-    set {
-      payload["iat"] = newValue?.timeIntervalSince1970
-    }
-  }
-
-  open subscript(key: String) -> Any? {
-    get {
-      return payload[key]
-    }
-    set {
-      payload[key] = newValue
-    }
-  }
+/*** Encode a payload
+  - parameter payload: The payload to sign
+  - parameter algorithm: The algorithm to sign the payload with
+  - returns: The JSON web token as a String
+*/
+public func encode(_ payload: Payload, algorithm: Algorithm) -> String {
+  return encode(claims: ClaimSet(claims: payload), algorithm: algorithm)
 }
 
-public func encode(_ algorithm:Algorithm, closure:((PayloadBuilder) -> ())) -> String {
-  let builder = PayloadBuilder()
+/// Encode a set of claims using the builder pattern
+public func encode(_ algorithm: Algorithm, closure: ((ClaimSetBuilder) -> ())) -> String {
+  let builder = ClaimSetBuilder()
   closure(builder)
-  return encode(builder.payload, algorithm: algorithm)
+  return encode(claims: builder.claims, algorithm: algorithm)
 }
