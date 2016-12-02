@@ -48,17 +48,13 @@ public enum InvalidToken : CustomStringConvertible, Error {
 
 /// Decode a JWT
 public func decode(_ jwt:String, algorithms:[Algorithm], verify:Bool = true, audience:String? = nil, issuer:String? = nil) throws -> Payload {
-  switch load(jwt) {
-  case let .success(header, payload, signature, signatureInput):
-    if verify {
-      try validateClaims(payload, audience: audience, issuer: issuer)
-      try verifySignature(algorithms, header: header, signingInput: signatureInput, signature: signature)
-    }
-
-    return payload
-  case .failure(let failure):
-    throw failure
+  let (header, payload, signature, signatureInput) = try load(jwt)
+  if verify {
+    try validateClaims(payload, audience: audience, issuer: issuer)
+    try verifySignature(algorithms, header: header, signingInput: signatureInput, signature: signature)
   }
+
+  return payload
 }
 
 /// Decode a JWT
@@ -68,15 +64,10 @@ public func decode(_ jwt:String, algorithm:Algorithm, verify:Bool = true, audien
 
 // MARK: Parsing a JWT
 
-enum LoadResult {
-  case success(header:Payload, payload:Payload, signature:Data, signatureInput:String)
-  case failure(InvalidToken)
-}
-
-func load(_ jwt:String) -> LoadResult {
+func load(_ jwt:String) throws -> (header: Payload, payload: Payload, signature: Data, signatureInput: String) {
   let segments = jwt.components(separatedBy: ".")
   if segments.count != 3 {
-    return .failure(.decodeError("Not enough segments"))
+    throw InvalidToken.decodeError("Not enough segments")
   }
 
   let headerSegment = segments[0]
@@ -86,30 +77,30 @@ func load(_ jwt:String) -> LoadResult {
 
   let headerData = base64decode(headerSegment)
   if headerData == nil {
-    return .failure(.decodeError("Header is not correctly encoded as base64"))
+    throw InvalidToken.decodeError("Header is not correctly encoded as base64")
   }
 
   let header = (try? JSONSerialization.jsonObject(with: headerData!, options: JSONSerialization.ReadingOptions(rawValue: 0))) as? Payload
   if header == nil {
-    return .failure(.decodeError("Invalid header"))
+    throw InvalidToken.decodeError("Invalid header")
   }
 
   let payloadData = base64decode(payloadSegment)
   if payloadData == nil {
-    return .failure(.decodeError("Payload is not correctly encoded as base64"))
+    throw InvalidToken.decodeError("Payload is not correctly encoded as base64")
   }
 
   let payload = (try? JSONSerialization.jsonObject(with: payloadData!, options: JSONSerialization.ReadingOptions(rawValue: 0))) as? Payload
   if payload == nil {
-    return .failure(.decodeError("Invalid payload"))
+    throw InvalidToken.decodeError("Invalid payload")
   }
 
   let signature = base64decode(signatureSegment)
   if signature == nil {
-    return .failure(.decodeError("Signature is not correctly encoded as base64"))
+    throw InvalidToken.decodeError("Signature is not correctly encoded as base64")
   }
 
-  return .success(header:header!, payload:payload!, signature:signature!, signatureInput:signatureInput)
+  return (header: header!, payload: payload!, signature: signature!, signatureInput: signatureInput)
 }
 
 // MARK: Signature Verification
