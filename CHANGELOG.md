@@ -1,5 +1,14 @@
 # JSON Web Token Changelog
 
+## Master
+
+### Enhancements
+
+- Introduces a new `ClaimSet` structure. The structure can be returned from
+  `decode` providing you convenience accessors. `encode` will now accept a
+  `ClaimSet`.
+
+
 ## 2.0.2
 
 ### Enhancements

@@ -21,7 +21,18 @@ import JWT
 ### Encoding a claim
 
 ```swift
-JWT.encode(["my": "payload"], algorithm: .hs256("secret".data(using: .utf8)!))
+JWT.encode(claims: ["my": "payload"], algorithm: .hs256("secret".data(using: .utf8)!))
+```
+
+#### Encoding a claim set
+
+```swift
+var claims = ClaimSet()
+claims.issuer = "fuller.li"
+claims.issuedAt = Date()
+claims["custom"] = "Hi"
+
+JWT.encode(claims: claims, algorithm, algorithm: .hs256("secret".data(using: .utf8)))
 ```
 
 #### Building a JWT with the builder pattern
@@ -40,8 +51,8 @@ When decoding a JWT, you must supply one or more algorithms and keys.
 
 ```swift
 do {
-  let payload = try JWT.decode("eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.e30.2_8pWJfyPup0YwOXK7g9Dn0cF1E3pdn299t4hSeJy5w", algorithm: .hs256("secret".data(using: .utf8)!))
-  print(payload)
+  let claims = try JWT.decode("eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.e30.2_8pWJfyPup0YwOXK7g9Dn0cF1E3pdn299t4hSeJy5w", algorithm: .hs256("secret".data(using: .utf8)!))
+  print(claims)
 } catch {
   print("Failed to decode JWT: \(error)")
 }
@@ -79,4 +90,3 @@ This library supports the following algorithms:
 ## License
 
 JSONWebToken is licensed under the BSD license. See [LICENSE](LICENSE) for more info.
-
