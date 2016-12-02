@@ -1,53 +1,48 @@
 import Foundation
 
-func validateClaims(_ payload:Payload, audience:String?, issuer:String?) -> InvalidToken? {
-  return validateIssuer(payload, issuer: issuer) ?? validateAudience(payload, audience: audience) ??
-    validateDate(payload, key: "exp", comparison: .orderedAscending, failure: .expiredSignature, decodeError: "Expiration time claim (exp) must be an integer") ??
-    validateDate(payload, key: "nbf", comparison: .orderedDescending, failure: .immatureSignature, decodeError: "Not before claim (nbf) must be an integer") ??
-    validateDate(payload, key: "iat", comparison: .orderedDescending, failure: .invalidIssuedAt, decodeError: "Issued at claim (iat) must be an integer")
+func validateClaims(_ payload:Payload, audience:String?, issuer:String?) throws {
+  try validateIssuer(payload, issuer: issuer)
+  try validateAudience(payload, audience: audience)
+  try validateDate(payload, key: "exp", comparison: .orderedAscending, failure: .expiredSignature, decodeError: "Expiration time claim (exp) must be an integer")
+  try validateDate(payload, key: "nbf", comparison: .orderedDescending, failure: .immatureSignature, decodeError: "Not before claim (nbf) must be an integer")
+  try validateDate(payload, key: "iat", comparison: .orderedDescending, failure: .invalidIssuedAt, decodeError: "Issued at claim (iat) must be an integer")
 }
 
-func validateAudience(_ payload:Payload, audience:String?) -> InvalidToken? {
+func validateAudience(_ payload:Payload, audience:String?) throws {
   if let audience = audience {
     if let aud = payload["aud"] as? [String] {
       if !aud.contains(audience) {
-        return .invalidAudience
+        throw InvalidToken.invalidAudience
       }
     } else if let aud = payload["aud"] as? String {
       if aud != audience {
-        return .invalidAudience
+        throw InvalidToken.invalidAudience
       }
     } else {
-      return .decodeError("Invalid audience claim, must be a string or an array of strings")
+      throw InvalidToken.decodeError("Invalid audience claim, must be a string or an array of strings")
     }
   }
-
-  return nil
 }
 
-func validateIssuer(_ payload:Payload, issuer:String?) -> InvalidToken? {
+func validateIssuer(_ payload:Payload, issuer:String?) throws {
   if let issuer = issuer {
     if let iss = payload["iss"] as? String {
       if iss != issuer {
-        return .invalidIssuer
+        throw InvalidToken.invalidIssuer
       }
     } else {
-      return .invalidIssuer
+      throw InvalidToken.invalidIssuer
     }
   }
-
-  return nil
 }
 
-func validateDate(_ payload:Payload, key:String, comparison:ComparisonResult, failure:InvalidToken, decodeError:String) -> InvalidToken? {
+func validateDate(_ payload:Payload, key:String, comparison:ComparisonResult, failure:InvalidToken, decodeError:String) throws {
   if let timestamp = payload[key] as? TimeInterval ?? (payload[key] as? NSString)?.doubleValue as TimeInterval? {
     let date = Date(timeIntervalSince1970: timestamp)
     if date.compare(Date()) == comparison {
-      return failure
+      throw failure
     }
   } else if payload[key] != nil {
-    return .decodeError(decodeError)
+    throw InvalidToken.decodeError(decodeError)
   }
-
-  return nil
 }

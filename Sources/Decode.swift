@@ -51,9 +51,8 @@ public func decode(_ jwt:String, algorithms:[Algorithm], verify:Bool = true, aud
   switch load(jwt) {
   case let .success(header, payload, signature, signatureInput):
     if verify {
-      if let failure = validateClaims(payload, audience: audience, issuer: issuer) ?? verifySignature(algorithms, header: header, signingInput: signatureInput, signature: signature) {
-        throw failure
-      }
+      try validateClaims(payload, audience: audience, issuer: issuer)
+      try verifySignature(algorithms, header: header, signingInput: signatureInput, signature: signature)
     }
 
     return payload
@@ -115,17 +114,17 @@ func load(_ jwt:String) -> LoadResult {
 
 // MARK: Signature Verification
 
-func verifySignature(_ algorithms:[Algorithm], header:Payload, signingInput:String, signature:Data) -> InvalidToken? {
+func verifySignature(_ algorithms:[Algorithm], header:Payload, signingInput:String, signature:Data) throws {
   if let alg = header["alg"] as? String {
     let matchingAlgorithms = algorithms.filter { algorithm in  algorithm.description == alg }
     let results = matchingAlgorithms.map { algorithm in algorithm.verify(signingInput, signature: signature) }
     let successes = results.filter { $0 }
     if successes.count > 0 {
-      return nil
+      return
     }
 
-    return .invalidAlgorithm
+    throw InvalidToken.invalidAlgorithm
   }
 
-  return .decodeError("Missing Algorithm")
+  throw InvalidToken.decodeError("Missing Algorithm")
 }
