@@ -91,7 +91,7 @@ extension ClaimSet {
 // MARK: Validations
 
 extension ClaimSet {
-  func validate(audience: String? = nil, issuer: String? = nil) throws {
+  public func validate(audience: String? = nil, issuer: String? = nil) throws {
     if let issuer = issuer {
       try validateIssuer(issuer)
     }
@@ -100,12 +100,12 @@ extension ClaimSet {
       try validateAudience(audience)
     }
 
-    try validateDate(claims, key: "exp", comparison: .orderedAscending, failure: .expiredSignature, decodeError: "Expiration time claim (exp) must be an integer")
-    try validateDate(claims, key: "nbf", comparison: .orderedDescending, failure: .immatureSignature, decodeError: "Not before claim (nbf) must be an integer")
-    try validateDate(claims, key: "iat", comparison: .orderedDescending, failure: .invalidIssuedAt, decodeError: "Issued at claim (iat) must be an integer")
+    try validateExpiary()
+    try validateNotBefore()
+    try validateIssuedAt()
   }
 
-  func validateAudience(_ audience: String) throws {
+  public func validateAudience(_ audience: String) throws {
     if let aud = self["aud"] as? [String] {
       if !aud.contains(audience) {
         throw InvalidToken.invalidAudience
@@ -119,7 +119,7 @@ extension ClaimSet {
     }
   }
 
-  func validateIssuer(_ issuer: String) throws {
+  public func validateIssuer(_ issuer: String) throws {
     if let iss = self["iss"] as? String {
       if iss != issuer {
         throw InvalidToken.invalidIssuer
@@ -127,6 +127,18 @@ extension ClaimSet {
     } else {
       throw InvalidToken.invalidIssuer
     }
+  }
+
+  public func validateExpiary() throws {
+    try validateDate(claims, key: "exp", comparison: .orderedAscending, failure: .expiredSignature, decodeError: "Expiration time claim (exp) must be an integer")
+  }
+
+  public func validateNotBefore() throws {
+    try validateDate(claims, key: "nbf", comparison: .orderedDescending, failure: .immatureSignature, decodeError: "Not before claim (nbf) must be an integer")
+  }
+
+  public func validateIssuedAt() throws {
+    try validateDate(claims, key: "iat", comparison: .orderedDescending, failure: .invalidIssuedAt, decodeError: "Issued at claim (iat) must be an integer")
   }
 }
 

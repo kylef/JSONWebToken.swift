@@ -8,6 +8,16 @@
   `decode` providing you convenience accessors. `encode` will now accept a
   `ClaimSet`.
 
+  `ClaimSet` provides methods to manually validate individual claims.
+
+  ```swift
+  try claims.validateAudience("example.com")
+  try claims.validateIssuer("fuller.li")
+  try claims.validateExpiary()
+  try claims.validateNotBefore()
+  try claims.validateIssuedAt()
+  ```
+
 
 ## 2.0.2
 
