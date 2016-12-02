@@ -73,7 +73,7 @@ public func decode(_ jwt: String, algorithm: Algorithm, verify: Bool = true, aud
 
 // MARK: Parsing a JWT
 
-func load(_ jwt:String) throws -> (header: Payload, payload: ClaimSet, signature: Data, signatureInput: String) {
+func load(_ jwt:String) throws -> (header: JOSEHeader, payload: ClaimSet, signature: Data, signatureInput: String) {
   let segments = jwt.components(separatedBy: ".")
   if segments.count != 3 {
     throw InvalidToken.decodeError("Not enough segments")
@@ -107,13 +107,13 @@ func load(_ jwt:String) throws -> (header: Payload, payload: ClaimSet, signature
     throw InvalidToken.decodeError("Signature is not correctly encoded as base64")
   }
 
-  return (header: header!, payload: ClaimSet(claims: payload!), signature: signature, signatureInput: signatureInput)
+  return (header: JOSEHeader(parameters: header!), payload: ClaimSet(claims: payload!), signature: signature, signatureInput: signatureInput)
 }
 
 // MARK: Signature Verification
 
-func verifySignature(_ algorithms: [Algorithm], header: Payload, signingInput: String, signature: Data) throws {
-  guard let alg = header["alg"] as? String else {
+func verifySignature(_ algorithms: [Algorithm], header: JOSEHeader, signingInput: String, signature: Data) throws {
+  guard let alg = header.algorithm else {
     throw InvalidToken.decodeError("Missing Algorithm")
   }
 
