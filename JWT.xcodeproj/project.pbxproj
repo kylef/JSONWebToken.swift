@@ -136,8 +136,8 @@
 				66725DA21C59202E00FC32F4 /* CryptoSwift.xcodeproj */,
 				520A711B1C469F440005C709 /* Package.swift */,
 				520A71121C469F010005C709 /* Sources */,
-				279D639E1AD07FFF0024E2BC /* JWT */,
-				279D63AB1AD07FFF0024E2BC /* JWTTests */,
+				279D639E1AD07FFF0024E2BC /* Sources */,
+				279D63AB1AD07FFF0024E2BC /* Tests */,
 				279D639D1AD07FFF0024E2BC /* Products */,
 				AC8AE547FDAF3DD80EB4DB2F /* Frameworks */,
 			);
@@ -157,12 +157,13 @@
 			name = Products;
 			sourceTree = "<group>";
 		};
-		279D639E1AD07FFF0024E2BC /* JWT */ = {
+		279D639E1AD07FFF0024E2BC /* Sources */ = {
 			isa = PBXGroup;
 			children = (
 				279D63A11AD07FFF0024E2BC /* JWT.h */,
 				279D639F1AD07FFF0024E2BC /* Supporting Files */,
 			);
+			name = Sources;
 			path = JWT;
 			sourceTree = "<group>";
 		};
@@ -174,13 +175,14 @@
 			name = "Supporting Files";
 			sourceTree = "<group>";
 		};
-		279D63AB1AD07FFF0024E2BC /* JWTTests */ = {
+		279D63AB1AD07FFF0024E2BC /* Tests */ = {
 			isa = PBXGroup;
 			children = (
 				279D63AE1AD07FFF0024E2BC /* JWTTests.swift */,
 				279D63AC1AD07FFF0024E2BC /* Supporting Files */,
 			);
-			path = JWTTests;
+			name = Tests;
+			path = Tests/JWTTests;
 			sourceTree = "<group>";
 		};
 		279D63AC1AD07FFF0024E2BC /* Supporting Files */ = {
@@ -658,7 +660,7 @@
 					"DEBUG=1",
 					"$(inherited)",
 				);
-				INFOPLIST_FILE = JWTTests/Info.plist;
+				INFOPLIST_FILE = Tests/JWTTests/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/../Frameworks @loader_path/../Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = "org.cocode.$(PRODUCT_NAME:rfc1034identifier)";
 				PRODUCT_NAME = "$(TARGET_NAME)";
@@ -673,7 +675,7 @@
 					"$(DEVELOPER_FRAMEWORKS_DIR)",
 					"$(inherited)",
 				);
-				INFOPLIST_FILE = JWTTests/Info.plist;
+				INFOPLIST_FILE = Tests/JWTTests/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/../Frameworks @loader_path/../Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = "org.cocode.$(PRODUCT_NAME:rfc1034identifier)";
 				PRODUCT_NAME = "$(TARGET_NAME)";
