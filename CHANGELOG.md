@@ -1,6 +1,6 @@
 # JSON Web Token Changelog
 
-## Master
+## 2.1.0
 
 ### Enhancements
 
