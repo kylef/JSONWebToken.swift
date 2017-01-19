@@ -15,9 +15,6 @@ public enum InvalidToken: CustomStringConvertible, Error {
   /// The issued claim is for the future
   case immatureSignature
 
-  /// The claim is for the future
-  case invalidIssuedAt
-
   /// The audience of the claim doesn't match
   case invalidAudience
 
@@ -35,8 +32,6 @@ public enum InvalidToken: CustomStringConvertible, Error {
       return "Expired Signature"
     case .immatureSignature:
       return "The token is not yet valid (not before claim)"
-    case .invalidIssuedAt:
-      return "Issued at claim (iat) is in the future"
     case .invalidAudience:
       return "Invalid Audience"
     case .invalidAlgorithm:
