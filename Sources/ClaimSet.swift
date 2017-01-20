@@ -1,5 +1,4 @@
 import Foundation
-import CryptoSwift
 
 public struct ClaimSet {
   var claims: [String: Any]
