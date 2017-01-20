@@ -1,3 +1,6 @@
+import Foundation
+import CryptoSwift
+
 /*** Encode a set of claims
  - parameter claims: The set of claims
  - parameter algorithm: The algorithm to sign the payload with
