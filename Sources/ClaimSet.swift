@@ -1,3 +1,6 @@
+
+import Foundation
+
 public struct ClaimSet {
   var claims: [String: Any]
 

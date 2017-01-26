@@ -3,7 +3,7 @@ import XCTest
 
 
 extension EncodeTests {
-  static var allTests: [(String, (EncodeTests) -> Void throws -> Void)] {
+  static var allTests: [(String, (EncodeTests) -> () throws -> ())] {
     return [
       ("testEncodingJWT", testEncodingJWT),
       ("testEncodingWithBuilder", testEncodingWithBuilder),
@@ -12,7 +12,7 @@ extension EncodeTests {
 }
 
 extension DecodeTests {
-  static var allTests: [(String, (DecodeTests) -> Void throws -> Void)] {
+  static var allTests: [(String, (DecodeTests) -> () throws -> ())] {
     return [
       ("testDecodingValidJWT", testDecodingValidJWT),
       ("testFailsToDecodeInvalidStringWithoutThreeSegments", testFailsToDecodeInvalidStringWithoutThreeSegments),
@@ -46,7 +46,7 @@ extension DecodeTests {
 }
 
 extension PayloadTests {
-  static var allTests: [(String, (PayloadTests) -> Void throws -> Void)] {
+  static var allTests: [(String, (PayloadTests) -> () throws -> ())] {
     return [
       ("testIssuer", testIssuer),
       ("testAudience", testAudience),
