@@ -51,7 +51,7 @@ When decoding a JWT, you must supply one or more algorithms and keys.
 
 ```swift
 do {
-  let claims = try JWT.decode("eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.e30.2_8pWJfyPup0YwOXK7g9Dn0cF1E3pdn299t4hSeJy5w", algorithm: .hs256("secret".data(using: .utf8)!))
+  let claims: ClaimSet = try JWT.decode("eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.e30.2_8pWJfyPup0YwOXK7g9Dn0cF1E3pdn299t4hSeJy5w", algorithm: .hs256("secret".data(using: .utf8)!))
   print(claims)
 } catch {
   print("Failed to decode JWT: \(error)")
