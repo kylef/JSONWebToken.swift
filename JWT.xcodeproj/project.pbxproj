@@ -29,6 +29,10 @@
 		520A71181C469F010005C709 /* Claims.swift in Sources */ = {isa = PBXBuildFile; fileRef = 520A71141C469F010005C709 /* Claims.swift */; };
 		520A71191C469F010005C709 /* Decode.swift in Sources */ = {isa = PBXBuildFile; fileRef = 520A71151C469F010005C709 /* Decode.swift */; };
 		520A711A1C469F010005C709 /* JWT.swift in Sources */ = {isa = PBXBuildFile; fileRef = 520A71161C469F010005C709 /* JWT.swift */; };
+		893A292B1ECDE8A700C10A48 /* SwCrypt.swift in Sources */ = {isa = PBXBuildFile; fileRef = 893A292A1ECDE8A700C10A48 /* SwCrypt.swift */; };
+		893A292C1ECDE8A700C10A48 /* SwCrypt.swift in Sources */ = {isa = PBXBuildFile; fileRef = 893A292A1ECDE8A700C10A48 /* SwCrypt.swift */; };
+		893A292D1ECDE8A700C10A48 /* SwCrypt.swift in Sources */ = {isa = PBXBuildFile; fileRef = 893A292A1ECDE8A700C10A48 /* SwCrypt.swift */; };
+		893A292E1ECDE8A700C10A48 /* SwCrypt.swift in Sources */ = {isa = PBXBuildFile; fileRef = 893A292A1ECDE8A700C10A48 /* SwCrypt.swift */; };
 		CD9B62171C7753D8005D4844 /* Claims.swift in Sources */ = {isa = PBXBuildFile; fileRef = 520A71141C469F010005C709 /* Claims.swift */; };
 		CD9B62181C7753D8005D4844 /* JWT.swift in Sources */ = {isa = PBXBuildFile; fileRef = 520A71161C469F010005C709 /* JWT.swift */; };
 		CD9B62191C7753D8005D4844 /* Decode.swift in Sources */ = {isa = PBXBuildFile; fileRef = 520A71151C469F010005C709 /* Decode.swift */; };
@@ -95,6 +99,7 @@
 		520A711B1C469F440005C709 /* Package.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Package.swift; sourceTree = "<group>"; };
 		540942F3614C41E3827F2013 /* Pods_JWT.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_JWT.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		66725DA21C59202E00FC32F4 /* CryptoSwift.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = CryptoSwift.xcodeproj; path = Carthage/Checkouts/CryptoSwift/CryptoSwift.xcodeproj; sourceTree = "<group>"; };
+		893A292A1ECDE8A700C10A48 /* SwCrypt.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SwCrypt.swift; sourceTree = "<group>"; };
 		CD9B62231C7753D8005D4844 /* JWT.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = JWT.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		CD9B62351C7753EC005D4844 /* JWT.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = JWT.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		CD9B62471C7753FB005D4844 /* JWT.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = JWT.framework; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -218,6 +223,7 @@
 				520A71151C469F010005C709 /* Decode.swift */,
 				2777940F1DF22D0D00573F3E /* Encode.swift */,
 				520A71161C469F010005C709 /* JWT.swift */,
+				893A292A1ECDE8A700C10A48 /* SwCrypt.swift */,
 			);
 			path = Sources;
 			sourceTree = "<group>";
@@ -479,6 +485,7 @@
 				520A711A1C469F010005C709 /* JWT.swift in Sources */,
 				520A71191C469F010005C709 /* Decode.swift in Sources */,
 				277794101DF22D0D00573F3E /* Encode.swift in Sources */,
+				893A292B1ECDE8A700C10A48 /* SwCrypt.swift in Sources */,
 				2777940B1DF22BE400573F3E /* JOSEHeader.swift in Sources */,
 				277794051DF221F800573F3E /* ClaimSet.swift in Sources */,
 				520A71171C469F010005C709 /* Base64.swift in Sources */,
@@ -501,6 +508,7 @@
 				CD9B62181C7753D8005D4844 /* JWT.swift in Sources */,
 				CD9B62191C7753D8005D4844 /* Decode.swift in Sources */,
 				277794111DF22D0D00573F3E /* Encode.swift in Sources */,
+				893A292C1ECDE8A700C10A48 /* SwCrypt.swift in Sources */,
 				2777940C1DF22BE400573F3E /* JOSEHeader.swift in Sources */,
 				277794061DF221F800573F3E /* ClaimSet.swift in Sources */,
 				CD9B621A1C7753D8005D4844 /* Base64.swift in Sources */,
@@ -515,6 +523,7 @@
 				CD9B622A1C7753EC005D4844 /* JWT.swift in Sources */,
 				CD9B622B1C7753EC005D4844 /* Decode.swift in Sources */,
 				277794121DF22D0D00573F3E /* Encode.swift in Sources */,
+				893A292D1ECDE8A700C10A48 /* SwCrypt.swift in Sources */,
 				2777940D1DF22BE400573F3E /* JOSEHeader.swift in Sources */,
 				277794071DF221F800573F3E /* ClaimSet.swift in Sources */,
 				CD9B622C1C7753EC005D4844 /* Base64.swift in Sources */,
@@ -529,6 +538,7 @@
 				CD9B623C1C7753FB005D4844 /* JWT.swift in Sources */,
 				CD9B623D1C7753FB005D4844 /* Decode.swift in Sources */,
 				277794131DF22D0D00573F3E /* Encode.swift in Sources */,
+				893A292E1ECDE8A700C10A48 /* SwCrypt.swift in Sources */,
 				2777940E1DF22BE400573F3E /* JOSEHeader.swift in Sources */,
 				277794081DF221F800573F3E /* ClaimSet.swift in Sources */,
 				CD9B623E1C7753FB005D4844 /* Base64.swift in Sources */,
