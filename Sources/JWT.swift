@@ -19,22 +19,22 @@ public enum Algorithm: CustomStringConvertible {
   case hs512(Data)
   
   /// RSA PKCS#1 using SHA-256 hash algorithm
-  case rs256(Data)
+  case rs256(String)
   
   /// RSA PKCS#1 using SHA-384 hash algorithm
-  case rs384(Data)
+  case rs384(String)
   
   /// RSA PKCS#1 using SHA-512 hash algorithm
-  case rs512(Data)
+  case rs512(String)
   
   /// RSA PSS using SHA-256 hash algorithm
-  case ps256(Data)
+  case ps256(String)
   
   /// RSA PSS using SHA-384 hash algorithm
-  case ps384(Data)
+  case ps384(String)
   
   /// RSA PSS using SHA-512 hash algorithm
-  case ps512(Data)
+  case ps512(String)
   
   
   public var description: String {
@@ -76,11 +76,13 @@ public enum Algorithm: CustomStringConvertible {
       return base64encode(Data(bytes: result))
     }
     
-    func signRS(_ key: Data, variant: CC.DigestAlgorithm, padding: CC.RSA.AsymmetricSAPadding) -> String {
+    func signRS(_ key: String, variant: CC.DigestAlgorithm, padding: CC.RSA.AsymmetricSAPadding) -> String {
       let messageData = message.data(using: String.Encoding.utf8, allowLossyConversion: false)!
       let result: Data
       do {
-        result = try CC.RSA.sign(messageData, derKey: key, padding: padding, digest: variant, saltLen:16)
+        let derKey = try SwKeyConvert.PublicKey.pemToPKCS1DER(key)
+        
+        result = try CC.RSA.sign(messageData, derKey: derKey, padding: padding, digest: variant, saltLen:16)
       } catch {
         result = Data()
       }
