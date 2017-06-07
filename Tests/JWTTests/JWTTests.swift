@@ -28,6 +28,13 @@ class EncodeTests: XCTestCase {
       XCTAssertEqual(payload as! [String: String], ["iss": "fuller.li"])
     }
   }
+
+  func testEncodingClaimsWithHeaders() {
+    let algorithm = Algorithm.hs256("secret".data(using: .utf8)!)
+    let jwt = JWT.encode(claims: ClaimSet(), algorithm: algorithm, headers: ["kid": "x"])
+
+    XCTAssertEqual(jwt, "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCIsImtpZCI6IngifQ.e30.ddEotxYYMMdat5HPgYFQnkHRdPXsxPG71ooyhIUoqGA")
+  }
 }
 
 class PayloadTests: XCTestCase {

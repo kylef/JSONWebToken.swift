@@ -1,5 +1,12 @@
 # JSON Web Token Changelog
 
+## Master
+
+### Enhancements
+
+- Allow passing additional headers when encoding a JWT.
+
+
 ## 2.1.0
 
 ### Enhancements
