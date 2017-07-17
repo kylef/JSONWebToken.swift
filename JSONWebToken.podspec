@@ -13,5 +13,6 @@ Pod::Spec.new do |spec|
   spec.watchos.deployment_target = '2.0'
   spec.requires_arc = true
   spec.dependency 'CryptoSwift', '~> 0.6.1'
+  spec.dependency 'SwiftyRSA', '~> 1.2.0'
   spec.module_name = 'JWT'
 end
