@@ -21,6 +21,9 @@ public enum Algorithm: CustomStringConvertible {
   /// RSA using SHA-256 hash algorithm
   case rsa256(PrivateKey)
   
+  // RSA using SHA-512 hash algorithm
+  case rsa512(PrivateKey)
+  
   public var description: String {
     switch self {
     case .none:
@@ -33,6 +36,8 @@ public enum Algorithm: CustomStringConvertible {
       return "HS512"
     case .rsa256:
       return "RSA256"
+    case .rsa512:
+      return "RS512"
     }
   }
   
