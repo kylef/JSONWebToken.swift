@@ -19,10 +19,10 @@ public enum Algorithm: CustomStringConvertible {
   case hs512(Data)
   
   /// RSA using SHA-256 hash algorithm
-  case rs256(PrivateKey)
+  case rs256(Data)
   
   // RSA using SHA-512 hash algorithm
-  case rs512(PrivateKey)
+  case rs512(Data)
   
   public var description: String {
     switch self {
@@ -56,7 +56,10 @@ public enum Algorithm: CustomStringConvertible {
       return base64encode(Data(bytes: result))
     }
     
-    func signRSA(_ privateKey: PrivateKey, digestType: Signature.DigestType) throws -> String {
+    func signRS(_ key: Data, digestType: Signature.DigestType) throws -> String {
+      
+      let keyString = String.init(data: key, encoding: .utf8)
+      let privateKey = try PrivateKey(pemEncoded: keyString)
       
       let clear = try ClearMessage(string: message, using: .utf8)
       
@@ -80,8 +83,11 @@ public enum Algorithm: CustomStringConvertible {
     case .hs512(let key):
       return signHS(key, variant: .sha512)
       
-    case .rsa256(let privateKey):
-      return try signRSA(privateKey, digestType: .sha256)
+    case .rs256(let key):
+      return try signRS(privateKey, digestType: .sha256)
+     
+    case .rs512(let key):
+      return try signRS(privateKey, digestType: .sha512)
       
     }
   }
