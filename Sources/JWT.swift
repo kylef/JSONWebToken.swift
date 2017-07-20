@@ -46,6 +46,7 @@ public enum Algorithm: CustomStringConvertible {
     
     func signHS(_ key: Data, variant: CryptoSwift.HMAC.Variant) -> String {
       let messageData = message.data(using: String.Encoding.utf8, allowLossyConversion: false)!
+      
       let mac = HMAC(key: key.bytes, variant: variant)
       let result: [UInt8]
       do {
@@ -58,7 +59,7 @@ public enum Algorithm: CustomStringConvertible {
     
     func signRS(_ key: Data, digestType: Signature.DigestType) throws -> String {
       
-      let keyString = String.init(data: key, encoding: .utf8)
+      let keyString = message.data(using: String.Encoding.utf8, allowLossyConversion: false)!
       let privateKey = try PrivateKey(pemEncoded: keyString)
       
       let clear = try ClearMessage(string: message, using: .utf8)
@@ -85,7 +86,7 @@ public enum Algorithm: CustomStringConvertible {
       
     case .rs256(let key):
       return try signRS(privateKey, digestType: .sha256)
-     
+      
     case .rs512(let key):
       return try signRS(privateKey, digestType: .sha512)
       
