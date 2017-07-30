@@ -59,8 +59,7 @@ public enum Algorithm: CustomStringConvertible {
     
     func signRS(_ key: Data, digestType: Signature.DigestType) throws -> String {
       
-      let keyString = message.data(using: String.Encoding.utf8, allowLossyConversion: false)!
-      let privateKey = try PrivateKey(pemEncoded: keyString)
+      let privateKey = try PrivateKey(data: data)
       
       let clear = try ClearMessage(string: message, using: .utf8)
       
@@ -85,10 +84,10 @@ public enum Algorithm: CustomStringConvertible {
       return signHS(key, variant: .sha512)
       
     case .rs256(let key):
-      return try signRS(privateKey, digestType: .sha256)
+      return try signRS(key, digestType: .sha256)
       
     case .rs512(let key):
-      return try signRS(privateKey, digestType: .sha512)
+      return try signRS(key, digestType: .sha512)
       
     }
   }
