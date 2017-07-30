@@ -5,25 +5,25 @@ import Foundation
  - parameter algorithm: The algorithm to sign the payload with
  - returns: The JSON web token as a String
  */
-public func encode(claims: ClaimSet, algorithm: Algorithm, headers: [String: String]? = nil) -> String {
+public func encode(claims: ClaimSet, algorithm: Algorithm, headers: [String: String]? = nil) throws -> String {
   func encodeJSON(_ payload: [String: Any]) -> String? {
     if let data = try? JSONSerialization.data(withJSONObject: payload) {
       return base64encode(data)
     }
-
+    
     return nil
   }
-
+  
   var headers = headers ?? [:]
   if !headers.keys.contains("typ") {
     headers["typ"] = "JWT"
   }
   headers["alg"] = algorithm.description
-
+  
   let header = encodeJSON(headers)!
   let payload = encodeJSON(claims.claims)!
   let signingInput = "\(header).\(payload)"
-  let signature = algorithm.sign(signingInput)
+  let signature = try algorithm.sign(signingInput)
   return "\(signingInput).\(signature)"
 }
 
@@ -32,16 +32,16 @@ public func encode(claims: ClaimSet, algorithm: Algorithm, headers: [String: Str
  - parameter algorithm: The algorithm to sign the payload with
  - returns: The JSON web token as a String
  */
-public func encode(claims: [String: Any], algorithm: Algorithm, headers: [String: String]? = nil) -> String {
-  return encode(claims: ClaimSet(claims: claims), algorithm: algorithm, headers: headers)
+public func encode(claims: [String: Any], algorithm: Algorithm, headers: [String: String]? = nil) throws -> String {
+  return try encode(claims: ClaimSet(claims: claims), algorithm: algorithm, headers: headers)
 }
 
 
 /// Encode a set of claims using the builder pattern
-public func encode(_ algorithm: Algorithm, closure: ((ClaimSetBuilder) -> Void)) -> String {
+public func encode(_ algorithm: Algorithm, closure: ((ClaimSetBuilder) -> Void)) throws -> String {
   let builder = ClaimSetBuilder()
   closure(builder)
-  return encode(claims: builder.claims, algorithm: algorithm)
+  return try encode(claims: builder.claims, algorithm: algorithm)
 }
 
 
@@ -51,6 +51,6 @@ public func encode(_ algorithm: Algorithm, closure: ((ClaimSetBuilder) -> Void))
  - returns: The JSON web token as a String
  */
 @available(*, deprecated, message: "use encode(claims: algorithm:) instead")
-public func encode(_ payload: Payload, algorithm: Algorithm) -> String {
-  return encode(claims: ClaimSet(claims: payload), algorithm: algorithm)
+public func encode(_ payload: Payload, algorithm: Algorithm) throws -> String {
+  return try encode(claims: ClaimSet(claims: payload), algorithm: algorithm)
 }
