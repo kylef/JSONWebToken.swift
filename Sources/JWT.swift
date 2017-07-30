@@ -59,7 +59,7 @@ public enum Algorithm: CustomStringConvertible {
     
     func signRS(_ key: Data, digestType: Signature.DigestType) throws -> String {
       
-      let privateKey = try PrivateKey(data: data)
+      let privateKey = try PrivateKey(data: key)
       
       let clear = try ClearMessage(string: message, using: .utf8)
       
