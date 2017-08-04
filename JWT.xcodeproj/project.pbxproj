@@ -7,6 +7,14 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		273010FF1F33EABA00219C35 /* HMAC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 273010FE1F33EABA00219C35 /* HMAC.swift */; };
+		273011001F33EABA00219C35 /* HMAC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 273010FE1F33EABA00219C35 /* HMAC.swift */; };
+		273011011F33EABA00219C35 /* HMAC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 273010FE1F33EABA00219C35 /* HMAC.swift */; };
+		273011021F33EABA00219C35 /* HMAC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 273010FE1F33EABA00219C35 /* HMAC.swift */; };
+		2730110A1F33FC9100219C35 /* HMACCryptoSwift.swift in Sources */ = {isa = PBXBuildFile; fileRef = 273011091F33FC9100219C35 /* HMACCryptoSwift.swift */; };
+		2730110B1F33FC9100219C35 /* HMACCryptoSwift.swift in Sources */ = {isa = PBXBuildFile; fileRef = 273011091F33FC9100219C35 /* HMACCryptoSwift.swift */; };
+		2730110C1F33FC9100219C35 /* HMACCryptoSwift.swift in Sources */ = {isa = PBXBuildFile; fileRef = 273011091F33FC9100219C35 /* HMACCryptoSwift.swift */; };
+		2730110D1F33FC9100219C35 /* HMACCryptoSwift.swift in Sources */ = {isa = PBXBuildFile; fileRef = 273011091F33FC9100219C35 /* HMACCryptoSwift.swift */; };
 		2734C6A81D88001F00BFF9F1 /* CryptoSwift.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 66725DAB1C59202E00FC32F4 /* CryptoSwift.framework */; };
 		2734C6A91D88002900BFF9F1 /* CryptoSwift.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 66725DAB1C59202E00FC32F4 /* CryptoSwift.framework */; };
 		2734C6AA1D88003000BFF9F1 /* CryptoSwift.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 66725DAB1C59202E00FC32F4 /* CryptoSwift.framework */; };
@@ -79,6 +87,9 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		273010FE1F33EABA00219C35 /* HMAC.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HMAC.swift; sourceTree = "<group>"; };
+		273011041F33FC5F00219C35 /* HMACCommonCrypto.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HMACCommonCrypto.swift; sourceTree = "<group>"; };
+		273011091F33FC9100219C35 /* HMACCryptoSwift.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HMACCryptoSwift.swift; sourceTree = "<group>"; };
 		277794041DF221F800573F3E /* ClaimSet.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ClaimSet.swift; sourceTree = "<group>"; };
 		2777940A1DF22BE400573F3E /* JOSEHeader.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = JOSEHeader.swift; sourceTree = "<group>"; };
 		2777940F1DF22D0D00573F3E /* Encode.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Encode.swift; sourceTree = "<group>"; };
@@ -218,6 +229,9 @@
 				520A71151C469F010005C709 /* Decode.swift */,
 				2777940F1DF22D0D00573F3E /* Encode.swift */,
 				520A71161C469F010005C709 /* JWT.swift */,
+				273010FE1F33EABA00219C35 /* HMAC.swift */,
+				273011041F33FC5F00219C35 /* HMACCommonCrypto.swift */,
+				273011091F33FC9100219C35 /* HMACCryptoSwift.swift */,
 			);
 			path = Sources;
 			sourceTree = "<group>";
@@ -481,7 +495,9 @@
 				277794101DF22D0D00573F3E /* Encode.swift in Sources */,
 				2777940B1DF22BE400573F3E /* JOSEHeader.swift in Sources */,
 				277794051DF221F800573F3E /* ClaimSet.swift in Sources */,
+				273010FF1F33EABA00219C35 /* HMAC.swift in Sources */,
 				520A71171C469F010005C709 /* Base64.swift in Sources */,
+				2730110A1F33FC9100219C35 /* HMACCryptoSwift.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -503,7 +519,9 @@
 				277794111DF22D0D00573F3E /* Encode.swift in Sources */,
 				2777940C1DF22BE400573F3E /* JOSEHeader.swift in Sources */,
 				277794061DF221F800573F3E /* ClaimSet.swift in Sources */,
+				273011001F33EABA00219C35 /* HMAC.swift in Sources */,
 				CD9B621A1C7753D8005D4844 /* Base64.swift in Sources */,
+				2730110B1F33FC9100219C35 /* HMACCryptoSwift.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -517,7 +535,9 @@
 				277794121DF22D0D00573F3E /* Encode.swift in Sources */,
 				2777940D1DF22BE400573F3E /* JOSEHeader.swift in Sources */,
 				277794071DF221F800573F3E /* ClaimSet.swift in Sources */,
+				273011011F33EABA00219C35 /* HMAC.swift in Sources */,
 				CD9B622C1C7753EC005D4844 /* Base64.swift in Sources */,
+				2730110C1F33FC9100219C35 /* HMACCryptoSwift.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -531,7 +551,9 @@
 				277794131DF22D0D00573F3E /* Encode.swift in Sources */,
 				2777940E1DF22BE400573F3E /* JOSEHeader.swift in Sources */,
 				277794081DF221F800573F3E /* ClaimSet.swift in Sources */,
+				273011021F33EABA00219C35 /* HMAC.swift in Sources */,
 				CD9B623E1C7753FB005D4844 /* Base64.swift in Sources */,
+				2730110D1F33FC9100219C35 /* HMACCryptoSwift.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

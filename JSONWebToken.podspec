@@ -14,4 +14,5 @@ Pod::Spec.new do |spec|
   spec.requires_arc = true
   spec.dependency 'CryptoSwift', '~> 0.6.1'
   spec.module_name = 'JWT'
+  spec.exclude_files = ['Sources/HMACCommonCrypto.swift']
 end

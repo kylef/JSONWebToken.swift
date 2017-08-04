@@ -1,5 +1,4 @@
 import Foundation
-import CryptoSwift
 
 public typealias Payload = [String: Any]
 
@@ -32,16 +31,9 @@ public enum Algorithm: CustomStringConvertible {
 
   /// Sign a message using the algorithm
   func sign(_ message: String) -> String {
-    func signHS(_ key: Data, variant: CryptoSwift.HMAC.Variant) -> String {
+    func signHS(_ key: Data, algorithm: HMACAlgorithm) -> String {
       let messageData = message.data(using: String.Encoding.utf8, allowLossyConversion: false)!
-      let mac = HMAC(key: key.bytes, variant: variant)
-      let result: [UInt8]
-      do {
-        result = try mac.authenticate(messageData.bytes)
-      } catch {
-        result = []
-      }
-      return base64encode(Data(bytes: result))
+      return base64encode(hmac(algorithm: algorithm, key: key, message: messageData))
     }
 
     switch self {
@@ -49,13 +41,13 @@ public enum Algorithm: CustomStringConvertible {
       return ""
 
     case .hs256(let key):
-      return signHS(key, variant: .sha256)
+      return signHS(key, algorithm: .sha256)
 
     case .hs384(let key):
-      return signHS(key, variant: .sha384)
+      return signHS(key, algorithm: .sha384)
 
     case .hs512(let key):
-      return signHS(key, variant: .sha512)
+      return signHS(key, algorithm: .sha512)
     }
   }
 
