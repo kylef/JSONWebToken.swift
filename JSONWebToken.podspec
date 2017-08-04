@@ -12,7 +12,18 @@ Pod::Spec.new do |spec|
   spec.tvos.deployment_target = '9.0'
   spec.watchos.deployment_target = '2.0'
   spec.requires_arc = true
-  spec.dependency 'CryptoSwift', '~> 0.6.1'
   spec.module_name = 'JWT'
-  spec.exclude_files = ['Sources/HMACCommonCrypto.swift']
+  spec.exclude_files = ['Sources/HMACCryptoSwift.swift']
+
+  if ARGV.include?('lint')
+    spec.pod_target_xcconfig = {
+      'SWIFT_INCLUDE_PATHS' => Dir.pwd,
+    }
+  else
+    spec.pod_target_xcconfig = {
+      'SWIFT_INCLUDE_PATHS' => '$(PODS_ROOT)/JSONWebToken/',
+    }
+  end
+
+  spec.preserve_paths = 'CommonCrypto/{shim.h,module.modulemap}'
 end
