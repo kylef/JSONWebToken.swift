@@ -1,6 +1,6 @@
 import Foundation
 
-func validateDate(_ payload: Payload, key: String, comparison: ComparisonResult, failure: InvalidToken, decodeError: String) throws {
+func validateDate(_ payload: Payload, key: String, comparison: ComparisonResult, leeway: TimeInterval = 0, failure: InvalidToken, decodeError: String) throws {
   if payload[key] == nil {
     return
   }
@@ -8,8 +8,8 @@ func validateDate(_ payload: Payload, key: String, comparison: ComparisonResult,
   guard let date = extractDate(payload: payload, key: key) else {
     throw InvalidToken.decodeError(decodeError)
   }
-
-  if date.compare(Date()) == comparison {
+	
+  if date.compare(Date().addingTimeInterval(leeway)) == comparison {
     throw failure
   }
 }
