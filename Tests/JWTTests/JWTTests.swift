@@ -279,6 +279,89 @@ class DecodeTests: XCTestCase {
   }
 }
 
+class ValidationTests: XCTestCase {
+  func testClaimJustExpiredWithoutLeeway() {
+    var claims = ClaimSet()
+    claims.expiration = Date().addingTimeInterval(-1)
+    
+    let expectation = XCTestExpectation(description: "Signature should be expired.")
+    do {
+      try claims.validateExpiary()
+      XCTFail("InvalidToken.expiredSignature error should have been thrown.")
+    } catch InvalidToken.expiredSignature {
+      expectation.fulfill()
+    } catch {
+      XCTFail("Unexpected error while validating exp claim.")
+    }
+    self.wait(for: [expectation], timeout: 0.5)
+  }
+  
+  func testClaimJustNotExpiredWithoutLeeway() {
+    var claims = ClaimSet()
+    claims.expiration = Date().addingTimeInterval(-1)
+    
+    do {
+      try claims.validateExpiary(leeway: 2)
+    } catch {
+      XCTFail("Unexpected error while validating exp claim that should be valid with leeway.")
+    }
+  }
+  
+  func testNotBeforeIsImmatureSignatureWithoutLeeway() {
+    var claims = ClaimSet()
+    claims.notBefore = Date().addingTimeInterval(1)
+    
+    let expectation = XCTestExpectation(description: "Signature should be immature.")
+    do {
+      try claims.validateNotBefore()
+      XCTFail("InvalidToken.immatureSignature error should have been thrown.")
+    } catch InvalidToken.immatureSignature {
+      expectation.fulfill()
+    } catch {
+      XCTFail("Unexpected error while validating nbf claim.")
+    }
+    self.wait(for: [expectation], timeout: 0.5)
+  }
+  
+  func testNotBeforeIsValidWithLeeway() {
+    var claims = ClaimSet()
+    claims.notBefore = Date().addingTimeInterval(1)
+    
+    do {
+      try claims.validateNotBefore(leeway: 2)
+    } catch {
+      XCTFail("Unexpected error while validating nbf claim that should be valid with leeway.")
+    }
+  }
+  
+  func testIssuedAtIsInFutureWithoutLeeway() {
+    var claims = ClaimSet()
+    claims.issuedAt = Date().addingTimeInterval(1)
+    
+    let expectation = XCTestExpectation(description: "iat should be in the future.")
+    do {
+      try claims.validateIssuedAt()
+      XCTFail("InvalidToken.invalidIssuedAt error should have been thrown.")
+    } catch InvalidToken.invalidIssuedAt {
+      expectation.fulfill()
+    } catch {
+      XCTFail("Unexpected error while validating iat claim.")
+    }
+    self.wait(for: [expectation], timeout: 0.5)
+  }
+  
+  func testIssuedAtIsValidWithLeeway() {
+    var claims = ClaimSet()
+    claims.issuedAt = Date().addingTimeInterval(1)
+    
+    do {
+      try claims.validateIssuedAt(leeway: 2)
+    } catch {
+      XCTFail("Unexpected error while validating iat claim that should be valid with leeway.")
+    }
+  }
+}
+
 // MARK: Helpers
 
 func assertSuccess(_ decoder: @autoclosure () throws -> Payload, closure: ((Payload) -> Void)? = nil) {
