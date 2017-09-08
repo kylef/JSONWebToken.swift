@@ -374,7 +374,7 @@ class IntegrationTests: XCTestCase {
     
     let expectation = XCTestExpectation(description: "Verification should fail.")
     do {
-      let _ = try JWT.decode(token, algorithm: .none)
+      let _ = try JWT.decode(token, algorithm: .none, leeway: 0)
       XCTFail("InvalidToken error should have been thrown.")
     } catch is InvalidToken {
       expectation.fulfill()
