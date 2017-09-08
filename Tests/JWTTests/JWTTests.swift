@@ -283,17 +283,15 @@ class ValidationTests: XCTestCase {
   func testClaimJustExpiredWithoutLeeway() {
     var claims = ClaimSet()
     claims.expiration = Date().addingTimeInterval(-1)
-    
-    let expectation = XCTestExpectation(description: "Signature should be expired.")
+		
     do {
       try claims.validateExpiary()
       XCTFail("InvalidToken.expiredSignature error should have been thrown.")
     } catch InvalidToken.expiredSignature {
-      expectation.fulfill()
+      // Correct error thrown
     } catch {
       XCTFail("Unexpected error while validating exp claim.")
     }
-    self.wait(for: [expectation], timeout: 0.5)
   }
   
   func testClaimJustNotExpiredWithoutLeeway() {
@@ -311,16 +309,14 @@ class ValidationTests: XCTestCase {
     var claims = ClaimSet()
     claims.notBefore = Date().addingTimeInterval(1)
     
-    let expectation = XCTestExpectation(description: "Signature should be immature.")
     do {
       try claims.validateNotBefore()
       XCTFail("InvalidToken.immatureSignature error should have been thrown.")
     } catch InvalidToken.immatureSignature {
-      expectation.fulfill()
+      // Correct error thrown
     } catch {
       XCTFail("Unexpected error while validating nbf claim.")
     }
-    self.wait(for: [expectation], timeout: 0.5)
   }
   
   func testNotBeforeIsValidWithLeeway() {
@@ -337,17 +333,15 @@ class ValidationTests: XCTestCase {
   func testIssuedAtIsInFutureWithoutLeeway() {
     var claims = ClaimSet()
     claims.issuedAt = Date().addingTimeInterval(1)
-    
-    let expectation = XCTestExpectation(description: "iat should be in the future.")
+		
     do {
       try claims.validateIssuedAt()
       XCTFail("InvalidToken.invalidIssuedAt error should have been thrown.")
     } catch InvalidToken.invalidIssuedAt {
-      expectation.fulfill()
+      // Correct error thrown
     } catch {
       XCTFail("Unexpected error while validating iat claim.")
     }
-    self.wait(for: [expectation], timeout: 0.5)
   }
   
   func testIssuedAtIsValidWithLeeway() {
@@ -371,17 +365,15 @@ class IntegrationTests: XCTestCase {
       builder.notBefore = Date().addingTimeInterval(1) // Token starts being valid in one second
       builder.issuedAt = Date().addingTimeInterval(1) // Token is issued one second in the future
     }
-    
-    let expectation = XCTestExpectation(description: "Verification should fail.")
+		
     do {
       let _ = try JWT.decode(token, algorithm: .none, leeway: 0)
       XCTFail("InvalidToken error should have been thrown.")
     } catch is InvalidToken {
-      expectation.fulfill()
+			// Correct error thrown
     } catch {
       XCTFail("Unexpected error type while verifying token.")
     }
-    self.wait(for: [expectation], timeout: 0.5)
   }
   
   func testVerificationSuccessWithLeeway() {
