@@ -68,6 +68,12 @@ try JWT.decode("eyJh...5w", algorithms: [
 ])
 ```
 
+You might also want to give your iat, exp and nbf checks some kind of leeway to account for skewed clocks. You can do this by passing a `leeway` parameter like this:
+
+```swift
+try JWT.decode("eyJh...5w", algorithm: .hs256("secret".data(using: .utf8)!), leeway: 10)
+```
+
 #### Supported claims
 
 The library supports validating the following claims:
