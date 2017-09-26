@@ -93,7 +93,7 @@ extension ClaimSet {
 // MARK: Validations
 
 extension ClaimSet {
-  public func validate(audience: String? = nil, issuer: String? = nil) throws {
+  public func validate(audience: String? = nil, issuer: String? = nil, leeway: TimeInterval = 0) throws {
     if let issuer = issuer {
       try validateIssuer(issuer)
     }
@@ -101,10 +101,10 @@ extension ClaimSet {
     if let audience = audience {
       try validateAudience(audience)
     }
-
-    try validateExpiary()
-    try validateNotBefore()
-    try validateIssuedAt()
+		
+    try validateExpiary(leeway: leeway)
+    try validateNotBefore(leeway: leeway)
+    try validateIssuedAt(leeway: leeway)
   }
 
   public func validateAudience(_ audience: String) throws {
@@ -131,16 +131,16 @@ extension ClaimSet {
     }
   }
 
-  public func validateExpiary() throws {
-    try validateDate(claims, key: "exp", comparison: .orderedAscending, failure: .expiredSignature, decodeError: "Expiration time claim (exp) must be an integer")
+  public func validateExpiary(leeway: TimeInterval = 0) throws {
+    try validateDate(claims, key: "exp", comparison: .orderedAscending, leeway: (-1 * leeway), failure: .expiredSignature, decodeError: "Expiration time claim (exp) must be an integer")
   }
 
-  public func validateNotBefore() throws {
-    try validateDate(claims, key: "nbf", comparison: .orderedDescending, failure: .immatureSignature, decodeError: "Not before claim (nbf) must be an integer")
+  public func validateNotBefore(leeway: TimeInterval = 0) throws {
+    try validateDate(claims, key: "nbf", comparison: .orderedDescending, leeway: leeway, failure: .immatureSignature, decodeError: "Not before claim (nbf) must be an integer")
   }
 
-  public func validateIssuedAt() throws {
-    try validateDate(claims, key: "iat", comparison: .orderedDescending, failure: .invalidIssuedAt, decodeError: "Issued at claim (iat) must be an integer")
+  public func validateIssuedAt(leeway: TimeInterval = 0) throws {
+    try validateDate(claims, key: "iat", comparison: .orderedDescending, leeway: leeway, failure: .invalidIssuedAt, decodeError: "Issued at claim (iat) must be an integer")
   }
 }
 

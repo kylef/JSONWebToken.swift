@@ -47,11 +47,11 @@ public enum InvalidToken: CustomStringConvertible, Error {
 
 
 /// Decode a JWT
-public func decode(_ jwt: String, algorithms: [Algorithm], verify: Bool = true, audience: String? = nil, issuer: String? = nil) throws -> ClaimSet {
+public func decode(_ jwt: String, algorithms: [Algorithm], verify: Bool = true, audience: String? = nil, issuer: String? = nil, leeway: TimeInterval = 0) throws -> ClaimSet {
   let (header, claims, signature, signatureInput) = try load(jwt)
 
   if verify {
-    try claims.validate(audience: audience, issuer: issuer)
+    try claims.validate(audience: audience, issuer: issuer, leeway: leeway)
     try verifySignature(algorithms, header: header, signingInput: signatureInput, signature: signature)
   }
 
@@ -59,8 +59,8 @@ public func decode(_ jwt: String, algorithms: [Algorithm], verify: Bool = true, 
 }
 
 /// Decode a JWT
-public func decode(_ jwt: String, algorithm: Algorithm, verify: Bool = true, audience: String? = nil, issuer: String? = nil) throws -> ClaimSet {
-  return try decode(jwt, algorithms: [algorithm], verify: verify, audience: audience, issuer: issuer)
+public func decode(_ jwt: String, algorithm: Algorithm, verify: Bool = true, audience: String? = nil, issuer: String? = nil, leeway: TimeInterval = 0) throws -> ClaimSet {
+  return try decode(jwt, algorithms: [algorithm], verify: verify, audience: audience, issuer: issuer, leeway: leeway)
 }
 
 /// Decode a JWT

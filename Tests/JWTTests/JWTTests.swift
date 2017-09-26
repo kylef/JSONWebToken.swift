@@ -28,6 +28,13 @@ class EncodeTests: XCTestCase {
       XCTAssertEqual(payload as! [String: String], ["iss": "fuller.li"])
     }
   }
+
+  func testEncodingClaimsWithHeaders() {
+    let algorithm = Algorithm.hs256("secret".data(using: .utf8)!)
+    let jwt = JWT.encode(claims: ClaimSet(), algorithm: algorithm, headers: ["kid": "x"])
+
+    XCTAssertEqual(jwt, "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCIsImtpZCI6IngifQ.e30.ddEotxYYMMdat5HPgYFQnkHRdPXsxPG71ooyhIUoqGA")
+  }
 }
 
 class PayloadTests: XCTestCase {
@@ -268,6 +275,121 @@ class DecodeTests: XCTestCase {
     let jwt = "eyJhbGciOiJIUzUxMiIsInR5cCI6IkpXVCJ9.eyJzb21lIjoicGF5bG9hZCJ9.WTzLzFO079PduJiFIyzrOah54YaM8qoxH9fLMQoQhKtw3_fMGjImIOokijDkXVbyfBqhMo2GCNu4w9v7UXvnpA"
     assertSuccess(try decode(jwt, algorithm: .hs512("secret".data(using: .utf8)!))) { payload in
       XCTAssertEqual(payload as! [String: String], ["some": "payload"])
+    }
+  }
+}
+
+class ValidationTests: XCTestCase {
+  func testClaimJustExpiredWithoutLeeway() {
+    var claims = ClaimSet()
+    claims.expiration = Date().addingTimeInterval(-1)
+		
+    do {
+      try claims.validateExpiary()
+      XCTFail("InvalidToken.expiredSignature error should have been thrown.")
+    } catch InvalidToken.expiredSignature {
+      // Correct error thrown
+    } catch {
+      XCTFail("Unexpected error while validating exp claim.")
+    }
+  }
+  
+  func testClaimJustNotExpiredWithoutLeeway() {
+    var claims = ClaimSet()
+    claims.expiration = Date().addingTimeInterval(-1)
+    
+    do {
+      try claims.validateExpiary(leeway: 2)
+    } catch {
+      XCTFail("Unexpected error while validating exp claim that should be valid with leeway.")
+    }
+  }
+  
+  func testNotBeforeIsImmatureSignatureWithoutLeeway() {
+    var claims = ClaimSet()
+    claims.notBefore = Date().addingTimeInterval(1)
+    
+    do {
+      try claims.validateNotBefore()
+      XCTFail("InvalidToken.immatureSignature error should have been thrown.")
+    } catch InvalidToken.immatureSignature {
+      // Correct error thrown
+    } catch {
+      XCTFail("Unexpected error while validating nbf claim.")
+    }
+  }
+  
+  func testNotBeforeIsValidWithLeeway() {
+    var claims = ClaimSet()
+    claims.notBefore = Date().addingTimeInterval(1)
+    
+    do {
+      try claims.validateNotBefore(leeway: 2)
+    } catch {
+      XCTFail("Unexpected error while validating nbf claim that should be valid with leeway.")
+    }
+  }
+  
+  func testIssuedAtIsInFutureWithoutLeeway() {
+    var claims = ClaimSet()
+    claims.issuedAt = Date().addingTimeInterval(1)
+		
+    do {
+      try claims.validateIssuedAt()
+      XCTFail("InvalidToken.invalidIssuedAt error should have been thrown.")
+    } catch InvalidToken.invalidIssuedAt {
+      // Correct error thrown
+    } catch {
+      XCTFail("Unexpected error while validating iat claim.")
+    }
+  }
+  
+  func testIssuedAtIsValidWithLeeway() {
+    var claims = ClaimSet()
+    claims.issuedAt = Date().addingTimeInterval(1)
+    
+    do {
+      try claims.validateIssuedAt(leeway: 2)
+    } catch {
+      XCTFail("Unexpected error while validating iat claim that should be valid with leeway.")
+    }
+  }
+}
+
+class IntegrationTests: XCTestCase {
+  func testVerificationFailureWithoutLeeway() {
+    let token = JWT.encode(.none) { builder in
+      builder.issuer = "fuller.li"
+      builder.audience = "cocoapods"
+      builder.expiration = Date().addingTimeInterval(-1) // Token expired one second ago
+      builder.notBefore = Date().addingTimeInterval(1) // Token starts being valid in one second
+      builder.issuedAt = Date().addingTimeInterval(1) // Token is issued one second in the future
+    }
+		
+    do {
+      let _ = try JWT.decode(token, algorithm: .none, leeway: 0)
+      XCTFail("InvalidToken error should have been thrown.")
+    } catch is InvalidToken {
+			// Correct error thrown
+    } catch {
+      XCTFail("Unexpected error type while verifying token.")
+    }
+  }
+  
+  func testVerificationSuccessWithLeeway() {
+    let token = JWT.encode(.none) { builder in
+      builder.issuer = "fuller.li"
+      builder.audience = "cocoapods"
+      builder.expiration = Date().addingTimeInterval(-1) // Token expired one second ago
+      builder.notBefore = Date().addingTimeInterval(1) // Token starts being valid in one second
+      builder.issuedAt = Date().addingTimeInterval(1) // Token is issued one second in the future
+    }
+    
+    do {
+      let _ = try JWT.decode(token, algorithm: .none, leeway: 2)
+      // Due to leeway no error gets thrown.
+    } catch {
+      XCTFail("Unexpected error type while verifying token.")
     }
   }
 }

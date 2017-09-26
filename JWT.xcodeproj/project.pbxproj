@@ -7,9 +7,14 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		2734C6A81D88001F00BFF9F1 /* CryptoSwift.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 66725DAB1C59202E00FC32F4 /* CryptoSwift.framework */; };
-		2734C6A91D88002900BFF9F1 /* CryptoSwift.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 66725DAB1C59202E00FC32F4 /* CryptoSwift.framework */; };
-		2734C6AA1D88003000BFF9F1 /* CryptoSwift.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 66725DAB1C59202E00FC32F4 /* CryptoSwift.framework */; };
+		273010FF1F33EABA00219C35 /* HMAC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 273010FE1F33EABA00219C35 /* HMAC.swift */; };
+		273011001F33EABA00219C35 /* HMAC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 273010FE1F33EABA00219C35 /* HMAC.swift */; };
+		273011011F33EABA00219C35 /* HMAC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 273010FE1F33EABA00219C35 /* HMAC.swift */; };
+		273011021F33EABA00219C35 /* HMAC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 273010FE1F33EABA00219C35 /* HMAC.swift */; };
+		273011161F34029900219C35 /* HMACCommonCrypto.swift in Sources */ = {isa = PBXBuildFile; fileRef = 273011041F33FC5F00219C35 /* HMACCommonCrypto.swift */; };
+		273011171F34029900219C35 /* HMACCommonCrypto.swift in Sources */ = {isa = PBXBuildFile; fileRef = 273011041F33FC5F00219C35 /* HMACCommonCrypto.swift */; };
+		273011181F34029A00219C35 /* HMACCommonCrypto.swift in Sources */ = {isa = PBXBuildFile; fileRef = 273011041F33FC5F00219C35 /* HMACCommonCrypto.swift */; };
+		273011191F34029A00219C35 /* HMACCommonCrypto.swift in Sources */ = {isa = PBXBuildFile; fileRef = 273011041F33FC5F00219C35 /* HMACCommonCrypto.swift */; };
 		277794051DF221F800573F3E /* ClaimSet.swift in Sources */ = {isa = PBXBuildFile; fileRef = 277794041DF221F800573F3E /* ClaimSet.swift */; };
 		277794061DF221F800573F3E /* ClaimSet.swift in Sources */ = {isa = PBXBuildFile; fileRef = 277794041DF221F800573F3E /* ClaimSet.swift */; };
 		277794071DF221F800573F3E /* ClaimSet.swift in Sources */ = {isa = PBXBuildFile; fileRef = 277794041DF221F800573F3E /* ClaimSet.swift */; };
@@ -44,7 +49,6 @@
 		CD9B623D1C7753FB005D4844 /* Decode.swift in Sources */ = {isa = PBXBuildFile; fileRef = 520A71151C469F010005C709 /* Decode.swift */; };
 		CD9B623E1C7753FB005D4844 /* Base64.swift in Sources */ = {isa = PBXBuildFile; fileRef = 520A71131C469F010005C709 /* Base64.swift */; };
 		CD9B62421C7753FB005D4844 /* JWT.h in Headers */ = {isa = PBXBuildFile; fileRef = 279D63A11AD07FFF0024E2BC /* JWT.h */; settings = {ATTRIBUTES = (Public, ); }; };
-		CD9B62891C7758BB005D4844 /* CryptoSwift.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 66725DAB1C59202E00FC32F4 /* CryptoSwift.framework */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -55,30 +59,12 @@
 			remoteGlobalIDString = 279D639B1AD07FFF0024E2BC;
 			remoteInfo = JWT;
 		};
-		66725DAA1C59202E00FC32F4 /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = 66725DA21C59202E00FC32F4 /* CryptoSwift.xcodeproj */;
-			proxyType = 2;
-			remoteGlobalIDString = 754BE45519693E190098E6F3;
-			remoteInfo = "CryptoSwift iOS";
-		};
-		66725DB21C59202E00FC32F4 /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = 66725DA21C59202E00FC32F4 /* CryptoSwift.xcodeproj */;
-			proxyType = 2;
-			remoteGlobalIDString = 754BE46019693E190098E6F3;
-			remoteInfo = CryptoSwiftTests;
-		};
-		CD9B628A1C7758CA005D4844 /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = 66725DA21C59202E00FC32F4 /* CryptoSwift.xcodeproj */;
-			proxyType = 1;
-			remoteGlobalIDString = 754BE45419693E190098E6F3;
-			remoteInfo = "CryptoSwift iOS";
-		};
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		273010FE1F33EABA00219C35 /* HMAC.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HMAC.swift; sourceTree = "<group>"; };
+		273011041F33FC5F00219C35 /* HMACCommonCrypto.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HMACCommonCrypto.swift; sourceTree = "<group>"; };
+		273011091F33FC9100219C35 /* HMACCryptoSwift.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HMACCryptoSwift.swift; sourceTree = "<group>"; };
 		277794041DF221F800573F3E /* ClaimSet.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ClaimSet.swift; sourceTree = "<group>"; };
 		2777940A1DF22BE400573F3E /* JOSEHeader.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = JOSEHeader.swift; sourceTree = "<group>"; };
 		2777940F1DF22D0D00573F3E /* Encode.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Encode.swift; sourceTree = "<group>"; };
@@ -94,7 +80,6 @@
 		520A71161C469F010005C709 /* JWT.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = JWT.swift; sourceTree = "<group>"; };
 		520A711B1C469F440005C709 /* Package.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Package.swift; sourceTree = "<group>"; };
 		540942F3614C41E3827F2013 /* Pods_JWT.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_JWT.framework; sourceTree = BUILT_PRODUCTS_DIR; };
-		66725DA21C59202E00FC32F4 /* CryptoSwift.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = CryptoSwift.xcodeproj; path = Carthage/Checkouts/CryptoSwift/CryptoSwift.xcodeproj; sourceTree = "<group>"; };
 		CD9B62231C7753D8005D4844 /* JWT.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = JWT.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		CD9B62351C7753EC005D4844 /* JWT.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = JWT.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		CD9B62471C7753FB005D4844 /* JWT.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = JWT.framework; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -106,7 +91,6 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				2734C6A81D88001F00BFF9F1 /* CryptoSwift.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -122,7 +106,6 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				CD9B62891C7758BB005D4844 /* CryptoSwift.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -130,7 +113,6 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				2734C6A91D88002900BFF9F1 /* CryptoSwift.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -138,7 +120,6 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				2734C6AA1D88003000BFF9F1 /* CryptoSwift.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -148,7 +129,6 @@
 		279D63921AD07FFF0024E2BC = {
 			isa = PBXGroup;
 			children = (
-				66725DA21C59202E00FC32F4 /* CryptoSwift.xcodeproj */,
 				520A711B1C469F440005C709 /* Package.swift */,
 				520A71121C469F010005C709 /* Sources */,
 				279D639E1AD07FFF0024E2BC /* Sources */,
@@ -218,17 +198,11 @@
 				520A71151C469F010005C709 /* Decode.swift */,
 				2777940F1DF22D0D00573F3E /* Encode.swift */,
 				520A71161C469F010005C709 /* JWT.swift */,
+				273010FE1F33EABA00219C35 /* HMAC.swift */,
+				273011041F33FC5F00219C35 /* HMACCommonCrypto.swift */,
+				273011091F33FC9100219C35 /* HMACCryptoSwift.swift */,
 			);
 			path = Sources;
-			sourceTree = "<group>";
-		};
-		66725DA31C59202E00FC32F4 /* Products */ = {
-			isa = PBXGroup;
-			children = (
-				66725DAB1C59202E00FC32F4 /* CryptoSwift.framework */,
-				66725DB31C59202E00FC32F4 /* Tests.xctest */,
-			);
-			name = Products;
 			sourceTree = "<group>";
 		};
 		AC8AE547FDAF3DD80EB4DB2F /* Frameworks */ = {
@@ -326,7 +300,6 @@
 			buildRules = (
 			);
 			dependencies = (
-				CD9B628B1C7758CA005D4844 /* PBXTargetDependency */,
 			);
 			name = "JWT-iOS";
 			productName = JWT;
@@ -398,12 +371,6 @@
 			mainGroup = 279D63921AD07FFF0024E2BC;
 			productRefGroup = 279D639D1AD07FFF0024E2BC /* Products */;
 			projectDirPath = "";
-			projectReferences = (
-				{
-					ProductGroup = 66725DA31C59202E00FC32F4 /* Products */;
-					ProjectRef = 66725DA21C59202E00FC32F4 /* CryptoSwift.xcodeproj */;
-				},
-			);
 			projectRoot = "";
 			targets = (
 				279D639B1AD07FFF0024E2BC /* JWT-OSX */,
@@ -414,23 +381,6 @@
 			);
 		};
 /* End PBXProject section */
-
-/* Begin PBXReferenceProxy section */
-		66725DAB1C59202E00FC32F4 /* CryptoSwift.framework */ = {
-			isa = PBXReferenceProxy;
-			fileType = wrapper.framework;
-			path = CryptoSwift.framework;
-			remoteRef = 66725DAA1C59202E00FC32F4 /* PBXContainerItemProxy */;
-			sourceTree = BUILT_PRODUCTS_DIR;
-		};
-		66725DB31C59202E00FC32F4 /* Tests.xctest */ = {
-			isa = PBXReferenceProxy;
-			fileType = wrapper.cfbundle;
-			path = Tests.xctest;
-			remoteRef = 66725DB21C59202E00FC32F4 /* PBXContainerItemProxy */;
-			sourceTree = BUILT_PRODUCTS_DIR;
-		};
-/* End PBXReferenceProxy section */
 
 /* Begin PBXResourcesBuildPhase section */
 		279D63A51AD07FFF0024E2BC /* Resources */ = {
@@ -475,12 +425,14 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				273011161F34029900219C35 /* HMACCommonCrypto.swift in Sources */,
 				520A71181C469F010005C709 /* Claims.swift in Sources */,
 				520A711A1C469F010005C709 /* JWT.swift in Sources */,
 				520A71191C469F010005C709 /* Decode.swift in Sources */,
 				277794101DF22D0D00573F3E /* Encode.swift in Sources */,
 				2777940B1DF22BE400573F3E /* JOSEHeader.swift in Sources */,
 				277794051DF221F800573F3E /* ClaimSet.swift in Sources */,
+				273010FF1F33EABA00219C35 /* HMAC.swift in Sources */,
 				520A71171C469F010005C709 /* Base64.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -497,12 +449,14 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				273011171F34029900219C35 /* HMACCommonCrypto.swift in Sources */,
 				CD9B62171C7753D8005D4844 /* Claims.swift in Sources */,
 				CD9B62181C7753D8005D4844 /* JWT.swift in Sources */,
 				CD9B62191C7753D8005D4844 /* Decode.swift in Sources */,
 				277794111DF22D0D00573F3E /* Encode.swift in Sources */,
 				2777940C1DF22BE400573F3E /* JOSEHeader.swift in Sources */,
 				277794061DF221F800573F3E /* ClaimSet.swift in Sources */,
+				273011001F33EABA00219C35 /* HMAC.swift in Sources */,
 				CD9B621A1C7753D8005D4844 /* Base64.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -511,12 +465,14 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				273011181F34029A00219C35 /* HMACCommonCrypto.swift in Sources */,
 				CD9B62291C7753EC005D4844 /* Claims.swift in Sources */,
 				CD9B622A1C7753EC005D4844 /* JWT.swift in Sources */,
 				CD9B622B1C7753EC005D4844 /* Decode.swift in Sources */,
 				277794121DF22D0D00573F3E /* Encode.swift in Sources */,
 				2777940D1DF22BE400573F3E /* JOSEHeader.swift in Sources */,
 				277794071DF221F800573F3E /* ClaimSet.swift in Sources */,
+				273011011F33EABA00219C35 /* HMAC.swift in Sources */,
 				CD9B622C1C7753EC005D4844 /* Base64.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -525,12 +481,14 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				273011191F34029A00219C35 /* HMACCommonCrypto.swift in Sources */,
 				CD9B623B1C7753FB005D4844 /* Claims.swift in Sources */,
 				CD9B623C1C7753FB005D4844 /* JWT.swift in Sources */,
 				CD9B623D1C7753FB005D4844 /* Decode.swift in Sources */,
 				277794131DF22D0D00573F3E /* Encode.swift in Sources */,
 				2777940E1DF22BE400573F3E /* JOSEHeader.swift in Sources */,
 				277794081DF221F800573F3E /* ClaimSet.swift in Sources */,
+				273011021F33EABA00219C35 /* HMAC.swift in Sources */,
 				CD9B623E1C7753FB005D4844 /* Base64.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -542,11 +500,6 @@
 			isa = PBXTargetDependency;
 			target = 279D639B1AD07FFF0024E2BC /* JWT-OSX */;
 			targetProxy = 279D63A91AD07FFF0024E2BC /* PBXContainerItemProxy */;
-		};
-		CD9B628B1C7758CA005D4844 /* PBXTargetDependency */ = {
-			isa = PBXTargetDependency;
-			name = "CryptoSwift iOS";
-			targetProxy = CD9B628A1C7758CA005D4844 /* PBXContainerItemProxy */;
 		};
 /* End PBXTargetDependency section */
 
@@ -594,6 +547,7 @@
 				ONLY_ACTIVE_ARCH = YES;
 				PRODUCT_NAME = "$(PROJECT_NAME)";
 				SDKROOT = macosx;
+				SWIFT_INCLUDE_PATHS = "$(SRCROOT)";
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
 				SWIFT_VERSION = 3.0;
 				VERSIONING_SYSTEM = "apple-generic";
@@ -637,6 +591,7 @@
 				MTL_ENABLE_DEBUG_INFO = NO;
 				PRODUCT_NAME = "$(PROJECT_NAME)";
 				SDKROOT = macosx;
+				SWIFT_INCLUDE_PATHS = "$(SRCROOT)";
 				SWIFT_OPTIMIZATION_LEVEL = "-Owholemodule";
 				SWIFT_VERSION = 3.0;
 				VERSIONING_SYSTEM = "apple-generic";
