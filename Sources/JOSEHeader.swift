@@ -25,4 +25,14 @@ struct JOSEHeader {
       parameters["alg"] = newValue
     }
   }
+
+  var type: String? {
+    get {
+      return parameters["typ"] as? String
+    }
+
+    set {
+      parameters["typ"] = newValue
+    }
+  }
 }

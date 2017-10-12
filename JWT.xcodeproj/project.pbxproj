@@ -11,6 +11,7 @@
 		271E10811F90253300B5033C /* JWA.swift in Sources */ = {isa = PBXBuildFile; fileRef = 271E107F1F90253300B5033C /* JWA.swift */; };
 		271E10821F90253300B5033C /* JWA.swift in Sources */ = {isa = PBXBuildFile; fileRef = 271E107F1F90253300B5033C /* JWA.swift */; };
 		271E10831F90253300B5033C /* JWA.swift in Sources */ = {isa = PBXBuildFile; fileRef = 271E107F1F90253300B5033C /* JWA.swift */; };
+		271E10851F90274A00B5033C /* JOSEHeaderTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 271E10841F90274A00B5033C /* JOSEHeaderTests.swift */; };
 		273010FF1F33EABA00219C35 /* HMAC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 273010FE1F33EABA00219C35 /* HMAC.swift */; };
 		273011001F33EABA00219C35 /* HMAC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 273010FE1F33EABA00219C35 /* HMAC.swift */; };
 		273011011F33EABA00219C35 /* HMAC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 273010FE1F33EABA00219C35 /* HMAC.swift */; };
@@ -67,6 +68,7 @@
 
 /* Begin PBXFileReference section */
 		271E107F1F90253300B5033C /* JWA.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = JWA.swift; sourceTree = "<group>"; };
+		271E10841F90274A00B5033C /* JOSEHeaderTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = JOSEHeaderTests.swift; sourceTree = "<group>"; };
 		273010FE1F33EABA00219C35 /* HMAC.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HMAC.swift; sourceTree = "<group>"; };
 		273011041F33FC5F00219C35 /* HMACCommonCrypto.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HMACCommonCrypto.swift; sourceTree = "<group>"; };
 		273011091F33FC9100219C35 /* HMACCryptoSwift.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HMACCryptoSwift.swift; sourceTree = "<group>"; };
@@ -179,6 +181,7 @@
 			isa = PBXGroup;
 			children = (
 				279D63AE1AD07FFF0024E2BC /* JWTTests.swift */,
+				271E10841F90274A00B5033C /* JOSEHeaderTests.swift */,
 				279D63AC1AD07FFF0024E2BC /* Supporting Files */,
 			);
 			name = Tests;
@@ -449,6 +452,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				279D63AF1AD07FFF0024E2BC /* JWTTests.swift in Sources */,
+				271E10851F90274A00B5033C /* JOSEHeaderTests.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
