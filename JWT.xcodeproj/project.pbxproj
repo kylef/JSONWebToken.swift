@@ -133,6 +133,24 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		271E10861F902D8900B5033C /* JWT */ = {
+			isa = PBXGroup;
+			children = (
+				277794041DF221F800573F3E /* ClaimSet.swift */,
+				2777940A1DF22BE400573F3E /* JOSEHeader.swift */,
+				520A71131C469F010005C709 /* Base64.swift */,
+				520A71141C469F010005C709 /* Claims.swift */,
+				520A71151C469F010005C709 /* Decode.swift */,
+				2777940F1DF22D0D00573F3E /* Encode.swift */,
+				520A71161C469F010005C709 /* JWT.swift */,
+				271E107F1F90253300B5033C /* JWA.swift */,
+				273010FE1F33EABA00219C35 /* HMAC.swift */,
+				273011041F33FC5F00219C35 /* HMACCommonCrypto.swift */,
+				273011091F33FC9100219C35 /* HMACCryptoSwift.swift */,
+			);
+			path = JWT;
+			sourceTree = "<group>";
+		};
 		279D63921AD07FFF0024E2BC = {
 			isa = PBXGroup;
 			children = (
@@ -199,17 +217,7 @@
 		520A71121C469F010005C709 /* Sources */ = {
 			isa = PBXGroup;
 			children = (
-				277794041DF221F800573F3E /* ClaimSet.swift */,
-				2777940A1DF22BE400573F3E /* JOSEHeader.swift */,
-				520A71131C469F010005C709 /* Base64.swift */,
-				520A71141C469F010005C709 /* Claims.swift */,
-				520A71151C469F010005C709 /* Decode.swift */,
-				2777940F1DF22D0D00573F3E /* Encode.swift */,
-				520A71161C469F010005C709 /* JWT.swift */,
-				271E107F1F90253300B5033C /* JWA.swift */,
-				273010FE1F33EABA00219C35 /* HMAC.swift */,
-				273011041F33FC5F00219C35 /* HMACCommonCrypto.swift */,
-				273011091F33FC9100219C35 /* HMACCryptoSwift.swift */,
+				271E10861F902D8900B5033C /* JWT */,
 			);
 			path = Sources;
 			sourceTree = "<group>";

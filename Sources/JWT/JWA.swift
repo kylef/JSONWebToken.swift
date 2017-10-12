@@ -1,3 +1,5 @@
+import Foundation
+
 /// Represents a JSON Web Algorithm (JWA)
 /// https://tools.ietf.org/html/draft-ietf-jose-json-web-algorithms-40
 public enum Algorithm: CustomStringConvertible {
