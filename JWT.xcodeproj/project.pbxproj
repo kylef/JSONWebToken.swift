@@ -7,6 +7,10 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		271E10801F90253300B5033C /* JWA.swift in Sources */ = {isa = PBXBuildFile; fileRef = 271E107F1F90253300B5033C /* JWA.swift */; };
+		271E10811F90253300B5033C /* JWA.swift in Sources */ = {isa = PBXBuildFile; fileRef = 271E107F1F90253300B5033C /* JWA.swift */; };
+		271E10821F90253300B5033C /* JWA.swift in Sources */ = {isa = PBXBuildFile; fileRef = 271E107F1F90253300B5033C /* JWA.swift */; };
+		271E10831F90253300B5033C /* JWA.swift in Sources */ = {isa = PBXBuildFile; fileRef = 271E107F1F90253300B5033C /* JWA.swift */; };
 		273010FF1F33EABA00219C35 /* HMAC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 273010FE1F33EABA00219C35 /* HMAC.swift */; };
 		273011001F33EABA00219C35 /* HMAC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 273010FE1F33EABA00219C35 /* HMAC.swift */; };
 		273011011F33EABA00219C35 /* HMAC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 273010FE1F33EABA00219C35 /* HMAC.swift */; };
@@ -62,6 +66,7 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		271E107F1F90253300B5033C /* JWA.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = JWA.swift; sourceTree = "<group>"; };
 		273010FE1F33EABA00219C35 /* HMAC.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HMAC.swift; sourceTree = "<group>"; };
 		273011041F33FC5F00219C35 /* HMACCommonCrypto.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HMACCommonCrypto.swift; sourceTree = "<group>"; };
 		273011091F33FC9100219C35 /* HMACCryptoSwift.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HMACCryptoSwift.swift; sourceTree = "<group>"; };
@@ -198,6 +203,7 @@
 				520A71151C469F010005C709 /* Decode.swift */,
 				2777940F1DF22D0D00573F3E /* Encode.swift */,
 				520A71161C469F010005C709 /* JWT.swift */,
+				271E107F1F90253300B5033C /* JWA.swift */,
 				273010FE1F33EABA00219C35 /* HMAC.swift */,
 				273011041F33FC5F00219C35 /* HMACCommonCrypto.swift */,
 				273011091F33FC9100219C35 /* HMACCryptoSwift.swift */,
@@ -425,6 +431,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				271E10801F90253300B5033C /* JWA.swift in Sources */,
 				273011161F34029900219C35 /* HMACCommonCrypto.swift in Sources */,
 				520A71181C469F010005C709 /* Claims.swift in Sources */,
 				520A711A1C469F010005C709 /* JWT.swift in Sources */,
@@ -449,6 +456,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				271E10811F90253300B5033C /* JWA.swift in Sources */,
 				273011171F34029900219C35 /* HMACCommonCrypto.swift in Sources */,
 				CD9B62171C7753D8005D4844 /* Claims.swift in Sources */,
 				CD9B62181C7753D8005D4844 /* JWT.swift in Sources */,
@@ -465,6 +473,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				271E10821F90253300B5033C /* JWA.swift in Sources */,
 				273011181F34029A00219C35 /* HMACCommonCrypto.swift in Sources */,
 				CD9B62291C7753EC005D4844 /* Claims.swift in Sources */,
 				CD9B622A1C7753EC005D4844 /* JWT.swift in Sources */,
@@ -481,6 +490,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				271E10831F90253300B5033C /* JWA.swift in Sources */,
 				273011191F34029A00219C35 /* HMACCommonCrypto.swift in Sources */,
 				CD9B623B1C7753FB005D4844 /* Claims.swift in Sources */,
 				CD9B623C1C7753FB005D4844 /* JWT.swift in Sources */,
