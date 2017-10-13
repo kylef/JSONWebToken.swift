@@ -8,14 +8,6 @@ import Foundation
 public func encode(claims: ClaimSet, algorithm: Algorithm, headers: [String: String]? = nil) -> String {
   let encoder = CompactJSONEncoder()
 
-  func encodeJSON(_ payload: [String: Any]) -> String? {
-    if let data = try? JSONSerialization.data(withJSONObject: payload) {
-      return base64encode(data)
-    }
-
-    return nil
-  }
-
   var headers = headers ?? [:]
   if !headers.keys.contains("typ") {
     headers["typ"] = "JWT"
@@ -23,7 +15,7 @@ public func encode(claims: ClaimSet, algorithm: Algorithm, headers: [String: Str
   headers["alg"] = algorithm.description
 
   let header = try! encoder.encodeString(headers)
-  let payload = encodeJSON(claims.claims)!
+  let payload = encoder.encodeString(claims.claims)!
   let signingInput = "\(header).\(payload)"
   let signature = algorithm.sign(signingInput)
   return "\(signingInput).\(signature)"
