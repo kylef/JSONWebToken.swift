@@ -15,6 +15,10 @@
 		271E108B1F9034B100B5033C /* CompactJSONDecoder.swift in Sources */ = {isa = PBXBuildFile; fileRef = 271E108A1F9034B100B5033C /* CompactJSONDecoder.swift */; };
 		271E108D1F9041C400B5033C /* CompactJSONDecoderTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 271E108C1F9041C400B5033C /* CompactJSONDecoderTests.swift */; };
 		271E108F1F9042E900B5033C /* CompactJSONEncoderTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 271E108E1F9042E900B5033C /* CompactJSONEncoderTests.swift */; };
+		271E10911F90488700B5033C /* JWTEncodeTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 271E10901F90488700B5033C /* JWTEncodeTests.swift */; };
+		271E10931F9049A400B5033C /* PayloadTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 271E10921F9049A400B5033C /* PayloadTests.swift */; };
+		271E10951F9049E200B5033C /* ClaimSetTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 271E10941F9049E200B5033C /* ClaimSetTests.swift */; };
+		271E10971F904A0700B5033C /* IntegrationTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 271E10961F904A0700B5033C /* IntegrationTests.swift */; };
 		273010FF1F33EABA00219C35 /* HMAC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 273010FE1F33EABA00219C35 /* HMAC.swift */; };
 		273011001F33EABA00219C35 /* HMAC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 273010FE1F33EABA00219C35 /* HMAC.swift */; };
 		273011011F33EABA00219C35 /* HMAC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 273010FE1F33EABA00219C35 /* HMAC.swift */; };
@@ -37,7 +41,7 @@
 		277794131DF22D0D00573F3E /* Encode.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2777940F1DF22D0D00573F3E /* Encode.swift */; };
 		279D63A21AD07FFF0024E2BC /* JWT.h in Headers */ = {isa = PBXBuildFile; fileRef = 279D63A11AD07FFF0024E2BC /* JWT.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		279D63A81AD07FFF0024E2BC /* JWT.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 279D639C1AD07FFF0024E2BC /* JWT.framework */; };
-		279D63AF1AD07FFF0024E2BC /* JWTTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 279D63AE1AD07FFF0024E2BC /* JWTTests.swift */; };
+		279D63AF1AD07FFF0024E2BC /* JWTDecodeTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 279D63AE1AD07FFF0024E2BC /* JWTDecodeTests.swift */; };
 		520A71171C469F010005C709 /* Base64.swift in Sources */ = {isa = PBXBuildFile; fileRef = 520A71131C469F010005C709 /* Base64.swift */; };
 		520A71181C469F010005C709 /* Claims.swift in Sources */ = {isa = PBXBuildFile; fileRef = 520A71141C469F010005C709 /* Claims.swift */; };
 		520A71191C469F010005C709 /* Decode.swift in Sources */ = {isa = PBXBuildFile; fileRef = 520A71151C469F010005C709 /* Decode.swift */; };
@@ -75,6 +79,10 @@
 		271E108A1F9034B100B5033C /* CompactJSONDecoder.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CompactJSONDecoder.swift; sourceTree = "<group>"; };
 		271E108C1F9041C400B5033C /* CompactJSONDecoderTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CompactJSONDecoderTests.swift; sourceTree = "<group>"; };
 		271E108E1F9042E900B5033C /* CompactJSONEncoderTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CompactJSONEncoderTests.swift; sourceTree = "<group>"; };
+		271E10901F90488700B5033C /* JWTEncodeTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = JWTEncodeTests.swift; sourceTree = "<group>"; };
+		271E10921F9049A400B5033C /* PayloadTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PayloadTests.swift; sourceTree = "<group>"; };
+		271E10941F9049E200B5033C /* ClaimSetTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ClaimSetTests.swift; sourceTree = "<group>"; };
+		271E10961F904A0700B5033C /* IntegrationTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IntegrationTests.swift; sourceTree = "<group>"; };
 		273010FE1F33EABA00219C35 /* HMAC.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HMAC.swift; sourceTree = "<group>"; };
 		273011041F33FC5F00219C35 /* HMACCommonCrypto.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HMACCommonCrypto.swift; sourceTree = "<group>"; };
 		273011091F33FC9100219C35 /* HMACCryptoSwift.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HMACCryptoSwift.swift; sourceTree = "<group>"; };
@@ -86,7 +94,7 @@
 		279D63A11AD07FFF0024E2BC /* JWT.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = JWT.h; sourceTree = "<group>"; };
 		279D63A71AD07FFF0024E2BC /* JWTTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = JWTTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		279D63AD1AD07FFF0024E2BC /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
-		279D63AE1AD07FFF0024E2BC /* JWTTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = JWTTests.swift; sourceTree = "<group>"; };
+		279D63AE1AD07FFF0024E2BC /* JWTDecodeTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = JWTDecodeTests.swift; sourceTree = "<group>"; };
 		520A71131C469F010005C709 /* Base64.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Base64.swift; sourceTree = "<group>"; };
 		520A71141C469F010005C709 /* Claims.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Claims.swift; sourceTree = "<group>"; };
 		520A71151C469F010005C709 /* Decode.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Decode.swift; sourceTree = "<group>"; };
@@ -208,7 +216,11 @@
 			children = (
 				271E108C1F9041C400B5033C /* CompactJSONDecoderTests.swift */,
 				271E108E1F9042E900B5033C /* CompactJSONEncoderTests.swift */,
-				279D63AE1AD07FFF0024E2BC /* JWTTests.swift */,
+				271E10941F9049E200B5033C /* ClaimSetTests.swift */,
+				271E10921F9049A400B5033C /* PayloadTests.swift */,
+				271E10901F90488700B5033C /* JWTEncodeTests.swift */,
+				279D63AE1AD07FFF0024E2BC /* JWTDecodeTests.swift */,
+				271E10961F904A0700B5033C /* IntegrationTests.swift */,
 				279D63AC1AD07FFF0024E2BC /* Supporting Files */,
 			);
 			name = Tests;
@@ -470,9 +482,13 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				271E10971F904A0700B5033C /* IntegrationTests.swift in Sources */,
 				271E108F1F9042E900B5033C /* CompactJSONEncoderTests.swift in Sources */,
+				271E10911F90488700B5033C /* JWTEncodeTests.swift in Sources */,
 				271E108D1F9041C400B5033C /* CompactJSONDecoderTests.swift in Sources */,
-				279D63AF1AD07FFF0024E2BC /* JWTTests.swift in Sources */,
+				279D63AF1AD07FFF0024E2BC /* JWTDecodeTests.swift in Sources */,
+				271E10931F9049A400B5033C /* PayloadTests.swift in Sources */,
+				271E10951F9049E200B5033C /* ClaimSetTests.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
