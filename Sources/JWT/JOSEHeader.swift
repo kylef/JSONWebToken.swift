@@ -9,30 +9,24 @@
 import Foundation
 
 
-struct JOSEHeader {
-  var parameters: [String: Any]
+struct JOSEHeader: Codable {
+  var type: String?
+  var algorithm: String?
 
-  init(parameters: [String: Any]) {
-    self.parameters = parameters
+  init(from decoder: Decoder) throws {
+    let container = try decoder.container(keyedBy: CodingKeys.self)
+    type = try container.decodeIfPresent(String.self, forKey: .type)
+    algorithm = try container.decodeIfPresent(String.self, forKey: .algorithm)
   }
 
-  var algorithm: String? {
-    get {
-      return parameters["alg"] as? String
-    }
-
-    set {
-      parameters["alg"] = newValue
-    }
+  func encode(to encoder: Encoder) throws {
+    var container = encoder.container(keyedBy: CodingKeys.self)
+    try container.encodeIfPresent(type, forKey: .type)
+    try container.encodeIfPresent(algorithm, forKey: .algorithm)
   }
 
-  var type: String? {
-    get {
-      return parameters["typ"] as? String
-    }
-
-    set {
-      parameters["typ"] = newValue
-    }
+  enum CodingKeys: String, CodingKey {
+    case type = "typ"
+    case algorithm = "alg"
   }
 }
