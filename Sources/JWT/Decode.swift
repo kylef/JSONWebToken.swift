@@ -90,22 +90,13 @@ func load(_ jwt: String) throws -> (header: JOSEHeader, payload: ClaimSet, signa
 
   let decoder = CompactJSONDecoder()
   let header = try decoder.decode(JOSEHeader.self, from: headerSegment)
-
-  let payloadData = base64decode(payloadSegment)
-  if payloadData == nil {
-    throw InvalidToken.decodeError("Payload is not correctly encoded as base64")
-  }
-
-  let payload = (try? JSONSerialization.jsonObject(with: payloadData!, options: JSONSerialization.ReadingOptions(rawValue: 0))) as? Payload
-  if payload == nil {
-    throw InvalidToken.decodeError("Invalid payload")
-  }
+  let payload = try decoder.decode(from: payloadSegment)
 
   guard let signature = base64decode(signatureSegment) else {
     throw InvalidToken.decodeError("Signature is not correctly encoded as base64")
   }
 
-  return (header: header, payload: ClaimSet(claims: payload!), signature: signature, signatureInput: signatureInput)
+  return (header: header, payload: ClaimSet(claims: payload), signature: signature, signatureInput: signatureInput)
 }
 
 // MARK: Signature Verification
