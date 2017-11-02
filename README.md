@@ -6,11 +6,13 @@ Swift implementation of [JSON Web Token](https://tools.ietf.org/html/draft-ietf-
 
 ## Installation
 
-[CocoaPods](http://cocoapods.org/) is the recommended installation method.
+Swift Pacakage Manager is the recommended installation method for JSONWebToken, [CocoaPods](http://cocoapods.org/) is also supported.
 
 ```ruby
 pod 'JSONWebToken'
 ```
+
+**NOTE:** *Carthage may be supported, however support will not be provided for this installation method, use at your own risk if you know how it works.*
 
 ## Usage
 
@@ -21,15 +23,26 @@ import JWT
 ### Encoding a claim
 
 ```swift
-JWT.encode(["my": "payload"], algorithm: .HS256("secret"))
+JWT.encode(claims: ["my": "payload"], algorithm: .hs256("secret".data(using: .utf8)!))
+```
+
+#### Encoding a claim set
+
+```swift
+var claims = ClaimSet()
+claims.issuer = "fuller.li"
+claims.issuedAt = Date()
+claims["custom"] = "Hi"
+
+JWT.encode(claims: claims, algorithm: .hs256("secret".data(using: .utf8)))
 ```
 
 #### Building a JWT with the builder pattern
 
 ```swift
-JWT.encode(.HS256("secret")) { builder in
+JWT.encode(.hs256("secret".data(using: .utf8))) { builder in
   builder.issuer = "fuller.li"
-  builder.issuedAt = NSDate()
+  builder.issuedAt = Date()
   builder["custom"] = "Hi"
 }
 ```
@@ -40,8 +53,8 @@ When decoding a JWT, you must supply one or more algorithms and keys.
 
 ```swift
 do {
-  let payload = try JWT.decode("eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.e30.2_8pWJfyPup0YwOXK7g9Dn0cF1E3pdn299t4hSeJy5w", algorithm: .HS256("secret"))
-  print(payload)
+  let claims: ClaimSet = try JWT.decode("eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.e30.2_8pWJfyPup0YwOXK7g9Dn0cF1E3pdn299t4hSeJy5w", algorithm: .hs256("secret".data(using: .utf8)!))
+  print(claims)
 } catch {
   print("Failed to decode JWT: \(error)")
 }
@@ -50,7 +63,17 @@ do {
 When the JWT may be signed with one out of many algorithms or keys:
 
 ```swift
-try JWT.decode("eyJh...5w", algorithms: [.HS256("secret"), .HS256("secret2"), .HS512("secure")])
+try JWT.decode("eyJh...5w", algorithms: [
+  .hs256("secret".data(using: .utf8)!),
+  .hs256("secret2".data(using: .utf8)!),
+  .hs512("secure".data(using: .utf8)!)
+])
+```
+
+You might also want to give your iat, exp and nbf checks some kind of leeway to account for skewed clocks. You can do this by passing a `leeway` parameter like this:
+
+```swift
+try JWT.decode("eyJh...5w", algorithm: .hs256("secret".data(using: .utf8)!), leeway: 10)
 ```
 
 #### Supported claims
@@ -67,12 +90,11 @@ The library supports validating the following claims:
 
 This library supports the following algorithms:
 
-- None - Unsecured JWTs
-- HS256 - HMAC using SHA-256 hash algorithm (default)
-- HS384 - HMAC using SHA-384 hash algorithm
-- HS512 - HMAC using SHA-512 hash algorithm
+- `none` - Unsecured JWTs
+- `hs256` - HMAC using SHA-256 hash algorithm (default)
+- `hs384` - HMAC using SHA-384 hash algorithm
+- `hs512` - HMAC using SHA-512 hash algorithm
 
 ## License
 
 JSONWebToken is licensed under the BSD license. See [LICENSE](LICENSE) for more info.
-

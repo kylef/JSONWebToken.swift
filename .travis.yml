@@ -1,7 +1,19 @@
-language: objective-c
-osx_image: xcode7.3
-script:
-- set -o pipefail
+os:
+- linux
+- osx
+language: generic
+sudo: required
+dist: trusty
+osx_image: xcode9
+env:
+- SWIFT_VERSION=4.0
+install:
+- if [[ "$TRAVIS_OS_NAME" != "osx" ]]; then eval "$(curl -sL https://gist.githubusercontent.com/kylef/5c0475ff02b7c7671d2a/raw/9f442512a46d7a2af7b850d65a7e9bd31edfb09b/swiftenv-install.sh)"; fi
 - git submodule update --init --recursive
-- xcodebuild -project JWT.xcodeproj -scheme JWT-OSX test -sdk macosx | xcpretty -c
-- pod lib lint --quick
+script:
+- swift test
+- if [[ "$TRAVIS_OS_NAME" == "osx" ]]; then xcodebuild -project JWT.xcodeproj -scheme JWT-OSX test -sdk macosx; fi
+- if [[ "$TRAVIS_OS_NAME" == "osx" ]]; then xcodebuild -project JWT.xcodeproj -scheme JWT-iOS build -sdk iphonesimulator; fi
+- if [[ "$TRAVIS_OS_NAME" == "osx" ]]; then xcodebuild -project JWT.xcodeproj -scheme JWT-tvOS build -sdk appletvsimulator; fi
+- if [[ "$TRAVIS_OS_NAME" == "osx" ]]; then xcodebuild -project JWT.xcodeproj -scheme JWT-watchOS build -sdk watchsimulator; fi
+- if [[ "$TRAVIS_OS_NAME" == "osx" ]]; then pod lib lint; fi
