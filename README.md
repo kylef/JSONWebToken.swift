@@ -1,6 +1,7 @@
 # JSON Web Token
 
 [![Build Status](http://img.shields.io/travis/kylef/JSONWebToken.swift/master.svg?style=flat)](https://travis-ci.org/kylef/JSONWebToken.swift)
+[![FOSSA Status](https://app.fossa.io/api/projects/git%2Bgithub.com%2Fkylef%2FJSONWebToken.swift.svg?type=shield)](https://app.fossa.io/projects/git%2Bgithub.com%2Fkylef%2FJSONWebToken.swift?ref=badge_shield)
 
 Swift implementation of [JSON Web Token](https://tools.ietf.org/html/draft-ietf-oauth-json-web-token-32).
 
@@ -98,3 +99,6 @@ This library supports the following algorithms:
 ## License
 
 JSONWebToken is licensed under the BSD license. See [LICENSE](LICENSE) for more info.
+
+
+[![FOSSA Status](https://app.fossa.io/api/projects/git%2Bgithub.com%2Fkylef%2FJSONWebToken.swift.svg?type=large)](https://app.fossa.io/projects/git%2Bgithub.com%2Fkylef%2FJSONWebToken.swift?ref=badge_large)
