@@ -6,7 +6,7 @@ Fork of https://github.com/kylef/JSONWebToken.swift that resolves the issue "Get
 
 Use cocoapods [CocoaPods](http://cocoapods.org/) and add the following to your Podfile.
 
-    pod 'JSONWebToken', :git => 'https://github.com/Wooder/JSONWebToken.swift.git'
+    pod 'JSONWebToken', :git => 'https://github.com/Wooder/JSONWebToken.swift.git', :branch => '2.2.0-fix-claimset'
     
     
 ## License
