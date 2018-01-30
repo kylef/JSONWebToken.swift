@@ -15,7 +15,7 @@ let package = Package(
 let package = Package(
   name: "JWT",
   dependencies: [
-    .Package(url: "https://github.com/krzyzanowskim/CryptoSwift.git", majorVersion: 0, minor: 6),
+    .Package(url: "https://github.com/krzyzanowskim/CryptoSwift.git", majorVersion: 0, minor: 8),
   ],
   exclude: [
     "Sources/JWT/HMACCommonCrypto.swift",
