@@ -16,4 +16,4 @@ script:
 - if [[ "$TRAVIS_OS_NAME" == "osx" ]]; then xcodebuild -project JWT.xcodeproj -scheme JWT-iOS build -sdk iphonesimulator; fi
 - if [[ "$TRAVIS_OS_NAME" == "osx" ]]; then xcodebuild -project JWT.xcodeproj -scheme JWT-tvOS build -sdk appletvsimulator; fi
 - if [[ "$TRAVIS_OS_NAME" == "osx" ]]; then xcodebuild -project JWT.xcodeproj -scheme JWT-watchOS build -sdk watchsimulator; fi
-- if [[ "$TRAVIS_OS_NAME" == "osx" ]]; then pod lib lint; fi
+- if [[ "$TRAVIS_OS_NAME" == "osx" ]]; then pod lib lint --allow-warnings; fi
