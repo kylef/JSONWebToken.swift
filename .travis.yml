@@ -12,8 +12,9 @@ install:
 - git submodule update --init --recursive
 script:
 - swift test
-#- if [[ "$TRAVIS_OS_NAME" == "osx" ]]; then xcodebuild -project JWT.xcodeproj -scheme JWT-OSX test -sdk macosx; fi
-#- if [[ "$TRAVIS_OS_NAME" == "osx" ]]; then xcodebuild -project JWT.xcodeproj -scheme JWT-iOS build -sdk iphonesimulator; fi
-#- if [[ "$TRAVIS_OS_NAME" == "osx" ]]; then xcodebuild -project JWT.xcodeproj -scheme JWT-tvOS build -sdk appletvsimulator; fi
-#- if [[ "$TRAVIS_OS_NAME" == "osx" ]]; then xcodebuild -project JWT.xcodeproj -scheme JWT-watchOS build -sdk watchsimulator; fi
+- if [[ "$TRAVIS_OS_NAME" == "osx" ]]; then swift package generate-xcodeproj; fi
+- if [[ "$TRAVIS_OS_NAME" == "osx" ]]; then xcodebuild -project JWT.xcodeproj -scheme JWT-Package test -sdk macosx; fi
+- if [[ "$TRAVIS_OS_NAME" == "osx" ]]; then xcodebuild -project JWT.xcodeproj -scheme JWT-Package build -sdk iphonesimulator; fi
+- if [[ "$TRAVIS_OS_NAME" == "osx" ]]; then xcodebuild -project JWT.xcodeproj -scheme JWT-Package build -sdk appletvsimulator; fi
+- if [[ "$TRAVIS_OS_NAME" == "osx" ]]; then xcodebuild -project JWT.xcodeproj -scheme JWT-Package build -sdk watchsimulator; fi
 #- if [[ "$TRAVIS_OS_NAME" == "osx" ]]; then pod lib lint --allow-warnings; fi
