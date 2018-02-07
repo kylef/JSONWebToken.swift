@@ -108,7 +108,7 @@ func verifySignature(_ algorithms: [Algorithm], header: JOSEHeader, signingInput
 
   let verifiedAlgorithms = algorithms
     .filter { algorithm in algorithm.description == alg }
-    .filter { algorithm in algorithm.verify(signingInput, signature: signature) }
+    .filter { algorithm in algorithm.algorithm.verify(signingInput.data(using: .utf8)!, signature: signature) }
 
   if verifiedAlgorithms.isEmpty {
     throw InvalidToken.invalidAlgorithm
