@@ -34,7 +34,7 @@ claims.issuer = "fuller.li"
 claims.issuedAt = Date()
 claims["custom"] = "Hi"
 
-JWT.encode(claims: claims, algorithm: .hs256("secret".data(using: .utf8)))
+JWT.encode(claims: claims, algorithm: .hs256("secret".data(using: .utf8)!))
 ```
 
 #### Building a JWT with the builder pattern
