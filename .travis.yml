@@ -1,20 +1,41 @@
 os:
-- linux
-- osx
+  - osx
+  - linux
+osx_image: xcode9
 language: generic
 sudo: required
 dist: trusty
-osx_image: xcode9
 env:
-- SWIFT_VERSION=4.0
+  global:
+    - SWIFT_VERSION=4.0
+  matrix:
+    - SWIFTPM_BUILD=true
+    - SWIFTPM_TEST=true
+    - XCODE_TEST_SDK=macosx
+    - XCODE_BUILD_SDK=iphonesimulator
+    - XCODE_BUILD_SDK=appletvsimulator
+    - XCODE_BUILD_SDK=watchsimulator
+
+matrix:
+  exclude:
+    # LinuxMain.swift is out of sync
+    - os: linux
+      env: SWIFTPM_TEST=true
+    - os: linux
+      env: XCODE_TEST_SDK=macosx
+    - os: linux
+      env: XCODE_BUILD_SDK=iphonesimulator
+    - os: linux
+      env: XCODE_BUILD_SDK=appletvsimulator
+    - os: linux
+      env: XCODE_BUILD_SDK=watchsimulator
+
 install:
-- if [[ "$TRAVIS_OS_NAME" != "osx" ]]; then eval "$(curl -sL https://gist.githubusercontent.com/kylef/5c0475ff02b7c7671d2a/raw/9f442512a46d7a2af7b850d65a7e9bd31edfb09b/swiftenv-install.sh)"; fi
-- git submodule update --init --recursive
+  - eval "$(curl -sL https://swiftenv.fuller.li/install.sh)"
+
 script:
-- swift test
-- if [[ "$TRAVIS_OS_NAME" == "osx" ]]; then swift package generate-xcodeproj; fi
-- if [[ "$TRAVIS_OS_NAME" == "osx" ]]; then xcodebuild -project JWT.xcodeproj -scheme JWT-Package test -sdk macosx; fi
-- if [[ "$TRAVIS_OS_NAME" == "osx" ]]; then xcodebuild -project JWT.xcodeproj -scheme JWT-Package build -sdk iphonesimulator; fi
-- if [[ "$TRAVIS_OS_NAME" == "osx" ]]; then xcodebuild -project JWT.xcodeproj -scheme JWT-Package build -sdk appletvsimulator; fi
-- if [[ "$TRAVIS_OS_NAME" == "osx" ]]; then xcodebuild -project JWT.xcodeproj -scheme JWT-Package build -sdk watchsimulator; fi
-#- if [[ "$TRAVIS_OS_NAME" == "osx" ]]; then pod lib lint --allow-warnings; fi
+- if [ -n "$SWIFTPM_BUILD" ]; then swift build; fi
+- if [ -n "$SWIFTPM_TEST" ]; then swift test; fi
+- if [ -n "$XCODE_BUILD_SDK" ] || [ -z "$XCODE_TEST_SDK" ]; then swift package generate-xcodeproj; fi
+- if [ -n "$XCODE_BUILD_SDK" ]; then xcodebuild -project JWT.xcodeproj -scheme JWT-Package build -sdk $XCODE_BUILD_SDK; fi
+- if [ -n "$XCODE_TEST_SDK" ]; then xcodebuild -project JWT.xcodeproj -scheme JWT-Package test -sdk $XCODE_TEST_SDK; fi
