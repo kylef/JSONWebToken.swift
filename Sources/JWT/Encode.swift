@@ -1,5 +1,6 @@
 import Foundation
 
+
 /*** Encode a set of claims
  - parameter claims: The set of claims
  - parameter algorithm: The algorithm to sign the payload with
@@ -17,7 +18,7 @@ public func encode(claims: ClaimSet, algorithm: Algorithm, headers: [String: Str
   let header = try! encoder.encodeString(headers)
   let payload = encoder.encodeString(claims.claims)!
   let signingInput = "\(header).\(payload)"
-  let signature = algorithm.sign(signingInput)
+  let signature = base64encode(algorithm.algorithm.sign(signingInput.data(using: .utf8)!))
   return "\(signingInput).\(signature)"
 }
 
