@@ -1,3 +1,6 @@
+import Foundation
+
+
 class CompactJSONEncoder: JSONEncoder {
   override func encode<T : Encodable>(_ value: T) throws -> Data {
     return try encodeString(value).data(using: .ascii) ?? Data()
