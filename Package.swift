@@ -4,9 +4,7 @@ import PackageDescription
 
 
 #if os(macOS) || os(iOS) || os(watchOS) || os(tvOS)
-let dependencies = [
-  Package.Dependency.package(url: "https://github.com/kylef-archive/CommonCrypto.git", from: "1.0.0"),
-]
+let dependencies: [Package.Dependency] = []
 let excludes = ["HMAC/HMACCryptoSwift.swift"]
 let targetDependencies: [Target.Dependency] = []
 #else
