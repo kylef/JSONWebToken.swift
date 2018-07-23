@@ -18,7 +18,7 @@ class DecodeTests: XCTestCase {
   }
 
   func testFailsToDecodeInvalidStringWithoutThreeSegments() {
-    XCTAssertThrowsError(try decode("a.b", algorithm: .none), "Not enough segments")
+    XCTAssertThrowsError(try decode("a.b", algorithm: .none) as ClaimSet, "Not enough segments")
   }
 
   // MARK: Disable verify
@@ -39,24 +39,24 @@ class DecodeTests: XCTestCase {
 
   func testIncorrectIssuerValidation() {
     let jwt = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJmdWxsZXIubGkifQ.wOhJ9_6lx-3JGJPmJmtFCDI3kt7uMAMmhHIslti7ryI"
-    XCTAssertThrowsError(try decode(jwt, algorithm: .hs256("secret".data(using: .utf8)!), issuer: "querykit.org"))
+    XCTAssertThrowsError(try decode(jwt, algorithm: .hs256("secret".data(using: .utf8)!), issuer: "querykit.org") as ClaimSet)
   }
 
   func testMissingIssuerValidation() {
     let jwt = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.e30.2_8pWJfyPup0YwOXK7g9Dn0cF1E3pdn299t4hSeJy5w"
-    XCTAssertThrowsError(try decode(jwt, algorithm: .hs256("secret".data(using: .utf8)!), issuer: "fuller.li"))
+    XCTAssertThrowsError(try decode(jwt, algorithm: .hs256("secret".data(using: .utf8)!), issuer: "fuller.li")  as ClaimSet)
   }
 
   // MARK: Expiration claim
 
   func testExpiredClaim() {
     let jwt = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJleHAiOjE0MjgxODg0OTF9.cy6b2szsNkKnHFnz2GjTatGjoHBTs8vBKnPGZgpp91I"
-    XCTAssertThrowsError(try decode(jwt, algorithm: .hs256("secret".data(using: .utf8)!)))
+    XCTAssertThrowsError(try decode(jwt, algorithm: .hs256("secret".data(using: .utf8)!)) as ClaimSet)
   }
 
   func testInvalidExpiaryClaim() {
     let jwt = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJleHAiOlsiMTQyODE4ODQ5MSJdfQ.OwF-wd3THjxrEGUhh6IdnNhxQZ7ydwJ3Z6J_dfl9MBs"
-    XCTAssertThrowsError(try decode(jwt, algorithm: .hs256("secret".data(using: .utf8)!)))
+    XCTAssertThrowsError(try decode(jwt, algorithm: .hs256("secret".data(using: .utf8)!)) as ClaimSet)
   }
 
   func testUnexpiredClaim() throws {
@@ -99,7 +99,7 @@ class DecodeTests: XCTestCase {
   func testUnmetNotBeforeClaim() {
     // If this just started failing, hello 2024!
     let jwt = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJuYmYiOjE3MjgxODg0OTF9.Tzhu1tu-7BXcF5YEIFFE1Vmg4tEybUnaz58FR4PcblQ"
-    XCTAssertThrowsError(try decode(jwt, algorithm: .hs256("secret".data(using: .utf8)!)))
+    XCTAssertThrowsError(try decode(jwt, algorithm: .hs256("secret".data(using: .utf8)!)) as ClaimSet)
   }
 
   // MARK: Issued at claim
@@ -121,7 +121,7 @@ class DecodeTests: XCTestCase {
   func testIssuedAtClaimInTheFuture() {
     // If this just started failing, hello 2024!
     let jwt = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpYXQiOjE3MjgxODg0OTF9.owHiJyJmTcW1lBW5y_Rz3iBfSbcNiXlbZ2fY9qR7-aU"
-    XCTAssertThrowsError(try decode(jwt, algorithm: .hs256("secret".data(using: .utf8)!)))
+    XCTAssertThrowsError(try decode(jwt, algorithm: .hs256("secret".data(using: .utf8)!)) as ClaimSet)
   }
 
   func testInvalidIssuedAtClaim() {
@@ -149,12 +149,12 @@ class DecodeTests: XCTestCase {
 
   func testMismatchAudienceClaim() {
     let jwt = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJhdWQiOiJreWxlIn0.VEB_n06pTSLlTXPFkc46ARADJ9HXNUBUPo3VhL9RDe4" // kyle
-    XCTAssertThrowsError(try decode(jwt, algorithm: .hs256("secret".data(using: .utf8)!), audience: "maxine"))
+    XCTAssertThrowsError(try decode(jwt, algorithm: .hs256("secret".data(using: .utf8)!), audience: "maxine") as ClaimSet)
   }
 
   func testMissingAudienceClaim() {
     let jwt = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.e30.2_8pWJfyPup0YwOXK7g9Dn0cF1E3pdn299t4hSeJy5w"
-    XCTAssertThrowsError(try decode(jwt, algorithm: .hs256("secret".data(using: .utf8)!), audience: "kyle"))
+    XCTAssertThrowsError(try decode(jwt, algorithm: .hs256("secret".data(using: .utf8)!), audience: "kyle") as ClaimSet)
   }
 
   // MARK: Signature verification
@@ -168,7 +168,7 @@ class DecodeTests: XCTestCase {
 
   func testNoneFailsWithSecretAlgorithm() {
     let jwt = "eyJhbGciOiJub25lIiwidHlwIjoiSldUIn0.eyJ0ZXN0IjoiaW5nIn0."
-    XCTAssertThrowsError(try decode(jwt, algorithm: .hs256("secret".data(using: .utf8)!)))
+    XCTAssertThrowsError(try decode(jwt, algorithm: .hs256("secret".data(using: .utf8)!)) as ClaimSet)
   }
 
   func testMatchesAnyAlgorithm() {
