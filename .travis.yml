@@ -1,6 +1,20 @@
-os: osx
+os:
+   - osx
+   - linux
 osx_image: xcode9.4
 script: swift build
+language: generic
+sudo: required
+dist: xenial
+
+env:
+  global:
+    - SWIFT_VERSION=4.1.2
+
+install:
+  - eval "$(curl -sL https://swiftenv.fuller.li/install.sh)"
+script:
+  - swift build
 
 # os:
 #   - osx
@@ -10,8 +24,6 @@ script: swift build
 # sudo: required
 # dist: trusty
 # env:
-#   global:
-#     - SWIFT_VERSION=4.0
 #   matrix:
 #     - SWIFTPM_BUILD=true
 #     - SWIFTPM_TEST=true
