@@ -126,8 +126,8 @@ extension ValidationTests {
 XCTMain([
   testCase(HMACAlgorithmTests.allTests),
   testCase(NoneAlgorithmTests.allTests),
-  testCase(CompactJSONDecoder.allTests),
-  testCase(CompactJSONEncoder.allTests),
+  testCase(CompactJSONDecoderTests.allTests),
+  testCase(CompactJSONEncoderTests.allTests),
   testCase(DecodeTests.allTests),
   testCase(IntegrationTests.allTests),
   testCase(JWTEncodeTests.allTests),
