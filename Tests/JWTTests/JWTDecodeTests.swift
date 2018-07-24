@@ -47,7 +47,7 @@ class DecodeTests: XCTestCase {
     XCTAssertThrowsError(try decode(jwt, algorithm: .hs256("secret".data(using: .utf8)!)))
   }
 
-  func testInvalidExpiaryClaim() {
+  func testInvalidExpiryClaim() {
     let jwt = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJleHAiOlsiMTQyODE4ODQ5MSJdfQ.OwF-wd3THjxrEGUhh6IdnNhxQZ7ydwJ3Z6J_dfl9MBs"
     XCTAssertThrowsError(try decode(jwt, algorithm: .hs256("secret".data(using: .utf8)!)))
   }

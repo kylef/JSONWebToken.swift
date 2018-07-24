@@ -54,7 +54,7 @@ extension DecodeTests {
       ("testIncorrectIssuerValidation", testIncorrectIssuerValidation),
       ("testMissingIssuerValidation", testMissingIssuerValidation),
       ("testExpiredClaim", testExpiredClaim),
-      ("testInvalidExpiaryClaim", testInvalidExpiaryClaim),
+      ("testInvalidExpiryClaim", testInvalidExpiryClaim),
       ("testUnexpiredClaim", testUnexpiredClaim),
       ("testUnexpiredClaimString", testUnexpiredClaimString),
       ("testNotBeforeClaim", testNotBeforeClaim),
