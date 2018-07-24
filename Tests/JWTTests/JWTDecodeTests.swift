@@ -57,7 +57,12 @@ class DecodeTests: XCTestCase {
     let jwt = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJleHAiOjE3MjgxODg0OTF9.EW7k-8Mvnv0GpvOKJalFRLoCB3a3xGG3i7hAZZXNAz0"
 
     let claims = try JWT.decode(jwt, algorithm: .hs256("secret".data(using: .utf8)!))
-    XCTAssertEqual(claims.expiration?.timeIntervalSince1970, 1728188491)
+	
+	if let expirationClaim = claims.expiration?.timeIntervalSince1970 {
+	  XCTAssertEqual(Int(expirationClaim), 1728188491)
+	} else {
+	  XCTFail()
+	}
   }
 
   func testUnexpiredClaimString() throws {
@@ -74,7 +79,11 @@ class DecodeTests: XCTestCase {
     let jwt = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJuYmYiOjE0MjgxODk3MjB9.jFT0nXAJvEwyG6R7CMJlzNJb7FtZGv30QRZpYam5cvs"
 
     let claims = try JWT.decode(jwt, algorithm: .hs256("secret".data(using: .utf8)!))
-    XCTAssertEqual(claims.notBefore?.timeIntervalSince1970, 1428189720)
+	if let notBeforeClaim = claims.notBefore?.timeIntervalSince1970 {
+	  XCTAssertEqual(Int(notBeforeClaim), 1428189720)
+	} else {
+	  XCTFail()
+	}
   }
 
   func testNotBeforeClaimString() throws {
@@ -101,7 +110,11 @@ class DecodeTests: XCTestCase {
     let jwt = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpYXQiOjE0MjgxODk3MjB9.I_5qjRcCUZVQdABLwG82CSuu2relSdIyJOyvXWUAJh4"
 
     let claims = try JWT.decode(jwt, algorithm: .hs256("secret".data(using: .utf8)!))
-    XCTAssertEqual(claims.issuedAt?.timeIntervalSince1970, 1428189720)
+	if let issuedAtClaim = claims.issuedAt?.timeIntervalSince1970 {
+	  XCTAssertEqual(Int(issuedAtClaim), 1428189720)
+	} else {
+	  XCTFail()
+	}
   }
 
   func testIssuedAtClaimInThePastString() throws {
