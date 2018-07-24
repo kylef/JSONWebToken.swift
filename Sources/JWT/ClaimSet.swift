@@ -6,6 +6,11 @@ func parseTimeInterval(_ value: Any?) -> Date? {
   if let string = value as? String, let interval = TimeInterval(string) {
     return Date(timeIntervalSince1970: interval)
   }
+	
+  if let interval = value as? Int {
+    let double = Double(interval)
+    return Date(timeIntervalSince1970: double)
+  }
 
   if let interval = value as? TimeInterval {
     return Date(timeIntervalSince1970: interval)
