@@ -7,7 +7,7 @@ class ValidationTests: XCTestCase {
     claims.expiration = Date().addingTimeInterval(-1)
 
     do {
-      try claims.validateExpiary()
+      try claims.validateExpiry()
       XCTFail("InvalidToken.expiredSignature error should have been thrown.")
     } catch InvalidToken.expiredSignature {
       // Correct error thrown
@@ -21,7 +21,7 @@ class ValidationTests: XCTestCase {
     claims.expiration = Date().addingTimeInterval(-1)
 
     do {
-      try claims.validateExpiary(leeway: 2)
+      try claims.validateExpiry(leeway: 2)
     } catch {
       XCTFail("Unexpected error while validating exp claim that should be valid with leeway.")
     }
