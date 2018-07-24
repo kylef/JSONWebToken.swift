@@ -1,19 +1,12 @@
 import Foundation
 import XCTest
-import JWT
+@testable import JWT
 
 class DecodeTests: XCTestCase {
-  func testDecodingValidJWTAsClaimSet() throws {
-    let jwt = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJuYW1lIjoiS3lsZSJ9.zxm7xcp1eZtZhp4t-nlw09ATQnnFKIiSN83uG8u6cAg"
-
-    let claims: ClaimSet = try JWT.decode(jwt, algorithm: .hs256("secret".data(using: .utf8)!))
-    XCTAssertEqual(claims["name"] as? String, "Kyle")
-  }
-
   func testDecodingValidJWT() throws {
     let jwt = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJuYW1lIjoiS3lsZSJ9.zxm7xcp1eZtZhp4t-nlw09ATQnnFKIiSN83uG8u6cAg"
 
-    let claims: ClaimSet = try JWT.decode(jwt, algorithm: .hs256("secret".data(using: .utf8)!))
+    let claims = try JWT.decode(jwt, algorithm: .hs256("secret".data(using: .utf8)!))
     XCTAssertEqual(claims["name"] as? String, "Kyle")
   }
 
@@ -25,7 +18,7 @@ class DecodeTests: XCTestCase {
 
   func testDisablingVerify() throws {
     let jwt = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.e30.2_8pWJfyPup0YwOXK7g9Dn0cF1E3pdn299t4hSeJy5w"
-    _ = try decode(jwt, algorithm: .none, verify: false, issuer: "fuller.li") as ClaimSet
+    _ = try decode(jwt, algorithm: .none, verify: false, issuer: "fuller.li")
   }
 
   // MARK: Issuer claim
@@ -33,7 +26,7 @@ class DecodeTests: XCTestCase {
   func testSuccessfulIssuerValidation() throws {
     let jwt = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJmdWxsZXIubGkifQ.d7B7PAQcz1E6oNhrlxmHxHXHgg39_k7X7wWeahl8kSQ"
 
-    let claims: ClaimSet = try JWT.decode(jwt, algorithm: .hs256("secret".data(using: .utf8)!))
+    let claims = try JWT.decode(jwt, algorithm: .hs256("secret".data(using: .utf8)!))
     XCTAssertEqual(claims.issuer, "fuller.li")
   }
 
@@ -63,7 +56,7 @@ class DecodeTests: XCTestCase {
     // If this just started failing, hello 2024!
     let jwt = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJleHAiOjE3MjgxODg0OTF9.EW7k-8Mvnv0GpvOKJalFRLoCB3a3xGG3i7hAZZXNAz0"
 
-    let claims: ClaimSet = try JWT.decode(jwt, algorithm: .hs256("secret".data(using: .utf8)!))
+    let claims = try JWT.decode(jwt, algorithm: .hs256("secret".data(using: .utf8)!))
     XCTAssertEqual(claims.expiration?.timeIntervalSince1970, 1728188491)
   }
 
@@ -71,7 +64,7 @@ class DecodeTests: XCTestCase {
     // If this just started failing, hello 2024!
     let jwt = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJleHAiOiIxNzI4MTg4NDkxIn0.y4w7lNLrfRRPzuNUfM-ZvPkoOtrTU_d8ZVYasLdZGpk"
 
-    let claims: ClaimSet = try JWT.decode(jwt, algorithm: .hs256("secret".data(using: .utf8)!))
+    let claims = try JWT.decode(jwt, algorithm: .hs256("secret".data(using: .utf8)!))
     XCTAssertEqual(claims.expiration?.timeIntervalSince1970, 1728188491)
   }
 
@@ -80,14 +73,14 @@ class DecodeTests: XCTestCase {
   func testNotBeforeClaim() throws {
     let jwt = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJuYmYiOjE0MjgxODk3MjB9.jFT0nXAJvEwyG6R7CMJlzNJb7FtZGv30QRZpYam5cvs"
 
-    let claims: ClaimSet = try JWT.decode(jwt, algorithm: .hs256("secret".data(using: .utf8)!))
+    let claims = try JWT.decode(jwt, algorithm: .hs256("secret".data(using: .utf8)!))
     XCTAssertEqual(claims.notBefore?.timeIntervalSince1970, 1428189720)
   }
 
   func testNotBeforeClaimString() throws {
     let jwt = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJuYmYiOiIxNDI4MTg5NzIwIn0.qZsj36irdmIAeXv6YazWDSFbpuxHtEh4Deof5YTpnVI"
 
-    let claims: ClaimSet = try JWT.decode(jwt, algorithm: .hs256("secret".data(using: .utf8)!))
+    let claims = try JWT.decode(jwt, algorithm: .hs256("secret".data(using: .utf8)!))
     XCTAssertEqual(claims.notBefore?.timeIntervalSince1970, 1428189720)
   }
 
@@ -107,14 +100,14 @@ class DecodeTests: XCTestCase {
   func testIssuedAtClaimInThePast() throws {
     let jwt = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpYXQiOjE0MjgxODk3MjB9.I_5qjRcCUZVQdABLwG82CSuu2relSdIyJOyvXWUAJh4"
 
-    let claims: ClaimSet = try JWT.decode(jwt, algorithm: .hs256("secret".data(using: .utf8)!))
+    let claims = try JWT.decode(jwt, algorithm: .hs256("secret".data(using: .utf8)!))
     XCTAssertEqual(claims.issuedAt?.timeIntervalSince1970, 1428189720)
   }
 
   func testIssuedAtClaimInThePastString() throws {
     let jwt = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpYXQiOiIxNDI4MTg5NzIwIn0.M8veWtsY52oBwi7LRKzvNnzhjK0QBS8Su1r0atlns2k"
 
-    let claims: ClaimSet = try JWT.decode(jwt, algorithm: .hs256("secret".data(using: .utf8)!))
+    let claims = try JWT.decode(jwt, algorithm: .hs256("secret".data(using: .utf8)!))
     XCTAssertEqual(claims.issuedAt?.timeIntervalSince1970, 1428189720)
   }
 
@@ -185,24 +178,24 @@ class DecodeTests: XCTestCase {
 
   func testHS512Algorithm() {
     let jwt = "eyJhbGciOiJIUzUxMiIsInR5cCI6IkpXVCJ9.eyJzb21lIjoicGF5bG9hZCJ9.WTzLzFO079PduJiFIyzrOah54YaM8qoxH9fLMQoQhKtw3_fMGjImIOokijDkXVbyfBqhMo2GCNu4w9v7UXvnpA"
-    assertSuccess(try decode(jwt, algorithm: .hs512("secret".data(using: .utf8)!))) { payload in
-      XCTAssertEqual(payload as! [String: String], ["some": "payload"])
+    assertSuccess(try decode(jwt, algorithm: .hs512("secret".data(using: .utf8)!))) { claims in
+      XCTAssertEqual(claims as! [String: String], ["some": "payload"])
     }
   }
 }
 
 // MARK: Helpers
 
-func assertSuccess(_ decoder: @autoclosure () throws -> Payload, closure: ((Payload) -> Void)? = nil) {
+func assertSuccess(_ decoder: @autoclosure () throws -> ClaimSet, closure: (([String: Any]) -> Void)? = nil) {
   do {
-    let payload = try decoder()
-    closure?(payload)
+    let claims = try decoder()
+	closure?(claims.claims as [String: Any])
   } catch {
     XCTFail("Failed to decode while expecting success. \(error)")
   }
 }
 
-func assertFailure(_ decoder: @autoclosure () throws -> Payload, closure: ((InvalidToken) -> Void)? = nil) {
+func assertFailure(_ decoder: @autoclosure () throws -> ClaimSet, closure: ((InvalidToken) -> Void)? = nil) {
   do {
     _ = try decoder()
     XCTFail("Decoding succeeded, expected a failure.")
@@ -213,7 +206,7 @@ func assertFailure(_ decoder: @autoclosure () throws -> Payload, closure: ((Inva
   }
 }
 
-func assertDecodeError(_ decoder: @autoclosure () throws -> Payload, error: String) {
+func assertDecodeError(_ decoder: @autoclosure () throws -> ClaimSet, error: String) {
   assertFailure(try decoder()) { failure in
     switch failure {
     case .decodeError(let decodeError):
