@@ -1,6 +1,6 @@
 import Foundation
 import XCTest
-import JWT
+@testable import JWT
 
 class DecodeTests: XCTestCase {
   func testDecodingValidJWTAsClaimSet() throws {
@@ -93,7 +93,7 @@ class DecodeTests: XCTestCase {
 
   func testInvalidNotBeforeClaim() {
     let jwt = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJuYmYiOlsxNDI4MTg5NzIwXX0.PUL1FQubzzJa4MNXe2D3d5t5cMaqFr3kYlzRUzly-C8"
-    assertDecodeError(try decode(jwt, algorithm: .hs256("secret".data(using: .utf8)!)), error: "Not before claim (nbf) must be an integer")
+    assertDecodeError(try decode(jwt, algorithm: .hs256("secret".data(using: .utf8)!)) as ClaimSet, error: "Not before claim (nbf) must be an integer")
   }
 
   func testUnmetNotBeforeClaim() {
@@ -134,7 +134,7 @@ class DecodeTests: XCTestCase {
 
   func testAudiencesClaim() {
     let jwt = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJhdWQiOlsibWF4aW5lIiwia2F0aWUiXX0.-PKvdNLCClrWG7CvesHP6PB0-vxu-_IZcsYhJxBy5JM"
-    assertSuccess(try decode(jwt, algorithm: .hs256("secret".data(using: .utf8)!), audience: "maxine")) { payload in
+    assertSuccess(try decode(jwt, algorithm: .hs256("secret".data(using: .utf8)!), audience: "maxine") as ClaimSet) { payload in
       XCTAssertEqual(payload.count, 1)
       XCTAssertEqual(payload["aud"] as! [String], ["maxine", "katie"])
     }
@@ -142,7 +142,7 @@ class DecodeTests: XCTestCase {
 
   func testAudienceClaim() {
     let jwt = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJhdWQiOiJreWxlIn0.dpgH4JOwueReaBoanLSxsGTc7AjKUvo7_M1sAfy_xVE"
-    assertSuccess(try decode(jwt, algorithm: .hs256("secret".data(using: .utf8)!), audience: "kyle")) { payload in
+    assertSuccess(try decode(jwt, algorithm: .hs256("secret".data(using: .utf8)!), audience: "kyle") as ClaimSet) { payload in
       XCTAssertEqual(payload as! [String: String], ["aud": "kyle"])
     }
   }
@@ -161,7 +161,7 @@ class DecodeTests: XCTestCase {
 
   func testNoneAlgorithm() {
     let jwt = "eyJhbGciOiJub25lIiwidHlwIjoiSldUIn0.eyJ0ZXN0IjoiaW5nIn0."
-    assertSuccess(try decode(jwt, algorithm: .none)) { payload in
+    assertSuccess(try decode(jwt, algorithm: .none) as ClaimSet) { payload in
       XCTAssertEqual(payload as! [String: String], ["test": "ing"])
     }
   }
@@ -173,36 +173,36 @@ class DecodeTests: XCTestCase {
 
   func testMatchesAnyAlgorithm() {
     let jwt = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.e30.2_8pWJfyPup0YwOXK7g9Dn0cF1E3pdn299t4hSeJy5w."
-    assertFailure(try decode(jwt, algorithms: [.hs256("anothersecret".data(using: .utf8)!), .hs256("secret".data(using: .utf8)!)]))
+    assertFailure(try decode(jwt, algorithms: [.hs256("anothersecret".data(using: .utf8)!), .hs256("secret".data(using: .utf8)!)]) as ClaimSet)
   }
 
   func testHS384Algorithm() {
     let jwt = "eyJhbGciOiJIUzM4NCIsInR5cCI6IkpXVCJ9.eyJzb21lIjoicGF5bG9hZCJ9.lddiriKLoo42qXduMhCTKZ5Lo3njXxOC92uXyvbLyYKzbq4CVVQOb3MpDwnI19u4"
-    assertSuccess(try decode(jwt, algorithm: .hs384("secret".data(using: .utf8)!))) { payload in
+    assertSuccess(try decode(jwt, algorithm: .hs384("secret".data(using: .utf8)!)) as ClaimSet) { payload in
       XCTAssertEqual(payload as! [String: String], ["some": "payload"])
     }
   }
 
   func testHS512Algorithm() {
     let jwt = "eyJhbGciOiJIUzUxMiIsInR5cCI6IkpXVCJ9.eyJzb21lIjoicGF5bG9hZCJ9.WTzLzFO079PduJiFIyzrOah54YaM8qoxH9fLMQoQhKtw3_fMGjImIOokijDkXVbyfBqhMo2GCNu4w9v7UXvnpA"
-    assertSuccess(try decode(jwt, algorithm: .hs512("secret".data(using: .utf8)!))) { payload in
-      XCTAssertEqual(payload as! [String: String], ["some": "payload"])
+    assertSuccess(try decode(jwt, algorithm: .hs512("secret".data(using: .utf8)!)) as ClaimSet) { claims in
+      XCTAssertEqual(claims as! [String: String], ["some": "payload"])
     }
   }
 }
 
 // MARK: Helpers
 
-func assertSuccess(_ decoder: @autoclosure () throws -> Payload, closure: ((Payload) -> Void)? = nil) {
+func assertSuccess(_ decoder: @autoclosure () throws -> ClaimSet, closure: (([String: Any]) -> Void)? = nil) {
   do {
-    let payload = try decoder()
-    closure?(payload)
+    let claims = try decoder()
+	closure?(claims.claims as [String: Any])
   } catch {
     XCTFail("Failed to decode while expecting success. \(error)")
   }
 }
 
-func assertFailure(_ decoder: @autoclosure () throws -> Payload, closure: ((InvalidToken) -> Void)? = nil) {
+func assertFailure(_ decoder: @autoclosure () throws -> ClaimSet, closure: ((InvalidToken) -> Void)? = nil) {
   do {
     _ = try decoder()
     XCTFail("Decoding succeeded, expected a failure.")
@@ -213,7 +213,7 @@ func assertFailure(_ decoder: @autoclosure () throws -> Payload, closure: ((Inva
   }
 }
 
-func assertDecodeError(_ decoder: @autoclosure () throws -> Payload, error: String) {
+func assertDecodeError(_ decoder: @autoclosure () throws -> ClaimSet, error: String) {
   assertFailure(try decoder()) { failure in
     switch failure {
     case .decodeError(let decodeError):
