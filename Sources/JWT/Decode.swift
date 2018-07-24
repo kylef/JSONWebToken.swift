@@ -63,18 +63,6 @@ public func decode(_ jwt: String, algorithm: Algorithm, verify: Bool = true, aud
   return try decode(jwt, algorithms: [algorithm], verify: verify, audience: audience, issuer: issuer, leeway: leeway)
 }
 
-/// Decode a JWT
-@available(*, deprecated, message: "use decode that returns a ClaimSet instead")
-public func decode(_ jwt: String, algorithms: [Algorithm], verify: Bool = true, audience: String? = nil, issuer: String? = nil) throws -> Payload {
-  return try decode(jwt, algorithms: algorithms, verify: verify, audience: audience, issuer: issuer).claims
-}
-
-/// Decode a JWT
-@available(*, deprecated, message: "use decode that returns a ClaimSet instead")
-public func decode(_ jwt: String, algorithm: Algorithm, verify: Bool = true, audience: String? = nil, issuer: String? = nil) throws -> Payload {
-  return try decode(jwt, algorithms: [algorithm], verify: verify, audience: audience, issuer: issuer).claims
-}
-
 // MARK: Parsing a JWT
 
 func load(_ jwt: String) throws -> (header: JOSEHeader, payload: ClaimSet, signature: Data, signatureInput: String) {

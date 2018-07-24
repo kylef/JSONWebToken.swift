@@ -104,7 +104,7 @@ extension ClaimSet {
       try validateAudience(audience)
     }
 		
-    try validateExpiary(leeway: leeway)
+    try validateExpiry(leeway: leeway)
     try validateNotBefore(leeway: leeway)
     try validateIssuedAt(leeway: leeway)
   }
@@ -132,8 +132,13 @@ extension ClaimSet {
       throw InvalidToken.invalidIssuer
     }
   }
-
+	
+  @available(*, deprecated, message: "This method's name is misspelled. Please instead use validateExpiry(leeway:).")
   public func validateExpiary(leeway: TimeInterval = 0) throws {
+    try validateExpiry(leeway: leeway)
+  }
+
+  public func validateExpiry(leeway: TimeInterval = 0) throws {
     try validateDate(claims, key: "exp", comparison: .orderedAscending, leeway: (-1 * leeway), failure: .expiredSignature, decodeError: "Expiration time claim (exp) must be an integer")
   }
 
