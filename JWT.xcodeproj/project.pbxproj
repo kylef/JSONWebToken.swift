@@ -521,17 +521,13 @@
 			buildActionMask = 2147483647;
 			files = (
 			);
-			inputFileListPaths = (
-			);
 			inputPaths = (
-			);
-			outputFileListPaths = (
 			);
 			outputPaths = (
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "COMMON_CRYPTO_DIR=\"${SDKROOT}/usr/include/CommonCrypto\"\nif [ -f \"${COMMON_CRYPTO_DIR}/module.modulemap\" ]\nthen\necho \"CommonCrypto already exists, skipping\"\nelse\n# This if-statement means we'll only run the main script if the CommonCryptoModuleMap directory doesn't exist\n# Because otherwise the rest of the script causes a full recompile for anything where CommonCrypto is a dependency\n# Do a \"Clean Build Folder\" to remove this directory and trigger the rest of the script to run\nif [ -d \"${BUILT_PRODUCTS_DIR}/CommonCryptoModuleMap\" ]; then\necho \"${BUILT_PRODUCTS_DIR}/CommonCryptoModuleMap directory already exists, so skipping the rest of the script.\"\nexit 0\nfi\n\nmkdir -p \"${BUILT_PRODUCTS_DIR}/CommonCryptoModuleMap\"\ncat <<EOF > \"${BUILT_PRODUCTS_DIR}/CommonCryptoModuleMap/module.modulemap\"\nmodule CommonCrypto [system] {\nheader \"${SDKROOT}/usr/include/CommonCrypto/CommonCrypto.h\"\nexport *\n}\nEOF\nfi\n";
+			shellScript = "COMMON_CRYPTO_DIR=\"${SDKROOT}/usr/include/CommonCrypto\"\nif [ -f \"${COMMON_CRYPTO_DIR}/module.modulemap\" ]\nthen\necho \"CommonCrypto already exists, skipping\"\nelse\n# This if-statement means we'll only run the main script if the CommonCryptoModuleMap directory doesn't exist\n# Because otherwise the rest of the script causes a full recompile for anything where CommonCrypto is a dependency\n# Do a \"Clean Build Folder\" to remove this directory and trigger the rest of the script to run\nif [ -d \"${BUILT_PRODUCTS_DIR}/CommonCryptoModuleMap\" ]; then\necho \"${BUILT_PRODUCTS_DIR}/CommonCryptoModuleMap directory already exists, so skipping the rest of the script.\"\nexit 0\nfi\n\nmkdir -p \"${BUILT_PRODUCTS_DIR}/CommonCryptoModuleMap\"\ncat <<EOF > \"${BUILT_PRODUCTS_DIR}/CommonCryptoModuleMap/module.modulemap\"\nmodule CommonCrypto [system] {\n    header \"${SDKROOT}/usr/include/CommonCrypto/CommonCrypto.h\"\n    export *\n}\nEOF\necho \"Built ${BUILT_PRODUCTS_DIR}/CommonCryptoModuleMap directory\"\nfi";
 		};
 /* End PBXShellScriptBuildPhase section */
 
@@ -847,6 +843,7 @@
 				PRODUCT_BUNDLE_IDENTIFIER = "org.cocode.$(PRODUCT_NAME:rfc1034identifier)";
 				SDKROOT = iphoneos;
 				SKIP_INSTALL = YES;
+				SWIFT_INCLUDE_PATHS = "$(inherited) ${BUILT_PRODUCTS_DIR}/CommonCryptoModuleMap";
 				TARGETED_DEVICE_FAMILY = "1,2";
 			};
 			name = Debug;
@@ -866,6 +863,7 @@
 				PRODUCT_BUNDLE_IDENTIFIER = "org.cocode.$(PRODUCT_NAME:rfc1034identifier)";
 				SDKROOT = iphoneos;
 				SKIP_INSTALL = YES;
+				SWIFT_INCLUDE_PATHS = "$(inherited) ${BUILT_PRODUCTS_DIR}/CommonCryptoModuleMap";
 				TARGETED_DEVICE_FAMILY = "1,2";
 				VALIDATE_PRODUCT = YES;
 			};
@@ -954,6 +952,7 @@
 			buildSettings = {
 				CODE_SIGN_STYLE = Automatic;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				SUPPORTED_PLATFORMS = "macosx iphonesimulator iphoneos appletvsimulator appletvos watchsimulator watchos";
 			};
 			name = Debug;
 		};
@@ -962,6 +961,7 @@
 			buildSettings = {
 				CODE_SIGN_STYLE = Automatic;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				SUPPORTED_PLATFORMS = "macosx iphonesimulator iphoneos appletvsimulator appletvos watchsimulator watchos";
 			};
 			name = Release;
 		};
