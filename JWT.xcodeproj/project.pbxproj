@@ -6,6 +6,20 @@
 	objectVersion = 46;
 	objects = {
 
+/* Begin PBXAggregateTarget section */
+		D0A831662110E20A00DEA3E1 /* CommonCryptoModuleMap */ = {
+			isa = PBXAggregateTarget;
+			buildConfigurationList = D0A831672110E20A00DEA3E1 /* Build configuration list for PBXAggregateTarget "CommonCryptoModuleMap" */;
+			buildPhases = (
+				D0A8316A2110E23200DEA3E1 /* ShellScript */,
+			);
+			dependencies = (
+			);
+			name = CommonCryptoModuleMap;
+			productName = CommonCryptoModuleMap;
+		};
+/* End PBXAggregateTarget section */
+
 /* Begin PBXBuildFile section */
 		271E10801F90253300B5033C /* JWA.swift in Sources */ = {isa = PBXBuildFile; fileRef = 271E107F1F90253300B5033C /* JWA.swift */; };
 		271E10811F90253300B5033C /* JWA.swift in Sources */ = {isa = PBXBuildFile; fileRef = 271E107F1F90253300B5033C /* JWA.swift */; };
@@ -76,6 +90,34 @@
 			proxyType = 1;
 			remoteGlobalIDString = 279D639B1AD07FFF0024E2BC;
 			remoteInfo = JWT;
+		};
+		D0A8316B2110E2A700DEA3E1 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 279D63931AD07FFF0024E2BC /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = D0A831662110E20A00DEA3E1;
+			remoteInfo = CommonCryptoModuleMap;
+		};
+		D0A8316D2110E2AF00DEA3E1 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 279D63931AD07FFF0024E2BC /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = D0A831662110E20A00DEA3E1;
+			remoteInfo = CommonCryptoModuleMap;
+		};
+		D0A8316F2110E2B500DEA3E1 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 279D63931AD07FFF0024E2BC /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = D0A831662110E20A00DEA3E1;
+			remoteInfo = CommonCryptoModuleMap;
+		};
+		D0A831712110E2BC00DEA3E1 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 279D63931AD07FFF0024E2BC /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = D0A831662110E20A00DEA3E1;
+			remoteInfo = CommonCryptoModuleMap;
 		};
 /* End PBXContainerItemProxy section */
 
@@ -308,6 +350,7 @@
 			buildRules = (
 			);
 			dependencies = (
+				D0A8316C2110E2A700DEA3E1 /* PBXTargetDependency */,
 			);
 			name = "JWT-OSX";
 			productName = JWT;
@@ -344,6 +387,7 @@
 			buildRules = (
 			);
 			dependencies = (
+				D0A8316E2110E2AF00DEA3E1 /* PBXTargetDependency */,
 			);
 			name = "JWT-iOS";
 			productName = JWT;
@@ -362,6 +406,7 @@
 			buildRules = (
 			);
 			dependencies = (
+				D0A831702110E2B500DEA3E1 /* PBXTargetDependency */,
 			);
 			name = "JWT-tvOS";
 			productName = JWT;
@@ -380,6 +425,7 @@
 			buildRules = (
 			);
 			dependencies = (
+				D0A831722110E2BC00DEA3E1 /* PBXTargetDependency */,
 			);
 			name = "JWT-watchOS";
 			productName = JWT;
@@ -403,6 +449,10 @@
 					279D63A61AD07FFF0024E2BC = {
 						CreatedOnToolsVersion = 6.2;
 					};
+					D0A831662110E20A00DEA3E1 = {
+						CreatedOnToolsVersion = 10.0;
+						ProvisioningStyle = Automatic;
+					};
 				};
 			};
 			buildConfigurationList = 279D63961AD07FFF0024E2BC /* Build configuration list for PBXProject "JWT" */;
@@ -422,6 +472,7 @@
 				CD9B62251C7753EC005D4844 /* JWT-tvOS */,
 				CD9B62371C7753FB005D4844 /* JWT-watchOS */,
 				279D63A61AD07FFF0024E2BC /* JWTTests */,
+				D0A831662110E20A00DEA3E1 /* CommonCryptoModuleMap */,
 			);
 		};
 /* End PBXProject section */
@@ -463,6 +514,26 @@
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXResourcesBuildPhase section */
+
+/* Begin PBXShellScriptBuildPhase section */
+		D0A8316A2110E23200DEA3E1 /* ShellScript */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+			);
+			inputPaths = (
+			);
+			outputFileListPaths = (
+			);
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "COMMON_CRYPTO_DIR=\"${SDKROOT}/usr/include/CommonCrypto\"\nif [ -f \"${COMMON_CRYPTO_DIR}/module.modulemap\" ]\nthen\necho \"CommonCrypto already exists, skipping\"\nelse\n# This if-statement means we'll only run the main script if the CommonCryptoModuleMap directory doesn't exist\n# Because otherwise the rest of the script causes a full recompile for anything where CommonCrypto is a dependency\n# Do a \"Clean Build Folder\" to remove this directory and trigger the rest of the script to run\nif [ -d \"${BUILT_PRODUCTS_DIR}/CommonCryptoModuleMap\" ]; then\necho \"${BUILT_PRODUCTS_DIR}/CommonCryptoModuleMap directory already exists, so skipping the rest of the script.\"\nexit 0\nfi\n\nmkdir -p \"${BUILT_PRODUCTS_DIR}/CommonCryptoModuleMap\"\ncat <<EOF > \"${BUILT_PRODUCTS_DIR}/CommonCryptoModuleMap/module.modulemap\"\nmodule CommonCrypto [system] {\nheader \"${SDKROOT}/usr/include/CommonCrypto/CommonCrypto.h\"\nexport *\n}\nEOF\nfi\n";
+		};
+/* End PBXShellScriptBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
 		279D63971AD07FFF0024E2BC /* Sources */ = {
@@ -562,6 +633,26 @@
 			isa = PBXTargetDependency;
 			target = 279D639B1AD07FFF0024E2BC /* JWT-OSX */;
 			targetProxy = 279D63A91AD07FFF0024E2BC /* PBXContainerItemProxy */;
+		};
+		D0A8316C2110E2A700DEA3E1 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = D0A831662110E20A00DEA3E1 /* CommonCryptoModuleMap */;
+			targetProxy = D0A8316B2110E2A700DEA3E1 /* PBXContainerItemProxy */;
+		};
+		D0A8316E2110E2AF00DEA3E1 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = D0A831662110E20A00DEA3E1 /* CommonCryptoModuleMap */;
+			targetProxy = D0A8316D2110E2AF00DEA3E1 /* PBXContainerItemProxy */;
+		};
+		D0A831702110E2B500DEA3E1 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = D0A831662110E20A00DEA3E1 /* CommonCryptoModuleMap */;
+			targetProxy = D0A8316F2110E2B500DEA3E1 /* PBXContainerItemProxy */;
+		};
+		D0A831722110E2BC00DEA3E1 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = D0A831662110E20A00DEA3E1 /* CommonCryptoModuleMap */;
+			targetProxy = D0A831712110E2BC00DEA3E1 /* PBXContainerItemProxy */;
 		};
 /* End PBXTargetDependency section */
 
@@ -858,6 +949,22 @@
 			};
 			name = Release;
 		};
+		D0A831682110E20A00DEA3E1 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CODE_SIGN_STYLE = Automatic;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+			};
+			name = Debug;
+		};
+		D0A831692110E20A00DEA3E1 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CODE_SIGN_STYLE = Automatic;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+			};
+			name = Release;
+		};
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
@@ -911,6 +1018,15 @@
 			buildConfigurations = (
 				CD9B62451C7753FB005D4844 /* Debug */,
 				CD9B62461C7753FB005D4844 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		D0A831672110E20A00DEA3E1 /* Build configuration list for PBXAggregateTarget "CommonCryptoModuleMap" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				D0A831682110E20A00DEA3E1 /* Debug */,
+				D0A831692110E20A00DEA3E1 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
