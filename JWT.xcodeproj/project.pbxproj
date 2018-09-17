@@ -111,7 +111,6 @@
 		CD9B62351C7753EC005D4844 /* JWT.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = JWT.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		CD9B62471C7753FB005D4844 /* JWT.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = JWT.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		CE8198B6E30BA6B8F8125FA7 /* Pods_JWTTests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_JWTTests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
-		D0882E042111B6460012248F /* Build-Phases */ = {isa = PBXFileReference; lastKnownFileType = folder; path = "Build-Phases"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -177,7 +176,6 @@
 		279D63921AD07FFF0024E2BC = {
 			isa = PBXGroup;
 			children = (
-				D0882E042111B6460012248F /* Build-Phases */,
 				520A711B1C469F440005C709 /* Package.swift */,
 				520A71121C469F010005C709 /* Sources */,
 				279D639E1AD07FFF0024E2BC /* Sources */,
@@ -483,7 +481,7 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "$SRCROOT/Build-Phases/common-crypto.sh";
+			shellScript = "COMMON_CRYPTO_DIR=\"${SDKROOT}/usr/include/CommonCrypto\"\nif [ -f \"${COMMON_CRYPTO_DIR}/module.modulemap\" ]\nthen\necho \"CommonCrypto already exists, skipping\"\nelse\n# This if-statement means we will only run the main script if the\n# CommonCrypto.framework directory does not exist because otherwise\n# the rest of the script causes a full recompile for anything\n# where CommonCrypto is a dependency\n# Do a \"Clean Build Folder\" to remove this directory and trigger\n# the rest of the script to run\nFRAMEWORK_DIR=\"${BUILT_PRODUCTS_DIR}/CommonCrypto.framework\"\n\nif [ -d \"${FRAMEWORK_DIR}\" ]; then\necho \"${FRAMEWORK_DIR} already exists, so skipping the rest of the script.\"\nexit 0\nfi\n\nmkdir -p \"${FRAMEWORK_DIR}/Modules\"\necho \"module CommonCrypto [system] {\nheader \\\"${SDKROOT}/usr/include/CommonCrypto/CommonCrypto.h\\\"\nexport *\n}\" >> \"${FRAMEWORK_DIR}/Modules/module.modulemap\"\n\nln -sf \"${SDKROOT}/usr/include/CommonCrypto\" \"${FRAMEWORK_DIR}/Headers\"\nfi\n";
 		};
 		D0882E012111B5C70012248F /* Run Script: CommonCrypto */ = {
 			isa = PBXShellScriptBuildPhase;
@@ -497,7 +495,7 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "$SRCROOT/Build-Phases/common-crypto.sh";
+			shellScript = "COMMON_CRYPTO_DIR=\"${SDKROOT}/usr/include/CommonCrypto\"\nif [ -f \"${COMMON_CRYPTO_DIR}/module.modulemap\" ]\nthen\necho \"CommonCrypto already exists, skipping\"\nelse\n# This if-statement means we will only run the main script if the\n# CommonCrypto.framework directory does not exist because otherwise\n# the rest of the script causes a full recompile for anything\n# where CommonCrypto is a dependency\n# Do a \"Clean Build Folder\" to remove this directory and trigger\n# the rest of the script to run\nFRAMEWORK_DIR=\"${BUILT_PRODUCTS_DIR}/CommonCrypto.framework\"\n\nif [ -d \"${FRAMEWORK_DIR}\" ]; then\necho \"${FRAMEWORK_DIR} already exists, so skipping the rest of the script.\"\nexit 0\nfi\n\nmkdir -p \"${FRAMEWORK_DIR}/Modules\"\necho \"module CommonCrypto [system] {\nheader \\\"${SDKROOT}/usr/include/CommonCrypto/CommonCrypto.h\\\"\nexport *\n}\" >> \"${FRAMEWORK_DIR}/Modules/module.modulemap\"\n\nln -sf \"${SDKROOT}/usr/include/CommonCrypto\" \"${FRAMEWORK_DIR}/Headers\"\nfi\n";
 		};
 		D0882E022111B5DC0012248F /* Run Script: CommonCrypto */ = {
 			isa = PBXShellScriptBuildPhase;
@@ -511,7 +509,7 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "$SRCROOT/Build-Phases/common-crypto.sh";
+			shellScript = "COMMON_CRYPTO_DIR=\"${SDKROOT}/usr/include/CommonCrypto\"\nif [ -f \"${COMMON_CRYPTO_DIR}/module.modulemap\" ]\nthen\necho \"CommonCrypto already exists, skipping\"\nelse\n# This if-statement means we will only run the main script if the\n# CommonCrypto.framework directory does not exist because otherwise\n# the rest of the script causes a full recompile for anything\n# where CommonCrypto is a dependency\n# Do a \"Clean Build Folder\" to remove this directory and trigger\n# the rest of the script to run\nFRAMEWORK_DIR=\"${BUILT_PRODUCTS_DIR}/CommonCrypto.framework\"\n\nif [ -d \"${FRAMEWORK_DIR}\" ]; then\necho \"${FRAMEWORK_DIR} already exists, so skipping the rest of the script.\"\nexit 0\nfi\n\nmkdir -p \"${FRAMEWORK_DIR}/Modules\"\necho \"module CommonCrypto [system] {\nheader \\\"${SDKROOT}/usr/include/CommonCrypto/CommonCrypto.h\\\"\nexport *\n}\" >> \"${FRAMEWORK_DIR}/Modules/module.modulemap\"\n\nln -sf \"${SDKROOT}/usr/include/CommonCrypto\" \"${FRAMEWORK_DIR}/Headers\"\nfi\n";
 		};
 		D0882E032111B5EE0012248F /* Run Script: CommonCrypto */ = {
 			isa = PBXShellScriptBuildPhase;
@@ -525,7 +523,7 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "$SRCROOT/Build-Phases/common-crypto.sh";
+			shellScript = "COMMON_CRYPTO_DIR=\"${SDKROOT}/usr/include/CommonCrypto\"\nif [ -f \"${COMMON_CRYPTO_DIR}/module.modulemap\" ]\nthen\necho \"CommonCrypto already exists, skipping\"\nelse\n# This if-statement means we will only run the main script if the\n# CommonCrypto.framework directory does not exist because otherwise\n# the rest of the script causes a full recompile for anything\n# where CommonCrypto is a dependency\n# Do a \"Clean Build Folder\" to remove this directory and trigger\n# the rest of the script to run\nFRAMEWORK_DIR=\"${BUILT_PRODUCTS_DIR}/CommonCrypto.framework\"\n\nif [ -d \"${FRAMEWORK_DIR}\" ]; then\necho \"${FRAMEWORK_DIR} already exists, so skipping the rest of the script.\"\nexit 0\nfi\n\nmkdir -p \"${FRAMEWORK_DIR}/Modules\"\necho \"module CommonCrypto [system] {\nheader \\\"${SDKROOT}/usr/include/CommonCrypto/CommonCrypto.h\\\"\nexport *\n}\" >> \"${FRAMEWORK_DIR}/Modules/module.modulemap\"\n\nln -sf \"${SDKROOT}/usr/include/CommonCrypto\" \"${FRAMEWORK_DIR}/Headers\"\nfi\n";
 		};
 /* End PBXShellScriptBuildPhase section */
 
