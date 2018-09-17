@@ -29,7 +29,7 @@ extension HMACAlgorithm {
 
 func hmac(algorithm: HMACAlgorithm, key: Data, message: Data) -> Data {
   let context = UnsafeMutablePointer<CCHmacContext>.allocate(capacity: 1)
-  defer { context.deallocate(capacity: 1) }
+  defer { context.deallocate() }
 
   key.withUnsafeBytes() { (buffer: UnsafePointer<UInt8>) in
     CCHmacInit(context, algorithm.commonCryptoAlgorithm, buffer, size_t(key.count))
