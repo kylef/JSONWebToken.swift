@@ -1,4 +1,0 @@
-module CommonCrypto [system] {
-    header "shim.h"
-    export *
-}
