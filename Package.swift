@@ -1,12 +1,10 @@
-// swift-tools-version:4.0
+// swift-tools-version:5.1
 
 import PackageDescription
 
 
 #if os(macOS) || os(iOS) || os(watchOS) || os(tvOS)
-let dependencies = [
-  Package.Dependency.package(url: "https://github.com/kylef-archive/CommonCrypto.git", from: "1.0.0"),
-]
+let dependencies: [Package.Dependency] = []
 let excludes = ["HMAC/HMACCryptoSwift.swift"]
 let targetDependencies: [Target.Dependency] = []
 #else
@@ -25,7 +23,11 @@ let package = Package(
   ],
   dependencies: dependencies,
   targets: [
-    .target(name: "JWA", dependencies: targetDependencies, exclude: excludes),
+    .target(name: "JWA",
+      exclude: excludes,
+      linkerSettings: [
+        .linkedFramework("CommonCrypto", .when(platforms: [.iOS, .macOS, .watchOS, .tvOS])),
+      ]),
     .target(name: "JWT", dependencies: ["JWA"]),
     .testTarget(name: "JWATests", dependencies: ["JWA"]),
     .testTarget(name: "JWTTests", dependencies: ["JWT"]),
