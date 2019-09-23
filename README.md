@@ -1,11 +1,10 @@
 # JSON Web Token
 
-[![Build Status](http://img.shields.io/travis/kylef/JSONWebToken.swift/master.svg?style=flat)](https://travis-ci.org/kylef/JSONWebToken.swift)
-
-Swift implementation of [JSON Web Token](https://tools.ietf.org/html/draft-ietf-oauth-json-web-token-32).
+Fork of https://github.com/kylef/JSONWebToken.swift that resolves the issue "Get raw claim set data" ((https://github.com/kylef/JSONWebToken.swift/issues/69)
 
 ## Installation
 
+=======
 Swift Pacakage Manager is the recommended installation method for JSONWebToken, [CocoaPods](http://cocoapods.org/) is also supported.
 
 ```ruby
@@ -94,7 +93,7 @@ This library supports the following algorithms:
 - `hs256` - HMAC using SHA-256 hash algorithm (default)
 - `hs384` - HMAC using SHA-384 hash algorithm
 - `hs512` - HMAC using SHA-512 hash algorithm
-
+        
 ## License
 
 JSONWebToken is licensed under the BSD license. See [LICENSE](LICENSE) for more info.
