@@ -1,0 +1,10 @@
+on: [push, pull_request]
+jobs:
+  test:
+    runs-on: ${{ matrix.os }}
+    strategy:
+      matrix:
+        os: [ubuntu-latest, macos-latest]
+    steps:
+      - uses: actions/checkout@v2
+      - run: swift test
