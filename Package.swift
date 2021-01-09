@@ -11,14 +11,14 @@ let dependencies = [
   Package.Dependency.package(url: "https://github.com/kylef-archive/CommonCrypto.git", from: "1.0.0"),
 ]
 #endif
-let excludes = ["HMAC/HMACCryptoSwift.swift"]
+let excludes = ["HMAC/HMACCrypto.swift"]
 let targetDependencies: [Target.Dependency] = []
 #else
 let dependencies = [
-  Package.Dependency.package(url: "https://github.com/krzyzanowskim/CryptoSwift.git", from: "0.10.0"),
+  Package.Dependency.package(url: "https://github.com/apple/swift-crypto", from: "1.1.3"),
 ]
 let excludes = ["HMAC/HMACCommonCrypto.swift"]
-let targetDependencies: [Target.Dependency] = ["CryptoSwift"]
+let targetDependencies: [Target.Dependency] = ["Crypto"]
 #endif
 
 
